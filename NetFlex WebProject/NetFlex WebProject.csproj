@@ -20,5 +20,10 @@
     <ProjectReference Include="..\NetFlex.Infrastructure\NetFlex.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\js\" />
+    <Folder Include="wwwroot\sass\" />
+  </ItemGroup>
+
 
 </Project>
