@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32126.317
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetFlex WebProject", "NetFlex WebProject\NetFlex WebProject.csproj", "{AE7A7F96-EC87-4936-8E50-E9733E81BC1C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetFlex.WEB", "NetFlex.WEB\NetFlex.WEB.csproj", "{A0048AB7-1B6D-4AA1-AF3B-C19B32657CD6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetFlex.Core", "NetFlex.Core\NetFlex.Core.csproj", "{DF32CEC8-398E-4645-B55E-785935489C99}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetFlex.DAL", "NetFlex.DAL\NetFlex.DAL.csproj", "{CCE5BB03-B67C-45A7-B75C-ECD1C6FE1EB6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetFlex.Infrastructure", "NetFlex.Infrastructure\NetFlex.Infrastructure.csproj", "{CDF2918C-E957-4784-A276-A57ADE184781}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetFlex.BLL", "NetFlex.BLL\NetFlex.BLL.csproj", "{9E798C2B-B341-4640-B0B9-5019FFEC18D0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,18 +15,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AE7A7F96-EC87-4936-8E50-E9733E81BC1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AE7A7F96-EC87-4936-8E50-E9733E81BC1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AE7A7F96-EC87-4936-8E50-E9733E81BC1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AE7A7F96-EC87-4936-8E50-E9733E81BC1C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DF32CEC8-398E-4645-B55E-785935489C99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DF32CEC8-398E-4645-B55E-785935489C99}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DF32CEC8-398E-4645-B55E-785935489C99}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DF32CEC8-398E-4645-B55E-785935489C99}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CDF2918C-E957-4784-A276-A57ADE184781}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CDF2918C-E957-4784-A276-A57ADE184781}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CDF2918C-E957-4784-A276-A57ADE184781}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CDF2918C-E957-4784-A276-A57ADE184781}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0048AB7-1B6D-4AA1-AF3B-C19B32657CD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0048AB7-1B6D-4AA1-AF3B-C19B32657CD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0048AB7-1B6D-4AA1-AF3B-C19B32657CD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0048AB7-1B6D-4AA1-AF3B-C19B32657CD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCE5BB03-B67C-45A7-B75C-ECD1C6FE1EB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCE5BB03-B67C-45A7-B75C-ECD1C6FE1EB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCE5BB03-B67C-45A7-B75C-ECD1C6FE1EB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCE5BB03-B67C-45A7-B75C-ECD1C6FE1EB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E798C2B-B341-4640-B0B9-5019FFEC18D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E798C2B-B341-4640-B0B9-5019FFEC18D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E798C2B-B341-4640-B0B9-5019FFEC18D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E798C2B-B341-4640-B0B9-5019FFEC18D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
