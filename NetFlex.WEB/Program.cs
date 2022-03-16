@@ -1,10 +1,13 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNet.Identity.Owin;
+using AspNet.Security.OAuth.Vkontakte;
 using NetFlex.DAL.EF;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("DatabaseContextConnection");
 
+// Add services to the container.
 builder.Services.AddEntityFrameworkNpgsql().AddDbContext<DatabaseContext>(options => options.UseNpgsql(
                     builder.Configuration.GetConnectionString("DatabaseContextConnection")
                 )
@@ -13,7 +16,13 @@ builder.Services.AddEntityFrameworkNpgsql().AddDbContext<DatabaseContext>(option
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<DatabaseContext>();
 
-// Add services to the container.
+builder.Services.AddAuthentication()
+.AddVkontakte(options =>
+{
+    options.ClientId = builder.Configuration["VKontakte:ClientId"];
+    options.ClientSecret = builder.Configuration["VKontakte:ClientSecret"];
+});
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
@@ -28,7 +37,6 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
