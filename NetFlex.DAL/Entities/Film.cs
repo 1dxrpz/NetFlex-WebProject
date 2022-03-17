@@ -15,6 +15,7 @@ namespace NetFlex.DAL.Entities
         public string AgeRating { get; set; }
         public string UserRating { get; set; }
         public string Description { get; set; }
+        public string VideoLink { get; set; }
 
     }
 }
