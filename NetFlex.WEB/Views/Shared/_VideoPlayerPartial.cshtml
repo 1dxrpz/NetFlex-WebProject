@@ -1,0 +1,59 @@
+﻿@model NetFlex.WEB.ViewModels.VideoPlayerViewModel
+
+<div class="videoPlayerContainer" hovered="false">
+	<video id="video">
+		<source src="@Model.VideoLink" type="video/mp4" />
+	</video>
+	<div class="controls">
+		<div class="video_info_container" onclick="ToggleVideo()">
+			<div class="video_name" onclick="alert(1)"><i class="fa-solid fa-arcontrols_row-left-long"></i></div>
+			<div class="buffering" buffering="false"><img src="https://raw.githubusercontent.com/1dxrpz/video-player-test-js/main/Netflix%20icon.svg" /></div>
+		</div>
+		<div class="controls_bottom">
+			<div class="controls_row">
+				<div class="progress_bar">
+					<div class="slider">
+						<div class="watching" dragArea="dragArea" dragName="watching">
+							<div class="loaded"></div>
+							<div class="current"></div>
+							<div class="current_trigger" draggable="draggable" dragAxis="x" dragName="watching"></div>
+						</div>
+					</div>
+					<div class="time">10:23</div>
+				</div>
+			</div>
+			<div class="controls_row">
+				<div class="buttons left">
+					<div class="button play" data-play="false"><i class="fa-solid fa-circle-play" onclick="Play()"></i><i class="fa-solid fa-circle-pause" onclick="Pause()"></i></div>
+					<div class="button skip_prev" onclick="SkipTime(-10)"><i class="fa-solid fa-backward"></i></div>
+					<div class="button skip_next" onclick="SkipTime(10)"><i class="fa-solid fa-forward"></i></div>
+					<div class="button volume" data-volume="50">
+						<input class="checkbox" type="checkbox" />
+						<div class="volume_slider_wrapper">
+							<div class="volume_slider" dragArea="dragArea" dragName="test">
+								<div class="current_volume"></div>
+								<div class="volume_trigger" draggable="draggable" dragAxis="y" dragName="test"></div>
+							</div>
+						</div><i class="fa-solid fa-volume-off" onclick="ToggleVolume()"></i><i class="fa-solid fa-volume-low" onclick="ToggleVolume()"></i><i class="fa-solid fa-volume-high" onclick="ToggleVolume()"></i>
+					</div>
+				</div>
+				<div class="info">
+					<div class="info_wrapper">
+						<div class="name">@Model.VideoTitle</div>
+						<div class="duration"></div>
+						<div class="episode">@Model.EpisodeName</div>
+					</div>
+				</div>
+				<div class="buttons right">
+					<div class="button support"></div>
+					<div class="button next_episode"><i class="fa-solid fa-forward-step"></i></div>
+					<div class="button episodes"><i class="fa-solid fa-bars"></i></div>
+					<div class="button fullscreen" data-fullscreen="false"><i class="fa-solid fa-expand" onclick="Expand()"></i><i class="fa-solid fa-compress" onclick="Compress()"></i></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+@section Scripts {
+    
+}
