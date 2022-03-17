@@ -9,6 +9,7 @@ namespace NetFlex.DAL.Entities
 {
     public class UserSubscription
     {
+        public Guid Id { get; set; }
         public Guid UserId { get; set; }
         public SubscriptionType SubscriptionId { get; set; }
         public DateTime StartDate { get; set; }

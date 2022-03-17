@@ -12,6 +12,7 @@ namespace NetFlex.DAL.Entities
         public string Title { get; set; }
         public string SerialId { get; set; }
         public string Number { get; set; }
+        public string VideoLink { get; set; }
 
     }
 }
