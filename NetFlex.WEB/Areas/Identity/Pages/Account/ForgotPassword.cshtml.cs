@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using NetFlex.DAL.EF;
 
-namespace NetFlex.WEB
+namespace NetFlex.WEB.Areas.Identity.Pages.Account
 {
     public class ForgotPasswordModel : PageModel
     {

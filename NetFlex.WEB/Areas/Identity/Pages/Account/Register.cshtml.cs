@@ -20,8 +20,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using NetFlex.DAL.EF;
 
-
-namespace NetFlex.WEB
+namespace NetFlex.WEB.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {
