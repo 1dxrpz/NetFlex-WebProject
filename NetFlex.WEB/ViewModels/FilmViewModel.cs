@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NetFlex.DAL.Entities
+﻿namespace NetFlex.WEB.ViewModels
 {
-    public class Film
+    public class FilmViewModel
     {
         public Guid Id { get; set; }
         public string Genre { get; set; }
@@ -16,6 +10,5 @@ namespace NetFlex.DAL.Entities
         public float UserRating { get; set; }
         public string Description { get; set; }
         public string VideoLink { get; set; }
-
     }
 }

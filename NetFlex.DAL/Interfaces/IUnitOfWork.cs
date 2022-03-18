@@ -15,6 +15,7 @@ namespace NetFlex.DAL.Interfaces
         IRepository<Rating> Ratings { get; }
         IRepository<Subscription> Subscriptions { get; }
         IRepository<UserSubscription> UserSubscriptions { get; }
+        IRepository<Review> Reviews { get; }
 
         void Save();
     }

@@ -12,7 +12,7 @@ namespace NetFlex.DAL.Repositories
 {
     public class RatingRepository : IRepository<Rating>
     {
-        private DatabaseContext db;
+        private readonly DatabaseContext db;
 
         public RatingRepository(DatabaseContext context)
         {
@@ -24,7 +24,7 @@ namespace NetFlex.DAL.Repositories
             return db.Ratings;
         }
 
-        public Rating Get(int id)
+        public Rating Get(Guid id)
         {
             return db.Ratings.Find(id);
         }
@@ -44,7 +44,7 @@ namespace NetFlex.DAL.Repositories
             return db.Ratings.Where(predicate).ToList();
         }
 
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             Rating rating = db.Ratings.Find(id);
             if (rating != null)

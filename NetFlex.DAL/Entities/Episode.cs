@@ -10,8 +10,9 @@ namespace NetFlex.DAL.Entities
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
-        public string SerialId { get; set; }
-        public string Number { get; set; }
+        public Guid SerialId { get; set; }
+        public int Duration { get; set; }
+        public int Number { get; set; }
         public string VideoLink { get; set; }
 
     }

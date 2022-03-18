@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetFlex.DAL.Entities
+namespace NetFlex.BLL.ModelsDTO
 {
     public class SubscriptionDTO
     {
         public SubscriptionType id { get; set; }
         public string Name { get; set; }
 
-        public int Cost { get; set; }
+        public float Cost { get; set; }
     }
 }

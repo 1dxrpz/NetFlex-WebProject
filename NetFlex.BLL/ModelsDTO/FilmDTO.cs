@@ -4,17 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetFlex.DAL.Entities
+namespace NetFlex.BLL.ModelsDTO
 {
     public class FilmDTO
     {
         public Guid Id { get; set; }
         public string Genre { get; set; }
         public string Title { get; set; }
-        public string Duration { get; set; }
-        public string AgeRating { get; set; }
-        public string UserRating { get; set; }
+        public int Duration { get; set; }
+        public int AgeRating { get; set; }
+        public float UserRating { get; set; }
         public string Description { get; set; }
-
+        public string VideoLink { get; set; }
     }
 }
