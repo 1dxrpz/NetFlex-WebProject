@@ -12,7 +12,7 @@ namespace NetFlex.DAL.Repositories
 {
     public class UserSubscriptionRepository : IRepository<UserSubscription>
     {
-        private DatabaseContext _db;
+        private readonly DatabaseContext _db;
 
         public UserSubscriptionRepository(DatabaseContext context)
         {
@@ -24,7 +24,7 @@ namespace NetFlex.DAL.Repositories
             return _db.UserSubscriptions;
         }
 
-        public UserSubscription Get(int id)
+        public UserSubscription Get(Guid id)
         {
             return _db.UserSubscriptions.Find(id);
         }
@@ -42,7 +42,7 @@ namespace NetFlex.DAL.Repositories
         {
             return _db.UserSubscriptions.Where(predicate).ToList();
         }
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             UserSubscription userSubscription = _db.UserSubscriptions.Find(id);
             if (userSubscription != null)

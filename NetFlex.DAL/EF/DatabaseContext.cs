@@ -13,6 +13,7 @@ namespace NetFlex.DAL.EF
         public DbSet<Rating> Ratings { get; set; }
         public DbSet<Subscription> Subscriptions { get; set; }
         public DbSet<UserSubscription> UserSubscriptions { get; set; }
+        public DbSet<Review> Reviews { get; set; }
         public DatabaseContext(DbContextOptions<DatabaseContext> options)
             : base(options)
         {

@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 
 namespace NetFlex.DAL.Entities
 {
-    public class Rating
+    public class Review
     {
         public Guid Id { get; set; }
-        public Guid UserId { get; set; }
+        public string UserName { get; set; }
         public Guid ContentId { get; set; }
-        public float UserRating { get; set; }
+        public string Text { get; set; }
+        public float Rating { get; set; }
+        
+        public DateTime PublishTime { get; set; }
     }
 }

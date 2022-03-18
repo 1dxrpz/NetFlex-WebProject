@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetFlex.DAL.Entities
+namespace NetFlex.BLL.ModelsDTO
 {
     public class RatingDTO
     {
@@ -13,3 +13,5 @@ namespace NetFlex.DAL.Entities
         public int UserRating { get; set; }
     }
 }
+
+

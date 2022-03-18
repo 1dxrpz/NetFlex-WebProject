@@ -11,6 +11,6 @@ namespace NetFlex.DAL.Entities
     {
         public Guid Id { get; set; }
         public SubscriptionType Name { get; set; }
-        public int Cost { get; set; }
+        public float Cost { get; set; }
     }
 }

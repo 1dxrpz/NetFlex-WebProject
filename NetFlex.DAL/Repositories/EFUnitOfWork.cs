@@ -19,6 +19,7 @@ namespace NetFlex.DAL.Repositories
         private RatingRepository ratingRepository;
         private SubscriptionRepository subscriptionRepository;
         private UserSubscriptionRepository userSubscriptionRepository;
+        private ReviewRepository reviewRepository;
 
         public EFUnitOfWork(string connectionString)
         {
@@ -77,6 +78,16 @@ namespace NetFlex.DAL.Repositories
                 if (userSubscriptionRepository == null)
                     userSubscriptionRepository = new UserSubscriptionRepository(db);
                 return userSubscriptionRepository;
+            }
+        }
+
+        public IRepository<Review> Reviews
+        {
+            get
+            {
+                if (reviewRepository == null)
+                    reviewRepository = new ReviewRepository(db);
+                return reviewRepository;
             }
         }
 

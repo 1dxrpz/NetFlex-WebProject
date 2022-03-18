@@ -12,7 +12,7 @@ namespace NetFlex.DAL.Repositories
 {
     public class EpisodeRepository : IRepository<Episode>
     {
-        private DatabaseContext _db;
+        private readonly DatabaseContext _db;
 
         public EpisodeRepository(DatabaseContext context)
         {
@@ -24,7 +24,7 @@ namespace NetFlex.DAL.Repositories
             return _db.Episodes.Include(o => o.Title);
         }
 
-        public Episode Get(int id)
+        public Episode Get(Guid id)
         {
             return _db.Episodes.Find(id);
         }
@@ -42,11 +42,13 @@ namespace NetFlex.DAL.Repositories
         {
             return _db.Episodes.Include(o => o.Title).Where(predicate).ToList();
         }
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             Episode episode = _db.Episodes.Find(id);
             if (episode != null)
                 _db.Episodes.Remove(episode);
         }
+
+        
     }
 }

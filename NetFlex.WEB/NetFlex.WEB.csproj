@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\NetFlex.BLL\NetFlex.BLL.csproj" />
     <ProjectReference Include="..\NetFlex.DAL\NetFlex.DAL.csproj" />
   </ItemGroup>
 

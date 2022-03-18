@@ -12,7 +12,7 @@ namespace NetFlex.DAL.Repositories
 {
     public class SerialRepository : IRepository<Serial>
     {
-        private DatabaseContext db;
+        private readonly DatabaseContext db;
 
         public SerialRepository(DatabaseContext context)
         {
@@ -24,7 +24,7 @@ namespace NetFlex.DAL.Repositories
             return db.Serials.Include(o => o.Title);
         }
 
-        public Serial Get(int id)
+        public Serial Get(Guid id)
         {
             return db.Serials.Find(id);
         }
@@ -44,7 +44,7 @@ namespace NetFlex.DAL.Repositories
             return db.Serials.Include(o => o.Title).Where(predicate).ToList();
         }
 
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             Serial serial = db.Serials.Find(id);
             if (serial != null)

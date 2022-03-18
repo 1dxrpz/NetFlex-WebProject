@@ -13,7 +13,7 @@ namespace NetFlex.DAL.Repositories
 {
     public class FilmRepository : IRepository<Film>
     {
-        private DatabaseContext _db;
+        private readonly DatabaseContext _db;
 
         public FilmRepository(DatabaseContext context)
         {
@@ -25,7 +25,7 @@ namespace NetFlex.DAL.Repositories
             return _db.Films.Include(o => o.Title);
         }
 
-        public Film Get(int id)
+        public Film Get(Guid id)
         {
             return _db.Films.Find(id);
         }
@@ -43,7 +43,7 @@ namespace NetFlex.DAL.Repositories
         {
             return _db.Films.Include(o => o.Title).Where(predicate).ToList();
         }
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             Film order = _db.Films.Find(id);
             if (order != null)
