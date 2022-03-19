@@ -7,8 +7,8 @@
     --controls_row_height: 40px;
     position: relative;
     background: #000;
-    width: 1000px;
-    height: 600px;
+    width: 100%;
+    height: 800px;
     display: flex;
     justify-content: center;
     align-items: center;

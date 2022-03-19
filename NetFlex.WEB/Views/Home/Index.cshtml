@@ -8,12 +8,3 @@
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
     
 </div>
-@{
-    NetFlex.WEB.ViewModels.VideoPlayerViewModel m = new NetFlex.WEB.ViewModels.VideoPlayerViewModel()
-    {
-        EpisodeName = "ahahah lol hahaha",
-        VideoLink = "https://raw.githubusercontent.com/1dxrpz/video-player-test-js/main/videos/The%20Killers%20-%20Mr.%20Brightside%20-Official%20Music%20Video-.mp4",
-        VideoTitle = "ti 4mo vonuchee"
-    };
-}
-@await Html.PartialAsync("../Shared/_VideoPlayerPartial.cshtml", @m)
