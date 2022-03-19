@@ -6,5 +6,9 @@
   {
     "outputFile": "wwwroot/css/Video/Video.min.css",
     "inputFile": "wwwroot/sass/Video.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/Admin/Admin.min.css",
+    "inputFile": "wwwroot/sass/Admin.scss"
   }
 ]
