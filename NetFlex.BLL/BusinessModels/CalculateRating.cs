@@ -21,6 +21,7 @@ namespace NetFlex.BLL.BusinessModels
             float res = 0;
             foreach (var e in rating)
             {
+
                 res += e.UserRating;
             }
             res /= rating.Count;

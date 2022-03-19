@@ -14,6 +14,7 @@ namespace NetFlex.DAL.Entities
         public int Duration { get; set; }
         public int Number { get; set; }
         public string VideoLink { get; set; }
+        public byte[] PreviewVideo { get; set; }
 
     }
 }

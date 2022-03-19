@@ -1,5 +1,54 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@using NetFlex.WEB.ViewModels
+@model NetFlex.WEB.ViewModels.EpisodeViewModel
+ @{
+	 List<EpisodeViewModel> episodeList = new List<EpisodeViewModel>();
+ }
+<div>   
+
+    <form method="post" asp-controller="Video" asp-action="UploadEpisode">
+        <div>
+		<div class="textbox">
+			<input asp-for="Title" placeholder=" "/>
+			<div class="textbox_placeholder"><div>Title</div></div>
+		</div>
+		<div class="textbox">
+			<input asp-for="SerialId" placeholder=" "/>
+			<div class="textbox_placeholder"><div>SerialId</div></div>
+		</div>
+		<div class="textbox">
+			<input asp-for="VideoLink" class="input" placeholder=" "/>
+			<div class="textbox_placeholder"><div>AgeRating</div></div>
+		</div>
+		<button type="submit">
+			POST
+		</button>
+		</div>
+    </form>
+</div>
+
+@*<form method="post" asp-controller="Video" asp-action="">
+        <div>
+		<div class="textbox">
+			<input asp-for="UserName" placeholder=" "/>
+			<div class="textbox_placeholder"><div>name</div></div>
+		</div>
+		<div class="textbox">
+			<input asp-for="ContentId" placeholder=" "/>
+			<div class="textbox_placeholder"><div>contentid</div></div>
+		</div>
+		<div class="textbox">
+			<input asp-for="Text" class="input" placeholder=" "/>
+			<div class="textbox_placeholder"><div>text</div></div>
+		</div>
+		<div class="textbox">
+			<input asp-for="Rating" class="input" placeholder=" "/>
+			<div class="textbox_placeholder"><div>ratin</div></div>
+		</div>
+		<button type="submit">
+			POST
+		</button>
+		</div>
+    </form>*@
+
+
+

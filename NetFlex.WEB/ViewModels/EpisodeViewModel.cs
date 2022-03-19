@@ -9,5 +9,6 @@
         public int Number { get; set; }
 
         public string VideoLink { get; set; }
+        public IFormFile Preview { get; set; }
     }
 }

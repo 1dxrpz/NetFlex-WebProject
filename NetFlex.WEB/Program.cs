@@ -4,6 +4,10 @@ using Microsoft.AspNet.Identity.Owin;
 using AspNet.Security.OAuth.Vkontakte;
 using NetFlex.DAL.EF;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using NetFlex.BLL.Interfaces;
+using NetFlex.BLL.Services;
+using NetFlex.DAL.Interfaces;
+using NetFlex.DAL.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +19,11 @@ builder.Services.AddEntityFrameworkNpgsql().AddDbContext<DatabaseContext>(option
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<DatabaseContext>();
+
+builder.Services.AddScoped<IUnitOfWork, EFUnitOfWork>();
+builder.Services.AddScoped<IVideoService, VideoService>();
+builder.Services.AddScoped<IReviewService, ReviewService>();
+builder.Services.AddScoped<IRatingService, RatingService>();
 
 builder.Services.AddAuthentication()
 .AddVkontakte(options =>
