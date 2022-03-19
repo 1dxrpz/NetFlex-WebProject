@@ -1,4 +1,5 @@
-﻿using NetFlex.DAL.Entities;
+﻿using NetFlex.DAL.EF;
+using NetFlex.DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,8 @@ namespace NetFlex.DAL.Interfaces
         IRepository<Subscription> Subscriptions { get; }
         IRepository<UserSubscription> UserSubscriptions { get; }
         IRepository<Review> Reviews { get; }
+
+        IRepository<ApplicationUser> Users { get; }
 
         void Save();
     }

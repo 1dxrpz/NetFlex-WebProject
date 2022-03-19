@@ -24,6 +24,7 @@ builder.Services.AddScoped<IUnitOfWork, EFUnitOfWork>();
 builder.Services.AddScoped<IVideoService, VideoService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<IRatingService, RatingService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddAuthentication()
 .AddVkontakte(options =>

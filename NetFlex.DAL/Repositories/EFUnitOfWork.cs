@@ -22,6 +22,7 @@ namespace NetFlex.DAL.Repositories
         private SubscriptionRepository subscriptionRepository;
         private UserSubscriptionRepository userSubscriptionRepository;
         private ReviewRepository reviewRepository;
+        private UserRepository userRepository;
 
         public EFUnitOfWork(DbContextOptions<DatabaseContext> options)
         {
@@ -91,6 +92,15 @@ namespace NetFlex.DAL.Repositories
                 if (reviewRepository == null)
                     reviewRepository = new ReviewRepository(db);
                 return reviewRepository;
+            }
+        }
+        public IRepository<ApplicationUser> Users
+        {
+            get
+            {
+                if (userRepository == null)
+                    userRepository = new UserRepository(db);
+                return userRepository;
             }
         }
 
