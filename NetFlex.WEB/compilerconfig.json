@@ -2,5 +2,9 @@
   {
     "outputFile": "wwwroot/css/Account/LoginRegister.min.css",
     "inputFile": "wwwroot/sass/LoginRegister.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/Video/Video.min.css",
+    "inputFile": "wwwroot/sass/Video.scss"
   }
 ]

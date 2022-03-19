@@ -29,6 +29,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\css\Account\" />
+    <Folder Include="wwwroot\css\Video\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 

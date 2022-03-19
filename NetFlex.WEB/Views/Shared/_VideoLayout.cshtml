@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - NetFlex.WEB</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <script src="https://kit.fontawesome.com/3ee70c58bc.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="~/css/VideoPlayer.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Video/Video.min.css" asp-append-version="true" />
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body>
+    <header>
+        <img class="logo" src="~/images/Logonetflix.png" />
+        <div class="menu">
+            <a href="#">Главная</a>
+            <a href="#">Сериалы</a>
+            <a href="#">Фильмы</a>
+            <a href="#">Новое и популярные</a>
+            <a href="#">Мой список</a>
+        </div>
+    </header>
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/VideoPlayer.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
