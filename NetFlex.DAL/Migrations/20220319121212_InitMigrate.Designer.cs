@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NetFlex.DAL.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20220317192902_InitMigrate")]
+    [Migration("20220319121212_InitMigrate")]
     partial class InitMigrate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -230,11 +230,14 @@ namespace NetFlex.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Number")
-                        .HasColumnType("text");
+                    b.Property<int>("Duration")
+                        .HasColumnType("integer");
 
-                    b.Property<string>("SerialId")
-                        .HasColumnType("text");
+                    b.Property<int>("Number")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("SerialId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Title")
                         .HasColumnType("text");
@@ -253,14 +256,14 @@ namespace NetFlex.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("AgeRating")
-                        .HasColumnType("text");
+                    b.Property<int>("AgeRating")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<string>("Duration")
-                        .HasColumnType("text");
+                    b.Property<int>("Duration")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Genre")
                         .HasColumnType("text");
@@ -268,8 +271,8 @@ namespace NetFlex.DAL.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("text");
 
-                    b.Property<string>("UserRating")
-                        .HasColumnType("text");
+                    b.Property<float>("UserRating")
+                        .HasColumnType("real");
 
                     b.Property<string>("VideoLink")
                         .HasColumnType("text");
@@ -291,12 +294,38 @@ namespace NetFlex.DAL.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("UserRating")
-                        .HasColumnType("integer");
+                    b.Property<float>("UserRating")
+                        .HasColumnType("real");
 
                     b.HasKey("Id");
 
                     b.ToTable("Ratings");
+                });
+
+            modelBuilder.Entity("NetFlex.DAL.Entities.Review", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ContentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("PublishTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<float>("Rating")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("NetFlex.DAL.Entities.Serial", b =>
@@ -305,8 +334,8 @@ namespace NetFlex.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("AgeRating")
-                        .HasColumnType("text");
+                    b.Property<int>("AgeRating")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
@@ -314,14 +343,14 @@ namespace NetFlex.DAL.Migrations
                     b.Property<string>("Genre")
                         .HasColumnType("text");
 
-                    b.Property<string>("NumEpisodes")
-                        .HasColumnType("text");
+                    b.Property<int>("NumEpisodes")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Title")
                         .HasColumnType("text");
 
-                    b.Property<string>("UserRating")
-                        .HasColumnType("text");
+                    b.Property<float>("UserRating")
+                        .HasColumnType("real");
 
                     b.HasKey("Id");
 
@@ -334,8 +363,8 @@ namespace NetFlex.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<int>("Cost")
-                        .HasColumnType("integer");
+                    b.Property<float>("Cost")
+                        .HasColumnType("real");
 
                     b.Property<int>("Name")
                         .HasColumnType("integer");

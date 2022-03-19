@@ -1,4 +1,6 @@
-﻿using NetFlex.DAL.EF;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using NetFlex.DAL.EF;
 using NetFlex.DAL.Entities;
 using NetFlex.DAL.Interfaces;
 using System;
@@ -21,9 +23,10 @@ namespace NetFlex.DAL.Repositories
         private UserSubscriptionRepository userSubscriptionRepository;
         private ReviewRepository reviewRepository;
 
-        public EFUnitOfWork(string connectionString)
+        public EFUnitOfWork(DbContextOptions<DatabaseContext> options)
         {
-            db = new DatabaseContext(connectionString);
+            db = new DatabaseContext(options);
+
         }
 
         public IRepository<Episode> Episodes 

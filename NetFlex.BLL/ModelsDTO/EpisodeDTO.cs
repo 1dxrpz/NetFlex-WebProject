@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,5 +16,7 @@ namespace NetFlex.BLL.ModelsDTO
         public int Duration { get; set; }
 
         public string VideoLink { get; set; }
+        public IFormFile PreviewVideo { get; set; }
+
     }
 }

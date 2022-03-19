@@ -55,8 +55,9 @@ namespace NetFlex.DAL.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Title = table.Column<string>(type: "text", nullable: true),
-                    SerialId = table.Column<string>(type: "text", nullable: true),
-                    Number = table.Column<string>(type: "text", nullable: true),
+                    SerialId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Duration = table.Column<int>(type: "integer", nullable: false),
+                    Number = table.Column<int>(type: "integer", nullable: false),
                     VideoLink = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -71,9 +72,9 @@ namespace NetFlex.DAL.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Genre = table.Column<string>(type: "text", nullable: true),
                     Title = table.Column<string>(type: "text", nullable: true),
-                    Duration = table.Column<string>(type: "text", nullable: true),
-                    AgeRating = table.Column<string>(type: "text", nullable: true),
-                    UserRating = table.Column<string>(type: "text", nullable: true),
+                    Duration = table.Column<int>(type: "integer", nullable: false),
+                    AgeRating = table.Column<int>(type: "integer", nullable: false),
+                    UserRating = table.Column<float>(type: "real", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: true),
                     VideoLink = table.Column<string>(type: "text", nullable: true)
                 },
@@ -89,11 +90,27 @@ namespace NetFlex.DAL.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
                     ContentId = table.Column<Guid>(type: "uuid", nullable: false),
-                    UserRating = table.Column<int>(type: "integer", nullable: false)
+                    UserRating = table.Column<float>(type: "real", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Ratings", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Reviews",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserName = table.Column<string>(type: "text", nullable: true),
+                    ContentId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Text = table.Column<string>(type: "text", nullable: true),
+                    Rating = table.Column<float>(type: "real", nullable: false),
+                    PublishTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reviews", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -103,9 +120,9 @@ namespace NetFlex.DAL.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Genre = table.Column<string>(type: "text", nullable: true),
                     Title = table.Column<string>(type: "text", nullable: true),
-                    NumEpisodes = table.Column<string>(type: "text", nullable: true),
-                    AgeRating = table.Column<string>(type: "text", nullable: true),
-                    UserRating = table.Column<string>(type: "text", nullable: true),
+                    NumEpisodes = table.Column<int>(type: "integer", nullable: false),
+                    AgeRating = table.Column<int>(type: "integer", nullable: false),
+                    UserRating = table.Column<float>(type: "real", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -119,7 +136,7 @@ namespace NetFlex.DAL.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<int>(type: "integer", nullable: false),
-                    Cost = table.Column<int>(type: "integer", nullable: false)
+                    Cost = table.Column<float>(type: "real", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -310,6 +327,9 @@ namespace NetFlex.DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "Ratings");
+
+            migrationBuilder.DropTable(
+                name: "Reviews");
 
             migrationBuilder.DropTable(
                 name: "Serials");

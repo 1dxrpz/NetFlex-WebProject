@@ -20,9 +20,6 @@ namespace NetFlex.DAL.EF
 
         }
 
-        public DatabaseContext(string connectionString)
-        {
-        }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

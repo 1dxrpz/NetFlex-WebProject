@@ -12,7 +12,7 @@ using NetFlex.BLL.Infrastructure;
 
 namespace NetFlex.BLL.Services
 {
-    internal class RatingService : IRatingService
+    public class RatingService : IRatingService
     {
         
         IUnitOfWork Database { get; set; }
@@ -27,7 +27,8 @@ namespace NetFlex.BLL.Services
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Rating, RatingDTO>()).CreateMapper();
             return mapper.Map<IEnumerable<Rating>, List<RatingDTO>>(Database.Ratings.GetAll());
         }
-        public void SetRating(RatingDTO model)
+
+        public void SetRating(ReviewDTO model)
         {
             var calc = new CalculateRating(GetRatings());
             var rating = calc.CalcRating(model.ContentId);
@@ -42,14 +43,16 @@ namespace NetFlex.BLL.Services
             {
                 serialRating = Database.Serials.Get(model.ContentId);
                 serialRating.UserRating = rating;
-            }
-            else
-            {
-                throw new ValidationException("Видео не найдено", "");
+
+                if (serialRating == null)
+                {
+                    throw new ValidationException("Видео не найдено", "");
+                }
             }
 
             Database.Save();
         }
+
         public void Dispose()
         {
             Database.Dispose();

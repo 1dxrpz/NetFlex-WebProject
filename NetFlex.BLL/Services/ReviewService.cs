@@ -17,6 +17,7 @@ namespace NetFlex.BLL.Services
         {
             Database = database;
         }
+
         public IEnumerable<ReviewDTO> GetReviews()
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Review, ReviewDTO>()).CreateMapper();
