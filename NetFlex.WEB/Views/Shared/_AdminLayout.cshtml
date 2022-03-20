@@ -15,28 +15,28 @@
 		<main role="main" class="pb-3">
 			<div class="wrapper">
 				<div class="menu">
-					<div class="button">
+					<a class="button" asp-controller="Admin" asp-action="Index" selected="false" data-url="/admin">
 						<i class="fa-solid fa-chart-line"></i>
 						<span>Statistics</span>
-					</div>
-					<div class="button">
+					</a>
+					<a class="button" asp-controller="Admin" asp-action="Users" selected="false" data-url="/admin/users">
 						<i class="fa-brands fa-accessible-icon"></i>
 						<span>Users</span>
-					</div>
+					</a>
 					<hr />
-					<div class="button" selected="true">
+					<a class="button" asp-controller="Admin" asp-action="Users" selected="false" data-url="/admin/plans">
 						<i class="fa-solid fa-circle-dollar-to-slot"></i>
 						<span>Subscription plans</span>
-					</div>
+					</a>
 					<hr />
-					<div class="button">
+					<a class="button" asp-controller="Admin" asp-action="Films" selected="false" data-url="/admin/films">
 						<i class="fa-solid fa-clapperboard"></i>
 						<span>Movies</span>
-					</div>
-					<div class="button">
+					</a>
+					<a class="button" asp-controller="Admin" asp-action="Serial" selected="false" data-url="/admin/serials">
 						<i class="fa-solid fa-film"></i>
 						<span>Series</span>
-					</div>
+					</a>
 				</div>
 				<div class="content">
 					@RenderBody()
@@ -48,5 +48,13 @@
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
 	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 	@await RenderSectionAsync("Scripts", required: false)
+	<script>
+		document.querySelectorAll(".button").forEach(v => {
+			if(v.getAttribute("data-url") == location.pathname.toLowerCase())
+			{
+				v.setAttribute("selected", true);
+			}
+		});
+	</script>
 </body>
 </html>
