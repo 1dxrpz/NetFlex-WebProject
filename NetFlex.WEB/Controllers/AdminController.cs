@@ -25,12 +25,20 @@ namespace NetFlex.WEB.Controllers
 			return View();
 		}
 
+
 		public IActionResult Users()
 		{
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<UserDTO, AdminUserVievModel>());
-            var mapper = new Mapper(config);
-            var users = mapper.Map<IEnumerable<UserDTO>, IEnumerable<AdminUserVievModel>>(_userService.GetUsers());
-			return View(users);
+            var users = _userService.GetUsers().Select(u => new AdminUserVievModel
+            {
+                UserId = u.Id,
+                UserName = u.UserName,
+                Email = u.Email,
+                PhoneNumber = u.PhoneNumber,
+                LockoutEnabled = u.LockoutEnable,
+                Avatar = u.Avatar,
+            });
+
+            return View(users);
 		}
 
 		[HttpGet("Serials")]
