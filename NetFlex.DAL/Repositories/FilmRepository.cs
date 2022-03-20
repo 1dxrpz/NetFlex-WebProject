@@ -22,7 +22,7 @@ namespace NetFlex.DAL.Repositories
 
         public IEnumerable<Film> GetAll()
         {
-            return _db.Films.Include(o => o.Title);
+            return _db.Films;
         }
 
         public Film Get(Guid id)

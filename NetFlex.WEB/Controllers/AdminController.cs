@@ -44,14 +44,18 @@ namespace NetFlex.WEB.Controllers
 		[HttpGet("Serials")]
 		public IActionResult Serials()
 		{
-			var serials = _videoService.GetSerials();
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<SerialDTO, SerialViewModel>());
+            var mapper = new Mapper(config);
+            var serials = mapper.Map<IEnumerable<SerialDTO>, IEnumerable<SerialViewModel>>(_videoService.GetSerials());
 			return View(serials);
 		}
 
 		[HttpGet("Films")]
 		public IActionResult Films()
 		{
-			var films = _videoService.GetFilms();
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<FilmDTO, FilmViewModel>());
+            var mapper = new Mapper(config);
+            var films = mapper.Map<IEnumerable<FilmDTO>, IEnumerable<FilmViewModel>>(_videoService.GetFilms());
 			return View(films);
 		}
 
@@ -81,8 +85,6 @@ namespace NetFlex.WEB.Controllers
                 var mapper = new Mapper(config);
                 var serialDTO = mapper.Map<SerialViewModel, SerialDTO>(model);
                 _videoService.UploadSerial(serialDTO);
-
-
             }
             catch (ValidationException ex)
             {
