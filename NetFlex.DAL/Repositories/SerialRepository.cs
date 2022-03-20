@@ -21,7 +21,7 @@ namespace NetFlex.DAL.Repositories
 
         public IEnumerable<Serial> GetAll()
         {
-            return db.Serials.Include(o => o.Title);
+            return db.Serials;
         }
 
         public Serial Get(Guid id)

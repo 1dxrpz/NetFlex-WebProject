@@ -39,6 +39,24 @@ namespace NetFlex.WEB.Controllers
             }
         }
 
+        [HttpGet("Seraes")]
+        public IActionResult GetSerial(Guid sereasId)
+        {
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<SerialDTO, SerialViewModel>());
+            var mapper = new Mapper(config);
+            var sereas = mapper.Map<SerialDTO, SerialViewModel>(_videoService.GetSerial(sereasId));
+            return View(sereas);
+        }
+
+        [HttpGet("Movie")]
+        public IActionResult GetFilm(Guid movieId)
+        {
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<FilmDTO, FilmViewModel>());
+            var mapper = new Mapper(config);
+            var movie = mapper.Map<FilmDTO, FilmViewModel>(_videoService.GetFilm(movieId));
+            return View(movie);
+        }
+
         [HttpPost("PublicReview")]
         public async Task<IActionResult> PublicReview(ReviewViewModel model)
         {
