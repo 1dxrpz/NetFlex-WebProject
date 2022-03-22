@@ -11,6 +11,24 @@
 				VideoTitle = "ti 4mo vonuchee"
 			};
 }
+<div class="main_info">
+	<div class="header_info_wrapper">
+		<div class="info_wrapper">
+			<div class="info_container">
+				<div class="video_title">Hello world</div>
+				<div class="genres">
+					<div class="genre">test genre</div>
+					<div class="genre">genre</div>
+					<div class="genre">test</div>
+				</div>
+				<div class="video_description">Hello world</div>
+			</div>
+		</div>
+		<div class="poster_wrapper">
+			<img src="~/images/poster.jpg" />
+		</div>
+	</div>
+</div>
 @await Html.PartialAsync("../Shared/_VideoPlayerPartial.cshtml", @m)
 <div class="page_content">
 	<div class="background_poster">
@@ -21,9 +39,6 @@
 		</div>
 	</div>
 	<div class="container">
-		<div class="video_info_container">
-			<div class="video_title">Hello world</div>
-		</div>
 		<div class="video_info_container">
 			<div class="reviews">
 				<div class="video_buttons_container">

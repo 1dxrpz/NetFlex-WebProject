@@ -41,7 +41,7 @@ namespace NetFlex.WEB.Controllers
             return View(users);
 		}
 
-		[HttpGet("Serials")]
+		[HttpGet]
 		public IActionResult Serials()
 		{
             var config = new MapperConfiguration(cfg => cfg.CreateMap<SerialDTO, SerialViewModel>());
@@ -50,7 +50,7 @@ namespace NetFlex.WEB.Controllers
 			return View(serials);
 		}
 
-		[HttpGet("Films")]
+		[HttpGet]
 		public IActionResult Films()
 		{
             var config = new MapperConfiguration(cfg => cfg.CreateMap<FilmDTO, FilmViewModel>());
