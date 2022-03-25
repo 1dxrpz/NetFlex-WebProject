@@ -10,5 +10,9 @@
   {
     "outputFile": "wwwroot/css/Admin/Admin.min.css",
     "inputFile": "wwwroot/sass/Admin.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/Settings/Settings.min.css",
+    "inputFile": "wwwroot/sass/Settings.scss"
   }
 ]
