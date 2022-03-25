@@ -17,7 +17,10 @@ namespace NetFlex.WEB.Controllers
         {
             return View();
         }
-
+        public IActionResult Subscribe()
+        {
+            return View();
+        }
         public IActionResult Privacy()
         {
             return View();

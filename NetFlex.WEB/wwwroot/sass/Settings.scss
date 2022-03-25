@@ -1,0 +1,22 @@
+﻿body {
+    background: #f3f3f3;
+}
+
+.option {
+    position: relative;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #00000033;
+    margin-bottom: 10px;
+    span {
+        border: none !important;
+    }
+    input {
+        border: none !important;
+        background: transparent !important;
+        outline: none;
+    }
+
+    input[disabled] {
+        background: #e9ecef !important;
+    }
+}

@@ -1,0 +1,197 @@
+﻿body {
+    margin: 0px;
+    background-color: black;
+    font-family: "Montserrat", sans-serif;
+}
+// replace
+.container_legacy {
+    max-width: 1770px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 75px;
+    padding-right: 75px;
+}
+
+.nav {
+    padding-top: 35px;
+    padding-bottom: 35px;
+}
+
+.nav_row {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.logo-navigation {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.logo {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.logo img {
+    height: 48px;
+}
+
+.navigation-list ul {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    list-style: none;
+}
+
+.navigation-list li {
+    margin-right: 25px;
+}
+
+    .navigation-list li:last-child {
+        margin-right: 0px;
+    }
+
+.navigation-list a {
+    text-decoration: none;
+    color: #FFFFFF;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.actions-list ul {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    list-style: none;
+}
+
+.actions-list li {
+    margin-right: 25px;
+}
+
+    .actions-list li:last-child {
+        margin-right: 0px;
+    }
+
+    .actions-list li a {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+    }
+
+    .actions-list li .user {
+        cursor: pointer;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: end;
+        -ms-flex-pack: end;
+        justify-content: end;
+        padding: 10px 10px 10px 10px;
+        margin: -10px -10px -10px -10px;
+        border-radius: 20px 10px 0 0;
+        -webkit-transition: all 0.5s;
+        transition: all 0.5s;
+    }
+
+        .actions-list li .user .user-dropdown.closed {
+            opacity: 0;
+            -webkit-animation: ani 2.5s forwards;
+            animation: ani 2.5s forwards;
+            pointer-events: none;
+        }
+
+        .actions-list li .user .user-dropdown {
+            position: absolute;
+            background-color: rgba(50, 50, 50, 0.9);
+            margin-top: 40px;
+            margin-right: -10px;
+            border-radius: 20px 0 5px 20px;
+            -webkit-transition: all 0.5s;
+            transition: all 0.5s;
+        }
+
+            .actions-list li .user .user-dropdown .avatar {
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-align: center;
+                -ms-flex-align: center;
+                align-items: center;
+                padding: 20px;
+            }
+
+                .actions-list li .user .user-dropdown .avatar img {
+                    max-height: 70px;
+                    min-width: 70px;
+                }
+
+                .actions-list li .user .user-dropdown .avatar text {
+                    min-width: 150px;
+                    display: -webkit-box;
+                    display: -ms-flexbox;
+                    display: flex;
+                    -webkit-box-pack: center;
+                    -ms-flex-pack: center;
+                    justify-content: center;
+                }
+
+            .actions-list li .user .user-dropdown ul {
+                display: block;
+                padding: 0;
+            }
+
+                .actions-list li .user .user-dropdown ul li {
+                    margin: 0;
+                    padding-top: 10px;
+                    padding-bottom: 10px;
+                    display: -webkit-box;
+                    display: -ms-flexbox;
+                    display: flex;
+                    -webkit-box-pack: start;
+                    -ms-flex-pack: start;
+                    justify-content: start;
+                    padding-left: 20px;
+                    padding-right: 20px;
+                }
+
+                    .actions-list li .user .user-dropdown ul li:last-child {
+                        margin-bottom: 10px;
+                    }
+
+                    .actions-list li .user .user-dropdown ul li img {
+                        max-height: 20px;
+                        max-width: 20px;
+                        margin-right: 20px;
+                    }
+
+                .actions-list li .user .user-dropdown ul a {
+                    text-decoration: none;
+                }
+
+                .actions-list li .user .user-dropdown ul text {
+                    font-weight: 600;
+                    font-size: 15px;
+                    color: #FFFFFF;
+                }
+

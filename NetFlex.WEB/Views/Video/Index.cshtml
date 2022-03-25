@@ -2,7 +2,6 @@
     ViewData["Title"] = "Video";
     Layout = "~/Views/Shared/_VideoLayout.cshtml";
 }
-
 @{
     NetFlex.WEB.ViewModels.VideoPlayerViewModel m = new NetFlex.WEB.ViewModels.VideoPlayerViewModel()
             {
@@ -11,93 +10,102 @@
                 VideoTitle = "ti 4mo vonuchee"
             };
 }
+<div class="main_info">
+	<div class="header_info_wrapper">
+		<div class="info_wrapper">
+			<div class="info_container">
+				<div class="video_title">Hello world</div>
+				<div class="genres">
+					<div class="genre">test genre</div>
+					<div class="genre">genre</div>
+					<div class="genre">test</div>
+				</div>
+				<div class="video_description">Hello world</div>
+			</div>
+		</div>
+		<div class="poster_wrapper">
+			<img src="~/images/poster.jpg" />
+		</div>
+	</div>
+</div>
 @await Html.PartialAsync("../Shared/_VideoPlayerPartial.cshtml", @m)
 <div class="page_content">
-    <div class="background_poster">
-        <div class="image">
-            <img src="~/images/poster.jpg" />
-        </div>
-        <div class="container">
-        </div>
-    </div>
-    <div class="container">
-        <div class="video_info_container">
-            <div class="video_title">Hello world</div>
-        </div>
-        <div class="video_info_container">
-            <div class="reviews">
-                <div class="video_buttons_container">
-                    <div class="button_colection">
-                        <div class="button">
-                            <i class="fa-solid fa-comment-dots"></i>
-                            <span>Write review</span>
-                        </div>
-                        <div class="button">
-                            <i class="fa-solid fa-plus"></i>
-                            <span>Add to My List</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="topic">Reviews <span>(16)</span></div>
-                <div class="reviews_wrapper">
-                    @for (int i = 0; i < 2; i++)
-                    {
-                        <div class="review">
-                            <div class="avatar">
-                                <img src="~/images/poster.jpg" />
-                            </div>
-                            <div class="content">
-                                <div class="name">Name Name<span class="date">18.02.2019</span></div>
-                                <div class="text">
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                                </div>
-                                <div class="bottom_info">
-                                    <div class="rate">
-                                        <svg height="200" width="200">
-                                            <text data-rate="@i" x="20" y="100" stroke-linecap="square" fill="none" stroke-linejoin="miter">
-                                                0.1
-                                            </text>
-                                        </svg>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    }
-                </div>
-            </div>
-            <div class="episodes">
-                <div class="video_buttons_container">
-                    <div class="rating">
-                        <span>Rating </span>
-                        <span class="rate">9.5</span>
-                        <span>/10</span>
-                    </div>
-                </div>
-                <div class="topic">Episodes <span>(12)</span></div>
-                <div class="episodes_wrapper">
-                    @for (int i = 0; i < 8; i++)
-                    {
-                        <div class="episode" data-num=@(i + 1)>
-                            <div class="poster"></div>
-                            <div class="info">
-                                <div class="name">Episode @i - ahhah</div>
-                                <div class="duration">12:22</div>
-                            </div>
-                        </div>
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="background_poster">
+		<div class="image">
+			<img src="~/images/poster.jpg" />
+		</div>
+		<div class="container">
+		</div>
+	</div>
+	<div class="container">
+		<div class="video_info_container">
+			<div class="reviews">
+				<div class="video_buttons_container">
+					<div class="button_colection">
+						<div class="button">
+							<i class="fa-solid fa-comment-dots"></i>
+							<span>Write review</span>
+						</div>
+						<div class="button">
+							<i class="fa-solid fa-plus"></i>
+							<span>Add to My List</span>
+						</div>
+					</div>
+				</div>
+				<div class="topic">Reviews <span>(16)</span></div>
+				<div class="reviews_wrapper">
+					@for (int i = 0; i < 2; i++)
+					{
+						<div class="review">
+							<div class="avatar">
+								<img src="~/images/poster.jpg" />
+							</div>
+							<div class="content">
+								<div class="name">Name Name<span class="date">18.02.2019</span></div>
+								<div class="text">
+									Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+								</div>
+								<div class="bottom_info">
+									<div class="rate">
+										<svg height="200" width="200">
+											<text data-rate="@i" x="20" y="100" stroke-linecap="square" fill="none" stroke-linejoin="miter">
+												0.1
+											</text>
+										</svg>
+									</div>
+								</div>
+							</div>
+						</div>
+					}
+				</div>
+			</div>
+			<div class="episodes">
+				<div class="video_buttons_container">
+					<div class="rating">
+						<span>Rating </span>
+						<span class="rate">9.5</span>
+						<span>/10</span>
+					</div>
+				</div>
+				<div class="topic">Episodes <span>(12)</span></div>
+				<div class="episodes_wrapper">
+					@for (int i = 0; i < 8; i++)
+					{
+						<div class="episode" data-num=@(i + 1)>
+							<div class="poster"></div>
+							<div class="info">
+								<div class="name">Episode @i - ahhah</div>
+								<div class="duration">12:22</div>
+							</div>
+						</div>
+					}
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 <footer>
 </footer>
-
 @section Scripts {
-<script>
-    document.onkeydown = function (e) {
-        var keyCode = e.keyCode || e.charCode;
-        if (keyCode == 32) e.preventDefault();
-    };
-</script>
+	<script src="~/js/VideoPlayer.js"></script>
 }
