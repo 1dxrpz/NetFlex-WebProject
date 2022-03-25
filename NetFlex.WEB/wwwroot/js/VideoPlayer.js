@@ -29,8 +29,8 @@ function SkipTime(e) {
 	video.currentTime += e;
 	UpdateHover();
 }
+
 document.addEventListener("keydown", (e) => {
-	//e.preventDefault();
 	switch (e.keyCode) {
 		case 37: SkipTime(-5); break;
 		case 39: SkipTime(5); break;

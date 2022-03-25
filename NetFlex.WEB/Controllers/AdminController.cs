@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 using NetFlex.BLL.Infrastructure;
 using NetFlex.BLL.Interfaces;
@@ -12,7 +14,7 @@ namespace NetFlex.WEB.Controllers
 		private readonly IVideoService _videoService;
 		public readonly IRatingService _ratingService;
 		public readonly IUserService _userService;
-
+        private RoleManager<IdentityRole> roleManager;
         public AdminController(IVideoService videoService, IRatingService ratingService, IUserService userService)
         {
             _videoService = videoService;

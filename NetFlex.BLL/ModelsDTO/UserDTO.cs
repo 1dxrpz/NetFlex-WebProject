@@ -17,7 +17,6 @@ namespace NetFlex.BLL.ModelsDTO
         public bool PhoneNumberConfirmed { get; set; }
         public bool TwoFactorEnable { get; set; }
         public bool LockoutEnable { get; set; }
-
         public string Avatar { get; set; }
 
     }

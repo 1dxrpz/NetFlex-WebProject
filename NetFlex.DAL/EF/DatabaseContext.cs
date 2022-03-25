@@ -24,7 +24,6 @@ namespace NetFlex.DAL.EF
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);
 
         }
     }
