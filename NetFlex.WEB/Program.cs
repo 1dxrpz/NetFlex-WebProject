@@ -26,6 +26,14 @@ builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<IRatingService, RatingService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
+builder.Services.AddRazorPages(options =>
+{
+    options.Conventions.AuthorizePage("/Contact");
+    options.Conventions.AuthorizeFolder("/Private");
+    options.Conventions.AllowAnonymousToPage("/Private/PublicPage");
+    options.Conventions.AllowAnonymousToFolder("/Private/PublicPages");
+});
+
 builder.Services.AddAuthentication()
 .AddVkontakte(options =>
 {

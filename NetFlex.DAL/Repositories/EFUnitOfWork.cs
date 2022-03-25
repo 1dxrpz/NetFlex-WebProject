@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using NetFlex.DAL.EF;
 using NetFlex.DAL.Entities;
@@ -13,100 +15,110 @@ namespace NetFlex.DAL.Repositories
 {
     public class EFUnitOfWork : IUnitOfWork
     {
-        private DatabaseContext db;
+        private DatabaseContext _db;
+        private RoleManager<IdentityRole> _roleManager;
 
-        private EpisodeRepository episodeRepository;
-        private FilmRepository filmRepository;
-        private SerialRepository serialRepository;
-        private RatingRepository ratingRepository;
-        private SubscriptionRepository subscriptionRepository;
-        private UserSubscriptionRepository userSubscriptionRepository;
-        private ReviewRepository reviewRepository;
-        private UserRepository userRepository;
+        private EpisodeRepository _episodeRepository;
+        private FilmRepository _filmRepository;
+        private SerialRepository _serialRepository;
+        private RatingRepository _ratingRepository;
+        private SubscriptionRepository _subscriptionRepository;
+        private UserSubscriptionRepository _userSubscriptionRepository;
+        private ReviewRepository _reviewRepository;
+        private UserRepository _userRepository;
+        private RoleRepository _roleRepository;
 
         public EFUnitOfWork(DbContextOptions<DatabaseContext> options)
         {
-            db = new DatabaseContext(options);
+            _db = new DatabaseContext(options);
 
         }
 
-        public IRepository<Episode> Episodes 
+        public IRepository<Episode> Episodes
         {
             get
             {
-                if (episodeRepository == null)
-                    episodeRepository = new EpisodeRepository(db);
-                return episodeRepository;
+                if (_episodeRepository == null)
+                    _episodeRepository = new EpisodeRepository(_db);
+                return _episodeRepository;
             }
         }
         public IRepository<Film> Films
         {
             get
             {
-                if (filmRepository == null)
-                    filmRepository = new FilmRepository(db);
-                return filmRepository;
+                if (_filmRepository == null)
+                    _filmRepository = new FilmRepository(_db);
+                return _filmRepository;
             }
         }
         public IRepository<Serial> Serials
         {
             get
             {
-                if (serialRepository == null)
-                    serialRepository = new SerialRepository(db);
-                return serialRepository;
+                if (_serialRepository == null)
+                    _serialRepository = new SerialRepository(_db);
+                return _serialRepository;
             }
         }
         public IRepository<Rating> Ratings
         {
             get
             {
-                if (ratingRepository == null)
-                    ratingRepository = new RatingRepository(db);
-                return ratingRepository;
+                if (_ratingRepository == null)
+                    _ratingRepository = new RatingRepository(_db);
+                return _ratingRepository;
             }
         }
         public IRepository<Subscription> Subscriptions
         {
             get
             {
-                if (subscriptionRepository == null)
-                    subscriptionRepository = new SubscriptionRepository(db);
-                return subscriptionRepository;
+                if (_subscriptionRepository == null)
+                    _subscriptionRepository = new SubscriptionRepository(_db);
+                return _subscriptionRepository;
             }
         }
         public IRepository<UserSubscription> UserSubscriptions
         {
             get
             {
-                if (userSubscriptionRepository == null)
-                    userSubscriptionRepository = new UserSubscriptionRepository(db);
-                return userSubscriptionRepository;
+                if (_userSubscriptionRepository == null)
+                    _userSubscriptionRepository = new UserSubscriptionRepository(_db);
+                return _userSubscriptionRepository;
             }
         }
-
         public IRepository<Review> Reviews
         {
             get
             {
-                if (reviewRepository == null)
-                    reviewRepository = new ReviewRepository(db);
-                return reviewRepository;
+                if (_reviewRepository == null)
+                    _reviewRepository = new ReviewRepository(_db);
+                return _reviewRepository;
             }
         }
         public IRepository<ApplicationUser> Users
         {
             get
             {
-                if (userRepository == null)
-                    userRepository = new UserRepository(db);
-                return userRepository;
+                if (_userRepository == null)
+                    _userRepository = new UserRepository(_db);
+                return _userRepository;
+            }
+        }
+        public IRoleRepository Roles
+        {
+            get
+            {
+                if (_roleRepository == null)
+                    _roleRepository = new RoleRepository(_roleManager);
+                return _roleRepository;
             }
         }
 
         public void Save()
         {
-            db.SaveChanges();
+            _db.SaveChanges();
         }
 
         private bool disposed = false;
@@ -117,7 +129,7 @@ namespace NetFlex.DAL.Repositories
             {
                 if (disposing)
                 {
-                    db.Dispose();
+                    _db.Dispose();
                 }
                 this.disposed = true;
             }
