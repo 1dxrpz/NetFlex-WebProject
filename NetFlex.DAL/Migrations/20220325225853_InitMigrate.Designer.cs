@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NetFlex.DAL.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20220319121212_InitMigrate")]
+    [Migration("20220325225853_InitMigrate")]
     partial class InitMigrate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -168,6 +168,9 @@ namespace NetFlex.DAL.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("integer");
 
+                    b.Property<string>("Avatar")
+                        .HasColumnType("text");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("text");
@@ -236,6 +239,9 @@ namespace NetFlex.DAL.Migrations
                     b.Property<int>("Number")
                         .HasColumnType("integer");
 
+                    b.Property<byte[]>("PreviewVideo")
+                        .HasColumnType("bytea");
+
                     b.Property<Guid>("SerialId")
                         .HasColumnType("uuid");
 
@@ -265,7 +271,10 @@ namespace NetFlex.DAL.Migrations
                     b.Property<int>("Duration")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Genre")
+                    b.Property<string>("Poster")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Preview")
                         .HasColumnType("text");
 
                     b.Property<string>("Title")
@@ -340,11 +349,11 @@ namespace NetFlex.DAL.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<string>("Genre")
-                        .HasColumnType("text");
-
                     b.Property<int>("NumEpisodes")
                         .HasColumnType("integer");
+
+                    b.Property<string>("Poster")
+                        .HasColumnType("text");
 
                     b.Property<string>("Title")
                         .HasColumnType("text");

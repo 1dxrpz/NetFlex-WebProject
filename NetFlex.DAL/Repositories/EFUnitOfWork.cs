@@ -17,6 +17,7 @@ namespace NetFlex.DAL.Repositories
     {
         private DatabaseContext _db;
         private RoleManager<IdentityRole> _roleManager;
+        private UserManager<IdentityUser> _userManager;
 
         private EpisodeRepository _episodeRepository;
         private FilmRepository _filmRepository;
@@ -111,7 +112,7 @@ namespace NetFlex.DAL.Repositories
             get
             {
                 if (_roleRepository == null)
-                    _roleRepository = new RoleRepository(_roleManager);
+                    _roleRepository = new RoleRepository(_roleManager, _userManager);
                 return _roleRepository;
             }
         }

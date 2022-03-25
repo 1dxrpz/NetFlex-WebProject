@@ -37,6 +37,15 @@ namespace NetFlex.DAL.Repositories
             IdentityResult result = _roleManager.Create(new IdentityRole(role));
         }
 
+        public void SetRole(string role, string user)
+        {
+            _userManager.AddToRole(role, user);
+        }
+        public void DeleteRole(string role, string user)
+        {
+            _userManager.RemoveFromRole(user, role);
+        }
+
         public void Delete(string name)
         {
             IdentityRole role = _roleManager.Roles.FirstOrDefault(r => r.Name == name);

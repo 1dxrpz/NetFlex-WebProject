@@ -9,10 +9,8 @@ namespace NetFlex.DAL.Entities
     public class Film
     {
         public Guid Id { get; set; }
-        public string Genre { get; set; }
         public string Title { get; set; }
-        public byte[] Poster { get; set; }
-
+        public string Poster { get; set; }
 
         public int Duration { get; set; }
         public int AgeRating { get; set; }
@@ -20,7 +18,7 @@ namespace NetFlex.DAL.Entities
         public string Description { get; set; }
         public string VideoLink { get; set; }
 
-        public byte[] Preview { get; set; }
+        public string Preview { get; set; }
 
     }
 }

@@ -166,6 +166,9 @@ namespace NetFlex.DAL.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("integer");
 
+                    b.Property<string>("Avatar")
+                        .HasColumnType("text");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("text");
@@ -266,14 +269,11 @@ namespace NetFlex.DAL.Migrations
                     b.Property<int>("Duration")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Genre")
+                    b.Property<string>("Poster")
                         .HasColumnType("text");
 
-                    b.Property<byte[]>("Poster")
-                        .HasColumnType("bytea");
-
-                    b.Property<byte[]>("Preview")
-                        .HasColumnType("bytea");
+                    b.Property<string>("Preview")
+                        .HasColumnType("text");
 
                     b.Property<string>("Title")
                         .HasColumnType("text");
@@ -347,14 +347,11 @@ namespace NetFlex.DAL.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<string>("Genre")
-                        .HasColumnType("text");
-
                     b.Property<int>("NumEpisodes")
                         .HasColumnType("integer");
 
-                    b.Property<byte[]>("Poster")
-                        .HasColumnType("bytea");
+                    b.Property<string>("Poster")
+                        .HasColumnType("text");
 
                     b.Property<string>("Title")
                         .HasColumnType("text");

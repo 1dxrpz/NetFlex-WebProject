@@ -9,8 +9,7 @@ namespace NetFlex.DAL.Entities
     public class Serial
     {
         public Guid Id { get; set; }
-        public string Genre { get; set; }
-        public byte[] Poster { get; set; }
+        public string Poster { get; set; }
         public string Title { get; set; }
         public int NumEpisodes { get; set; }
         public int AgeRating { get; set; }

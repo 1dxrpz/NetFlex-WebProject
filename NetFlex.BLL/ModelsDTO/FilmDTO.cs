@@ -10,8 +10,7 @@ namespace NetFlex.BLL.ModelsDTO
     public class FilmDTO
     {
         public Guid Id { get; set; }
-        public string Genre { get; set; }
-        public IFormFile Poster { get; set; }
+        public string Poster { get; set; }
 
 
         public string Title { get; set; }
@@ -21,6 +20,6 @@ namespace NetFlex.BLL.ModelsDTO
         public string Description { get; set; }
         public string VideoLink { get; set; }
        
-        public IFormFile Preview { get; set; }
+        public string Preview { get; set; }
     }
 }

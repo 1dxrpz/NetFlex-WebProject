@@ -2,6 +2,7 @@
 using NetFlex.DAL.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace NetFlex.DAL.EF
 {
@@ -24,7 +25,16 @@ namespace NetFlex.DAL.EF
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-
+            base.OnModelCreating(builder);
+            //builder.ApplyConfiguration(new ApplicationUserEntityConfiguration());
         }
     }
+
+    //public class ApplicationUserEntityConfiguration : IEntityTypeConfiguration<ApplicationUser>
+    //{
+    //    public void Configure(EntityTypeBuilder<ApplicationUser> builder)
+    //    {
+    //        builder.Property(u => u.Avatar);
+    //    }
+    //}
 }

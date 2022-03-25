@@ -51,7 +51,6 @@ namespace NetFlex.BLL.Services
             {
                 Id = film.Id,
                 Title = film.Title,
-                Genre = film.Genre,
                 Duration = film.Duration,
                 AgeRating = film.AgeRating,
                 UserRating = film.UserRating,
@@ -73,7 +72,6 @@ namespace NetFlex.BLL.Services
             {
                 Id = serial.Id,
                 Title = serial.Title,
-                Genre = serial.Genre,
                 NumEpisodes = serial.NumEpisodes,
                 AgeRating = serial.AgeRating,
                 UserRating = serial.UserRating,

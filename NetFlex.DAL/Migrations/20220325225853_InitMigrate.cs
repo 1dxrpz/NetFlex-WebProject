@@ -29,6 +29,7 @@ namespace NetFlex.DAL.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
+                    Avatar = table.Column<string>(type: "text", nullable: true),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -58,7 +59,8 @@ namespace NetFlex.DAL.Migrations
                     SerialId = table.Column<Guid>(type: "uuid", nullable: false),
                     Duration = table.Column<int>(type: "integer", nullable: false),
                     Number = table.Column<int>(type: "integer", nullable: false),
-                    VideoLink = table.Column<string>(type: "text", nullable: true)
+                    VideoLink = table.Column<string>(type: "text", nullable: true),
+                    PreviewVideo = table.Column<byte[]>(type: "bytea", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -70,13 +72,14 @@ namespace NetFlex.DAL.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Genre = table.Column<string>(type: "text", nullable: true),
                     Title = table.Column<string>(type: "text", nullable: true),
+                    Poster = table.Column<string>(type: "text", nullable: true),
                     Duration = table.Column<int>(type: "integer", nullable: false),
                     AgeRating = table.Column<int>(type: "integer", nullable: false),
                     UserRating = table.Column<float>(type: "real", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: true),
-                    VideoLink = table.Column<string>(type: "text", nullable: true)
+                    VideoLink = table.Column<string>(type: "text", nullable: true),
+                    Preview = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -118,7 +121,7 @@ namespace NetFlex.DAL.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Genre = table.Column<string>(type: "text", nullable: true),
+                    Poster = table.Column<string>(type: "text", nullable: true),
                     Title = table.Column<string>(type: "text", nullable: true),
                     NumEpisodes = table.Column<int>(type: "integer", nullable: false),
                     AgeRating = table.Column<int>(type: "integer", nullable: false),

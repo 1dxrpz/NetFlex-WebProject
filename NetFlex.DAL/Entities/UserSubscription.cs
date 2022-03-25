@@ -15,6 +15,5 @@ namespace NetFlex.DAL.Entities
         public DateTime StartDate { get; set; }
         public DateTime FinishDate { get; set; }
 
-
     }
 }
