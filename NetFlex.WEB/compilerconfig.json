@@ -14,5 +14,13 @@
   {
     "outputFile": "wwwroot/css/Settings/Settings.min.css",
     "inputFile": "wwwroot/sass/Settings.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/Home/Subscribe.min.css",
+    "inputFile": "wwwroot/sass/Subscribe.scss"
+  },
+  {
+    "outputFile": "wwwroot/sass/PanelsUI.css",
+    "inputFile": "wwwroot/sass/PanelsUI.scss"
   }
 ]

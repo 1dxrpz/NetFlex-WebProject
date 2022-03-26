@@ -3,26 +3,78 @@
 *@
 @{
 }
+@section Styles {
+<link rel="stylesheet" href="~/css/Home/Subscribe.min.css" />
+}
+<div class="topic">
+	<h1>Choose your plan</h1>
+</div>
 <table class="table">
 	<thead>
 		<tr>
-			<td>1</td>
-			<td>1</td>
-			<td>1</td>
+			<td class="hollow">
+			</td>
+			<td class="tag_button" selected="true">
+				<div class="wrapper">
+					<a class="button">A Rank</a>
+					<input data-selection="2" type="radio" name="plan" checked onclick="ChangeSelection(this)" />
+				</div>
+			</td>
+			<td class="tag_button">
+				<div class="wrapper">
+					<a class="button">S Rank</a>
+					<input data-selection="3" type="radio" name="plan" onclick="ChangeSelection(this)" />
+				</div>
+			</td>
+			<td class="tag_button">
+				<div class="wrapper">
+					<a class="button">SSS Rank</a>
+					<input data-selection="4" type="radio" name="plan" onclick="ChangeSelection(this)" />
+				</div>
+			</td>
 		</tr>
 	</thead>
 	<tbody>
-		<tr>
-			<td>1</td>
-			<td>1</td>
-			<td>1</td>
-		</tr>
+		@for (int i = 0; i < 15; i++)
+		{
+			<tr>
+				<td class="option">Full HD</td>
+				<td checked selected="true">
+					<i class="fa-solid fa-check"></i>
+				</td>
+				<td>
+					<i class="fa-solid fa-xmark"></i>
+				</td>
+				<td>
+					<i class="fa-solid fa-xmark"></i>
+				</td>
+			</tr>
+		}
 	</tbody>
 	<tfoot>
 		<tr>
-			<td>1</td>
-			<td>1</td>
-			<td>1</td>
+			<td class="hollow">Some option</td>
+			<td class="price featured" selected="true">
+				100$<span>/month</span>
+			</td>
+			<td class="price">
+				300$<span>/month</span>
+			</td>
+			<td class="price">
+				500$<span>/month</span>
+			</td>
 		</tr>
 	</tfoot>
 </table>
+<div class="topic jcend">
+	<button class="btn btn-danger text-white">Continue</button>
+</div>
+@section Scripts {
+<script>
+	function ChangeSelection(e) {
+		console.log(e);
+		document.querySelectorAll(`tr>td`).forEach(v => v.setAttribute("selected", false));
+		document.querySelectorAll(`tr>td:nth-child(${e.getAttribute("data-selection")})`).forEach(v => v.setAttribute("selected", true));
+	}
+</script>
+}
