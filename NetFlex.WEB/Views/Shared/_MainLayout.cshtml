@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="~/css/MainLayout.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script src="https://kit.fontawesome.com/3ee70c58bc.js" crossorigin="anonymous"></script>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
 </head>
 
@@ -32,20 +33,23 @@
         <div class="actions-list">
           <ul>
             <li>
-              <a href=""><img src="~/images/magnifier.svg" alt=""></a>
+              <a href=""><i class="fa-solid fa-magnifying-glass"></i></a>
             </li>
             <li>
-              <a href=""><img src="~/images/gift.svg" alt=""></a>
+              <a href=""><i class="fa-solid fa-gift"></i></a>
             </li>
             <li>
-              <a href=""><img src="~/images/bell.svg" alt=""></a>
+              <a href=""><i class="fa-solid fa-bell"></i></a>
             </li>
             <li>
-              <a href=""><img src="~/images/settings.svg" alt=""></a>
+              <a href=""><i class="fa-solid fa-gears"></i></a>
             </li>
             <li>
               <div class="user" >
-                <img src="~/images/user.svg" alt="">
+                <div class="user-icon">
+                  <i class="fa-solid fa-user"></i>
+                  <i class="fa-solid fa-chevron-down"></i>
+                </div>
                 <div class="user-dropdown closed">
                   <ul>
                     <div class="avatar">
@@ -54,15 +58,15 @@
                     </div>
 
                     <li>
-                      <img src="~/images/user-settings.svg" alt="">
+                      <i class="fa-solid fa-screwdriver-wrench"></i>
                       <a href=""><text>Настройки профиля</text></a>
                     </li>
                     <li>
-                      <img src="~/images/question.svg" alt="">
+                      <i class="fa-solid fa-circle-info"></i>
                       <a href=""><text>Помощь</text></a>
                     </li>
                     <li>
-                      <img src="~/images/exit.svg" alt="">
+                      <i class="fa-solid fa-arrow-right-from-bracket"></i>
                       <a href=""><text>Выйти</text></a>
                     </li>
                   </ul>
@@ -76,7 +80,7 @@
   </nav>
 </header>
 
-@RenderBody();
+@RenderBody()
 
 <script type="text/javascript">
 
