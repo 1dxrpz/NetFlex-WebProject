@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using NetFlex.BLL.Infrastructure;
 using NetFlex.BLL.Interfaces;
 using NetFlex.BLL.ModelsDTO;
+using NetFlex.DAL.Enums;
 using NetFlex.WEB.ViewModels;
 
 namespace NetFlex.WEB.Controllers
@@ -24,11 +25,17 @@ namespace NetFlex.WEB.Controllers
 
         public IActionResult Index()
 		{
-			return View();
+            return View();
 		}
-
-
-		public IActionResult Users()
+        public IActionResult SubsriptionPlans()
+        {
+            return View();
+        }
+        public IActionResult Episodes()
+        {
+            return View();
+        }
+        public IActionResult Users()
 		{
             var users = _userService.GetUsers().Select(u => new AdminUserVievModel
             {
