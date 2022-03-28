@@ -1,4 +1,5 @@
-﻿using NetFlex.BLL.ModelsDTO;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using NetFlex.BLL.ModelsDTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;

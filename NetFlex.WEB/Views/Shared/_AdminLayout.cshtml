@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using NetFlex.DAL.Enums
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
@@ -16,27 +17,39 @@
 		<main role="main" class="pb-3">
 			<div class="wrapper">
 				<div class="menu">
-					<a class="button" asp-controller="Admin" asp-action="Index" selected="false" data-url="/admin">
+					@{
+						//Enum.TryParse(ViewData["CurrentPage"] as string, out AdminPages _page);
+						Func<AdminPages, string> CheckSelected = (e) => { return (e == (AdminPages)ViewData["CurrentPage"]).ToString(); };
+					}
+					<a class="button" asp-controller="Admin" asp-action="Index" selected="@CheckSelected(AdminPages.Statistics)">
 						<i class="fa-solid fa-chart-line"></i>
 						<span>Statistics</span>
 					</a>
-					<a class="button" asp-controller="Admin" asp-action="Users" selected="false" data-url="/admin/users">
+					<a class="button" asp-controller="Admin" asp-action="Users" selected="@CheckSelected(AdminPages.Users)">
 						<i class="fa-brands fa-accessible-icon"></i>
 						<span>Users</span>
 					</a>
+					<a class="button" asp-controller="Admin" asp-action="Roles" selected="@CheckSelected(AdminPages.Roles)">
+						<i class="fa-brands fa-accessible-icon"></i>
+						<span>Roles</span>
+					</a>
 					<hr />
-					<a class="button" asp-controller="Admin" asp-action="Users" selected="false" data-url="/admin/plans">
+					<a class="button" asp-controller="Admin" asp-action="SubsriptionPlans" selected="@CheckSelected(AdminPages.Plans)">
 						<i class="fa-solid fa-circle-dollar-to-slot"></i>
 						<span>Subscription plans</span>
 					</a>
 					<hr />
-					<a class="button" asp-controller="Admin" asp-action="Films" selected="false" data-url="/admin/films">
+					<a class="button" asp-controller="Admin" asp-action="Films" selected="@CheckSelected(AdminPages.Movies)">
 						<i class="fa-solid fa-clapperboard"></i>
 						<span>Movies</span>
 					</a>
-					<a class="button" asp-controller="Admin" asp-action="Serials" selected="false" data-url="/admin/serials">
+					<a class="button" asp-controller="Admin" asp-action="Serials" selected="@CheckSelected(AdminPages.Series)">
 						<i class="fa-solid fa-film"></i>
 						<span>Series</span>
+					</a>
+					<a class="button" asp-controller="Admin" asp-action="Episodes" selected="@CheckSelected(AdminPages.Episodes)">
+						<i class="fa-solid fa-film"></i>
+						<span>Episodes</span>
 					</a>
 				</div>
 				<div class="content">
@@ -49,13 +62,5 @@
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
 	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 	@await RenderSectionAsync("Scripts", required: false)
-	<script>
-		document.querySelectorAll(".button").forEach(v => {
-			if(v.getAttribute("data-url") == location.pathname.toLowerCase())
-			{
-				v.setAttribute("selected", true);
-			}
-		});
-	</script>
 </body>
 </html>

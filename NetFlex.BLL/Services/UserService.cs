@@ -20,6 +20,7 @@ namespace NetFlex.BLL.Services
         {
             Database = database;
         }
+
         public UserDTO GetUser(Guid id)
         {
 

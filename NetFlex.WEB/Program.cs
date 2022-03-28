@@ -8,6 +8,7 @@ using NetFlex.BLL.Interfaces;
 using NetFlex.BLL.Services;
 using NetFlex.DAL.Interfaces;
 using NetFlex.DAL.Repositories;
+using NetFlex.DAL.Constants;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,10 +22,11 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
     .AddEntityFrameworkStores<DatabaseContext>();
 
 builder.Services.AddScoped<IUnitOfWork, EFUnitOfWork>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IVideoService, VideoService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<IRatingService, RatingService>();
-builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddRazorPages(options =>
 {
@@ -39,6 +41,12 @@ builder.Services.AddAuthentication()
 {
     options.ClientId = builder.Configuration["VKontakte:ClientId"];
     options.ClientSecret = builder.Configuration["VKontakte:ClientSecret"];
+});
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy(Constants.Policies.RequireAdmin, policy => policy.RequireRole(Constants.Roles.Administrator));
+    options.AddPolicy(Constants.Policies.RequireManager, policy => policy.RequireRole(Constants.Roles.Manager));
 });
 
 builder.Services.AddControllersWithViews();
@@ -66,3 +74,4 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.Run();
+
