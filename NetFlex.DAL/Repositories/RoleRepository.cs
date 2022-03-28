@@ -13,13 +13,15 @@ namespace NetFlex.DAL.Repositories
 {
     public class RoleRepository : IRoleRepository
     {
+        private readonly DatabaseContext _db;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public RoleRepository(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
+        public RoleRepository(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager, DatabaseContext db)
         {
             _roleManager = roleManager;
             _userManager = userManager;
+            _db = db;
         }
 
         public IQueryable<IdentityRole> GetAll()
@@ -32,23 +34,24 @@ namespace NetFlex.DAL.Repositories
             return _roleManager.Roles.FirstOrDefault(r => r.Name == name);
         }
 
-        public void Create(string role)
+        public void Create(IdentityRole role)
         {
-            IdentityResult result = _roleManager.Create(new IdentityRole(role));
+            _roleManager.Create(role);
         }
 
-        public void SetRole(string role, string user)
+        public void GiveRole(string role, string userName)
         {
-            _userManager.AddToRole(role, user);
+            var user = _db.Users.FirstOrDefault(u => u.UserName == userName);
+            _userManager.AddToRole(user.Id, role);
         }
-        public void DeleteRole(string role, string user)
+        public void TakeAwayRole(string role, string userName)
         {
-            _userManager.RemoveFromRole(user, role);
+            var user = _db.Users.FirstOrDefault(u => u.UserName == userName);
+            _userManager.RemoveFromRole(user.Id, role);
         }
 
-        public void Delete(string name)
+        public void Delete(IdentityRole role)
         {
-            IdentityRole role = _roleManager.Roles.FirstOrDefault(r => r.Name == name);
             _roleManager.Delete(role);
         }
     }
