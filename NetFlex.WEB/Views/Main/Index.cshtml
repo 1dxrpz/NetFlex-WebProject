@@ -1,4 +1,192 @@
 ﻿@{
     ViewData["Title"] = "Mainpage";
-	Layout = "~/Views/Shared/_VideoLayout.cshtml";
+	Layout = "~/Views/Shared/_MainLayout.cshtml";
 }
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="~/css/Main/Main.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+</head>
+
+
+<body background='~/images/background.png' class="body">
+    <div class="container-netflex">
+      <div class="films-genres">
+        <div><text >Фильмы</text></div>
+        <div class="genre-list">
+
+          <div class="genre-container">
+            <text class="genre-text">Жанры</text>
+            <img src="~/images/arrow.svg" alt="">
+          </div>
+          <div class="dropdownmenu closed">
+            <ul>
+              <li>
+                <a href="">Азиатское</a>
+                <a href="">Американские</a>
+                <a href="">Аниме</a>
+                <a href="">Британские</a>
+                <a href="">Для детей</a>
+                <a href="">Документальные сериалы</a>
+              </li>
+              <li>
+                <a href="">Драмы</a>
+                <a href="">Европейские</a>
+                <a href="">Комедии</a>
+                <a href="">Наука и природа</a>
+                <a href="">Научная фантастика и фэнтези</a>
+                <a href="">О преступлениях</a>
+              </li>
+              <li>
+                <a href="">Подростковое кино</a>
+                <a href="">Реалити и ток-шоу</a>
+                <a href="">Романтика</a>
+                <a href="">Триллеры</a>
+                <a href="">Ужасы</a>
+                <a href="">Экшен</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-netflex">
+      <div class="Information">
+        <div class="div_name"><text>WATCHMEN</text></div>
+        <div class="div_information"><text>В параллельном мире супергерои - обычное дело. Заклейменные преступниками, они должны спасти себя... и весь мир</text></div>
+      </div>
+    </div>
+    <div class="container-netflex">
+      <div class="watchinformation-age">
+        <div class="watch-information">
+          <div class="watch">
+            <img src="~/images/play.svg" alt="">
+            <text>Смотреть</text>
+          </div>
+          <div class="information">
+            <img src="~/images/information.svg" alt="">
+            <text>Подробнее</text>
+          </div>
+        </div>
+        <div class="age"><text>16+</text></div>
+      </div>
+    </div>
+
+<div class="recomendations-container">
+  <div class="recomendations">
+    <div class="recomendation-block">
+      <text>Мой лист</text>
+      <div class="recomendation-pictures snaps-inline">
+        <div class="film-picture">
+          <img src="~/images/recomendation-picture.png" alt="">
+        </div>
+        <div class="film-picture">
+          <img src="~/images/recomendation-picture.png" alt="">
+        </div>
+        <div class="film-picture">
+          <img src="~/images/recomendation-picture.png" alt="">
+        </div>
+        <div class="film-picture">
+          <img src="~/images/recomendation-picture.png" alt="">
+        </div>
+        <div class="film-picture">
+          <img src="~/images/recomendation-picture.png" alt="">
+        </div>
+        <div class="film-picture">
+          <img src="~/images/recomendation-picture.png" alt="">
+        </div>
+        <div class="film-picture">
+          <img src="~/images/recomendation-picture.png" alt="">
+        </div>
+        <div class="film-picture">
+          <img src="~/images/recomendation-picture.png" alt="">
+        </div>
+      </div>
+    </div>
+
+    <div class="recomendation-block">
+      <text>Приключенческое кино</text>
+      <div class="recomendation-pictures snaps-inline">
+        <div class="film-picture">
+          <img src="~/images/recomendation-picture.png" alt="">
+        </div>
+        <div class="film-picture">
+          <img src="~/images/recomendation-picture.png" alt="">
+        </div>
+        <div class="film-picture">
+          <img src="~/images/recomendation-picture.png" alt="">
+        </div>
+        <div class="film-picture">
+          <img src="~/images/recomendation-picture.png" alt="">
+        </div>
+        <div class="film-picture">
+          <img src="~/images/recomendation-picture.png" alt="">
+        </div>
+      </div>
+    </div>
+
+    <div class="recomendation-block">
+      <text>Приключенческое кино</text>
+      <div class="recomendation-pictures snaps-inline">
+        <div class="film-picture">
+          <img src="~/images/recomendation-picture.png" alt="">
+        </div>
+        <div class="film-picture">
+          <img src="~/images/recomendation-picture.png" alt="">
+        </div>
+        <div class="film-picture">
+          <img src="~/images/recomendation-picture.png" alt="">
+        </div>
+        <div class="film-picture">
+          <img src="~/images/recomendation-picture.png" alt="">
+        </div>
+        <div class="film-picture">
+          <img src="~/images/recomendation-picture.png" alt="">
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+<script type="text/javascript">
+let dropdown = document.querySelector('.genre-container')
+let dropdownmenu = document.querySelector('.dropdownmenu')
+
+dropdown.addEventListener('click', (e) => {
+if (dropdownmenu.classList.contains('closed')) {
+  dropdownmenu.classList.remove('closed')
+} else {
+dropdownmenu.classList.add('closed')
+}
+})
+
+
+let user_dropdown = document.querySelector('.user')
+let user_dropdownmenu = document.querySelector('.user-dropdown')
+
+user_dropdown.addEventListener('click', (e) => {
+if (user_dropdownmenu.classList.contains('closed')) {
+  user_dropdownmenu.classList.remove('closed')
+  user_dropdown.style.backgroundColor= "rgba(50, 50, 50, 0.9)"
+} else {
+user_dropdownmenu.classList.add('closed')
+user_dropdown.style.backgroundColor= "rgba(0, 0, 0, 0)"
+}
+})
+
+
+
+</script>
+
+</body>
+</html>
