@@ -13,6 +13,7 @@ namespace NetFlex.DAL.Enums
 		Plans,
 		Movies,
 		Series,
-		Episodes
+		Episodes,
+		Roles
 	}
 }

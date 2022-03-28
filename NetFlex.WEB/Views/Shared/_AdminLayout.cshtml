@@ -29,6 +29,10 @@
 						<i class="fa-brands fa-accessible-icon"></i>
 						<span>Users</span>
 					</a>
+					<a class="button" asp-controller="Admin" asp-action="Roles" selected="@CheckSelected(AdminPages.Roles)">
+						<i class="fa-brands fa-accessible-icon"></i>
+						<span>Roles</span>
+					</a>
 					<hr />
 					<a class="button" asp-controller="Admin" asp-action="SubsriptionPlans" selected="@CheckSelected(AdminPages.Plans)">
 						<i class="fa-solid fa-circle-dollar-to-slot"></i>

@@ -112,7 +112,7 @@ namespace NetFlex.DAL.Repositories
             get
             {
                 if (_roleRepository == null)
-                    _roleRepository = new RoleRepository(_roleManager, _userManager);
+                    _roleRepository = new RoleRepository(_roleManager, _userManager, _db);
                 return _roleRepository;
             }
         }

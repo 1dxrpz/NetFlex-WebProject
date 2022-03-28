@@ -8,30 +8,12 @@ body, html {
 }
 
 header {
-    height: 90px;
-    display: flex;
-    align-items: center;
-    padding: 10px 50px;
-    background: #0B0B0B;
-
-    img.logo {
-        height: 40px;
-    }
-
-    .menu {
-        font-weight: 600;
-        margin-left: 50px;
-        font-family: Montserrat, sans-serif;
-
-        a {
-            font-size: 10pt;
-            color: #fff;
-            text-decoration: none;
-            padding: 10px 20px;
-        }
-    }
+    position: absolute !important;
+    z-index: 4;
+    display: block;
+    width: 100% !important;
+    box-sizing: border-box;
 }
-
 footer {
     color: #666;
     background: rgba(0, 0, 0, .75);
@@ -47,6 +29,7 @@ footer {
     position: relative;
     background: url(../images/cover.png);
     z-index: 1;
+    padding-top: 100px;
 
     &:before {
         content: "";
@@ -95,11 +78,13 @@ footer {
                     letter-spacing: -4px;
                     padding-top: 20px;
                 }
+
                 .video_description {
                     font-size: 14pt;
                     color: #eee;
                     padding: 18px;
                 }
+
                 .genres {
                     display: inline-flex;
 
