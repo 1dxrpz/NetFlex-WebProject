@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using NetFlex.DAL.Constants;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNetCore.Authorization;
@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using NetFlex.BLL.Infrastructure;
 using NetFlex.BLL.Interfaces;
 using NetFlex.BLL.ModelsDTO;
+using NetFlex.DAL.Enums;
 using NetFlex.WEB.ViewModels;
 
 namespace NetFlex.WEB.Controllers
@@ -27,8 +28,17 @@ namespace NetFlex.WEB.Controllers
 
         public IActionResult Index()
 		{
-			return View();
+            return View();
 		}
+
+        public IActionResult SubsriptionPlans()
+        {
+            return View();
+        }
+        public IActionResult Episodes()
+        {
+            return View();
+        }
 
         [HttpGet]
         public IActionResult Users()

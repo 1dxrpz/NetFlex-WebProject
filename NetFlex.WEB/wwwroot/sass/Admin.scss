@@ -3,13 +3,16 @@
     color: #ccc;
     font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
 }
-table.table-dark {
-    background: red !important;
+
+.table {
+    color: #eee !important;
 }
+
 .wrapper {
     width: 100%;
     position: relative;
     display: flex;
+
     .content {
         width: calc(100% - 200px);
         position: relative;
@@ -17,6 +20,7 @@ table.table-dark {
         box-sizing: border-box;
         padding: 50px 20px;
     }
+
     .menu {
         margin-top: 50px;
         font-size: 10pt;
@@ -60,6 +64,36 @@ table.table-dark {
                     background: #58a6ff;
                     border-radius: 10px;
                 }
+            }
+        }
+    }
+}
+
+.planTable {
+    width: 100%;
+
+    tr {
+        display: flex;
+        border-bottom: 1px solid #222;
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        td {
+            padding: 10px;
+            display: flex;
+            flex: 1;
+            justify-content: center;
+
+            input[type="text"] {
+                font-size: 10pt;
+                padding: 2px 10px;
+            }
+
+            &:first-child {
+                flex: 2;
+                justify-content: flex-start;
             }
         }
     }
