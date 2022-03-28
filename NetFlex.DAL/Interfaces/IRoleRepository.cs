@@ -12,7 +12,10 @@ namespace NetFlex.DAL.Interfaces
     {
         IQueryable<IdentityRole> GetAll();
         IdentityRole Get(string Name);
-        void Create(string name);
-        void Delete(string name);
+        void Create(IdentityRole name);
+        void Delete(IdentityRole name);
+        void GiveRole(string role, string user);
+        void TakeAwayRole(string role, string user);
+
     }
 }

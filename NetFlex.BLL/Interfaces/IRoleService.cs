@@ -9,9 +9,14 @@ namespace NetFlex.BLL.Interfaces
 {
     public interface IRoleService
     {
-        void AddRole(RoleDTO roleDTO);
-        RoleDTO GetRole(string name);
-        IEnumerable<RoleDTO> GetRoles();
+        IQueryable<RoleDTO> GetRoles();
+        RoleDTO Get(string role);
+
+        void Create(RoleDTO role);
+        void Delete(string role);
+        void GiveRole(string role, string user);
+        void TakeAwayRole(string role, string user);
+
         void Dispose();
 
 
