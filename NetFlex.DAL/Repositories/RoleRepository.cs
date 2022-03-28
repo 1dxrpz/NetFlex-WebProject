@@ -26,12 +26,12 @@ namespace NetFlex.DAL.Repositories
 
         public IQueryable<IdentityRole> GetAll()
         {
-            return _roleManager.Roles;
+            return (IQueryable<IdentityRole>)_db.Roles;
         }
 
         public IdentityRole Get(string name)
         {
-            return _roleManager.Roles.FirstOrDefault(r => r.Name == name);
+            return (IdentityRole)_db.Roles.Select(r => r.Name == name);
         }
 
         public void Create(IdentityRole role)
