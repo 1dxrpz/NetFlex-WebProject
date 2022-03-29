@@ -53,7 +53,7 @@ namespace NetFlex.WEB.Controllers
                 Email = u.Email,
                 PhoneNumber = u.PhoneNumber,
                 LockoutEnabled = u.LockoutEnable,
-                Avatar = u.Avatar,
+                Avatar = u.Avatar
             });
 
             return View(users);
@@ -143,16 +143,16 @@ namespace NetFlex.WEB.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddRole(RoleViewModel model)
+        public async Task<IActionResult> AddRole(string name)
         {
             try
             {
                 var roleDto = new RoleDTO()
                 {
-                    Name = model.Name,
+                    Name = name,
                 };
 
-                _roleService.Create(roleDto);
+                await _roleService.Create(roleDto);
 
             }
             catch (ValidationException ex)
@@ -163,11 +163,11 @@ namespace NetFlex.WEB.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteRole(string role)
+        public async Task<IActionResult> DeleteRole(string role)
         {
             try
             {
-                _roleService.Delete(role);
+                await _roleService.Delete(role);
 
             }
             catch (ValidationException ex)
@@ -178,11 +178,11 @@ namespace NetFlex.WEB.Controllers
         }
 
         [HttpPost]
-        public IActionResult GiveRole([FromBody] string user, string role)
+        public async Task<IActionResult> GiveRole(string user, string role)
         {
             try
             {
-                _roleService.GiveRole(role, user);
+                await _roleService.GiveRole(role, user);
 
             }
             catch (ValidationException ex)
