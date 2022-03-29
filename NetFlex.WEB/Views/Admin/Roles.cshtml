@@ -1,6 +1,55 @@
 ﻿@using NetFlex.DAL.Enums
 @{
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    ViewData["CurrentPage"] = AdminPages.Roles;
+	Layout = "~/Views/Shared/_AdminLayout.cshtml";
+	ViewData["CurrentPage"] = AdminPages.Roles;
 }
 @model IEnumerable<NetFlex.WEB.ViewModels.RoleViewModel>
+
+@foreach (var item in Model)
+{
+	<div>
+		@item.Name
+		<button onclick="DeleteRole('@item.Name')">delete</button>
+	</div>
+}
+
+<form id="role_form_t" asp-action="AddRole" asp-controller="Admin" method="post">
+	<input type="text" id="role_input" name="name" />
+	<button type="submit"></button>
+</form>
+
+@section Scripts {
+<script>
+	//var roleform = document.querySelector("#role_form");
+	//var rolename = document.querySelector("#role_input");
+
+	//roleform.addEventListener("submit", e => {
+	//	e.preventDefault();
+	//	$.ajax({
+	//		type: 'POST',
+	//		url: `/Admin/AddRole?name=${rolename.value}`,
+	//		success: function () {
+	//			alert(rolename.value);
+	//		},
+	//		error: function () {
+	//			alert("suck")
+	//		}
+	//	});
+	//});
+
+	function DeleteRole(e) {
+		$.ajax({
+			type: 'POST',
+			url: `/Admin/DeleteRole?role=${e}`,
+			success: function () {
+				alert(1);
+			},
+			error: function () {
+				alert("suck")
+			}
+		});
+	}
+
+
+</script>
+}

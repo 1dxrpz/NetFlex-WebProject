@@ -35,13 +35,10 @@
 				<thead>
 					<tr>
 						<th scope="col">#</th>
-						<th scope="col">GUID</th>
 						<th scope="col">Name</th>
 						<th scope="col">Email</th>
 						<th scope="col">Password</th>
-						<th scope="col">Phone number</th>
-						<th scope="col">Avatar</th>
-						<th scope="col">Locked</th>
+						<th scope="col">Role</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -50,13 +47,9 @@
 						i++;
 						<tr>
 							<th scope="row">@i</th>
-							<td>@item.UserId</td>
 							<td>@item.UserName</td>
 							<td>@item.Email</td>
 							<td>@item.Password</td>
-							<td>@item.PhoneNumber</td>
-							<td>@item.Avatar</td>
-							<td>@item.LockoutEnabled</td>
 						</tr>
 					}
 				</tbody>
@@ -64,3 +57,17 @@
 		</div>
 	</div>
 </div>
+@section Scripts {
+	<script>
+		$.ajax({
+			type: 'POST',
+			url: `/Admin/GiveRole?user=4el@mail.cum&role=Administrator`,
+			success: function () {
+				alert("nice");
+			},
+			error: function () {
+				alert("suck")
+			}
+		});
+	</script>
+}
