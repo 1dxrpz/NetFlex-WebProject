@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
+﻿using Microsoft.AspNetCore.Identity;
 using NetFlex.DAL.EF;
 using System;
 using System.Collections.Generic;
@@ -10,12 +10,12 @@ namespace NetFlex.DAL.Interfaces
 {
     public interface IRoleRepository
     {
-        IQueryable<IdentityRole> GetAll();
+        IEnumerable<IdentityRole> GetAll();
         IdentityRole Get(string Name);
-        void Create(IdentityRole name);
-        void Delete(IdentityRole name);
-        void GiveRole(string role, string user);
-        void TakeAwayRole(string role, string user);
+        Task Create(IdentityRole name);
+        Task Delete(IdentityRole name);
+        Task GiveRole(string role, string user);
+        Task TakeAwayRole(string role, string user);
 
     }
 }

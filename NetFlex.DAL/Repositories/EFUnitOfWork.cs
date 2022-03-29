@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using NetFlex.DAL.EF;
@@ -17,7 +16,7 @@ namespace NetFlex.DAL.Repositories
     {
         private DatabaseContext _db;
         private RoleManager<IdentityRole> _roleManager;
-        private UserManager<IdentityUser> _userManager;
+        private UserManager<ApplicationUser> _userManager;
 
         private EpisodeRepository _episodeRepository;
         private FilmRepository _filmRepository;
@@ -29,9 +28,11 @@ namespace NetFlex.DAL.Repositories
         private UserRepository _userRepository;
         private RoleRepository _roleRepository;
 
-        public EFUnitOfWork(DbContextOptions<DatabaseContext> options)
+        public EFUnitOfWork(DbContextOptions<DatabaseContext> options, RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
         {
             _db = new DatabaseContext(options);
+            _roleManager = roleManager;
+            _userManager = userManager;
 
         }
 
