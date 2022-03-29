@@ -33,16 +33,28 @@
         <div class="actions-list">
           <ul>
             <li>
-              <a href=""><i class="fa-solid fa-magnifying-glass"></i></a>
+              <div class="search">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <div class="input">
+                  <input type="text" name="" value="" placeholder="Search" id="mysearch">
+                </div>
+                <span class="clear" onclick=" document.getElementById('mysearch').value = ''"></span>
+              </div>
             </li>
             <li>
-              <a href=""><i class="fa-solid fa-gift"></i></a>
+              <div class="action-list-container">
+                <a href=""><i class="fa-solid fa-gift"></i></a>
+              </div>
             </li>
             <li>
-              <a href=""><i class="fa-solid fa-bell"></i></a>
+              <div class="action-list-container">
+                <a href=""><i class="fa-solid fa-bell"></i></a>
+              </div>
             </li>
             <li>
-              <a href=""><i class="fa-solid fa-gears"></i></a>
+              <div class="action-list-container">
+                <a href=""><i class="fa-solid fa-gears"></i></a>
+              </div>
             </li>
             <li>
               <div class="user" >
@@ -84,19 +96,16 @@
 
 <script type="text/javascript">
 
-  let user_dropdown = document.querySelector('.user')
-  let user_dropdownmenu = document.querySelector('.user-dropdown')
-
-  user_dropdown.addEventListener('click', (e) => {
-  if (user_dropdownmenu.classList.contains('closed')) {
-    user_dropdownmenu.classList.remove('closed')
-    user_dropdown.style.backgroundColor= "rgba(50, 50, 50, 0.9)"
-  } else {
-  user_dropdownmenu.classList.add('closed')
-  user_dropdown.style.backgroundColor= "rgba(0, 0, 0, 0)"
-  }
-  })
-
+  const search = document.querySelector('.search');
+  const magnifire = document.querySelector('.fa-magnifying-glass');
+  magnifire.addEventListener('click', (e) => {
+    if (search.classList.contains('active')) {
+      search.classList.remove('active')
+      } else {
+      search.classList.add('active')
+      }
+      })
+  
 </script>
 
 </html>
