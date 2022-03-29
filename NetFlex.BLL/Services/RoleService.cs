@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNetCore.Identity;
 using NetFlex.BLL.Interfaces;
 using NetFlex.BLL.ModelsDTO;
 using NetFlex.DAL.Interfaces;
@@ -27,38 +27,36 @@ namespace NetFlex.BLL.Services
             return mapper.Map<IdentityRole, RoleDTO>(Database.Roles.Get(role));
         }
 
-        public IQueryable<RoleDTO> GetRoles()
+        public IEnumerable<RoleDTO> GetRoles()
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<IdentityRole, RoleDTO>()).CreateMapper();
-            return mapper.Map<IQueryable<IdentityRole>, IQueryable<RoleDTO>>(Database.Roles.GetAll());
+            return mapper.Map<IEnumerable<IdentityRole>, List<RoleDTO>>(Database.Roles.GetAll());
         }
 
-        public void Create(RoleDTO role)
+        public async Task Create(RoleDTO role)
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<RoleDTO, IdentityRole>());
-            var mapper = new Mapper(config);
-            var res = mapper.Map<RoleDTO, IdentityRole>(role);
+            var identityRole = new IdentityRole(role.Name); 
 
-            Database.Roles.Create(res);
+            await Database.Roles.Create(identityRole);
             Database.Save();
         }
 
-        public void Delete(string role)
+        public async Task Delete(string role)
         {
             var res = Database.Roles.Get(role);
 
-            Database.Roles.Delete(res);
+            await Database.Roles.Delete(res);
             Database.Save();
         }
         
-        public void GiveRole(string role, string user)
+        public async Task GiveRole(string role, string user)
         {
-            Database.Roles.GiveRole(role, user);
+            await Database.Roles.GiveRole(role, user);
         }
 
-        public void TakeAwayRole(string role, string user)
+        public async Task TakeAwayRole(string role, string user)
         {
-            Database.Roles.TakeAwayRole(role, user);
+            await Database.Roles.TakeAwayRole(role, user);
         }
 
         public void Dispose()

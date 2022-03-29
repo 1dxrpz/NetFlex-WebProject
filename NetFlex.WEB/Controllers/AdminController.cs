@@ -1,6 +1,5 @@
 using AutoMapper;
 using NetFlex.DAL.Constants;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NetFlex.BLL.Infrastructure;
@@ -8,22 +7,26 @@ using NetFlex.BLL.Interfaces;
 using NetFlex.BLL.ModelsDTO;
 using NetFlex.DAL.Enums;
 using NetFlex.WEB.ViewModels;
+using Microsoft.AspNetCore.Identity;
 
 namespace NetFlex.WEB.Controllers
 {
     //[Authorize(Policy = Constants.Policies.RequireAdmin)]
     public class AdminController : Controller
 	{
-		private readonly IVideoService _videoService;
+        RoleManager<IdentityRole> _roleManager;
+
+        private readonly IVideoService _videoService;
 		public readonly IRatingService _ratingService;
 		public readonly IUserService _userService;
         public readonly IRoleService _roleService;
-        public AdminController(IVideoService videoService, IRatingService ratingService, IUserService userService, IRoleService roleService)
+        public AdminController(RoleManager<IdentityRole> rm,IVideoService videoService, IRatingService ratingService, IUserService userService, IRoleService roleService)
         {
             _videoService = videoService;
             _ratingService = ratingService;
 			_userService = userService;
             _roleService = roleService;
+            _roleManager = rm;
         }
 
         public IActionResult Index()
@@ -81,7 +84,7 @@ namespace NetFlex.WEB.Controllers
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<RoleDTO, RoleViewModel>());
             var mapper = new Mapper(config);
-            var roles = mapper.Map<IEnumerable<RoleDTO>, IEnumerable<RoleViewModel>>(_roleService.GetRoles());
+            var roles = mapper.Map<IEnumerable<RoleDTO>, List<RoleViewModel>>(_roleService.GetRoles());
 
             return View(roles);
         }
@@ -144,10 +147,12 @@ namespace NetFlex.WEB.Controllers
         {
             try
             {
-                var config = new MapperConfiguration(cfg => cfg.CreateMap<RoleViewModel, RoleDTO>());
-                var mapper = new Mapper(config);
-                var roleDTO = mapper.Map<RoleViewModel, RoleDTO>(model);
-                _roleService.Create(roleDTO);
+                var roleDto = new RoleDTO()
+                {
+                    Name = model.Name,
+                };
+
+                _roleService.Create(roleDto);
 
             }
             catch (ValidationException ex)

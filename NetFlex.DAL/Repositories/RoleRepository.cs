@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
 using NetFlex.DAL.EF;
 using NetFlex.DAL.Interfaces;
 using System;
@@ -15,44 +13,44 @@ namespace NetFlex.DAL.Repositories
     {
         private readonly DatabaseContext _db;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public RoleRepository(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager, DatabaseContext db)
+        public RoleRepository(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, DatabaseContext db)
         {
             _roleManager = roleManager;
             _userManager = userManager;
             _db = db;
         }
 
-        public IQueryable<IdentityRole> GetAll()
+        public IEnumerable<IdentityRole> GetAll()
         {
-            return (IQueryable<IdentityRole>)_db.Roles;
+            return _roleManager.Roles.ToList();
         }
 
         public IdentityRole Get(string name)
         {
-            return (IdentityRole)_db.Roles.Select(r => r.Name == name);
+            return _db.Roles.FirstOrDefault(r => r.Name == name);
         }
 
-        public void Create(IdentityRole role)
+        public async Task Create(IdentityRole role)
         {
-            _roleManager.Create(role);
+            await _roleManager.CreateAsync(role);
         }
 
-        public void GiveRole(string role, string userName)
+        public async Task GiveRole(string role, string userName)
         {
             var user = _db.Users.FirstOrDefault(u => u.UserName == userName);
-            _userManager.AddToRole(user.Id, role);
+            await _userManager.AddToRoleAsync(user, role);
         }
-        public void TakeAwayRole(string role, string userName)
+        public async Task TakeAwayRole(string role, string userName)
         {
             var user = _db.Users.FirstOrDefault(u => u.UserName == userName);
-            _userManager.RemoveFromRole(user.Id, role);
+            await _userManager.RemoveFromRoleAsync(user, role);
         }
 
-        public void Delete(IdentityRole role)
+        public async Task Delete(IdentityRole role)
         {
-            _roleManager.Delete(role);
+            await _roleManager.DeleteAsync(role);
         }
     }
 }

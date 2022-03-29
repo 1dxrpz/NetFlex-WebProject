@@ -18,7 +18,10 @@ builder.Services.AddEntityFrameworkNpgsql().AddDbContext<DatabaseContext>(option
                 )
             );
 
-builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(opts => {
+    opts.User.RequireUniqueEmail = true;    // уникальный email
+    opts.User.AllowedUserNameCharacters = ".@abcdefghijklmnopqrstuvwxyz"; // допустимые символы
+})
     .AddEntityFrameworkStores<DatabaseContext>();
 
 builder.Services.AddScoped<IUnitOfWork, EFUnitOfWork>();
@@ -27,6 +30,7 @@ builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IVideoService, VideoService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<IRatingService, RatingService>();
+
 
 builder.Services.AddRazorPages(options =>
 {
@@ -69,7 +73,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Main}/{action=Index}/{id?}");
 
 app.MapRazorPages();
 
