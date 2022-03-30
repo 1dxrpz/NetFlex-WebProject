@@ -18,11 +18,18 @@ builder.Services.AddEntityFrameworkNpgsql().AddDbContext<DatabaseContext>(option
                 )
             );
 
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>(opts => {
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(opts =>
+{
     opts.User.RequireUniqueEmail = true;    // уникальный email
-    opts.User.AllowedUserNameCharacters = ".@abcdefghijklmnopqrstuvwxyz"; // допустимые символы
+    opts.SignIn.RequireConfirmedAccount = true;
+
 })
-    .AddEntityFrameworkStores<DatabaseContext>();
+    .AddEntityFrameworkStores<DatabaseContext>()
+    .AddDefaultUI()
+    .AddDefaultTokenProviders();
+
+
+
 
 builder.Services.AddScoped<IUnitOfWork, EFUnitOfWork>();
 builder.Services.AddScoped<IUserService, UserService>();

@@ -12,11 +12,10 @@ namespace NetFlex.BLL.Interfaces
         IEnumerable<RoleDTO> GetRoles();
         RoleDTO Get(string role);
 
-        Task Create(RoleDTO role);
+        Task Create(string role);
         Task Delete(string role);
-        Task GiveRole(string role, string user);
-        Task TakeAwayRole(string role, string user);
-
+        Task GiveRoles(List<string> role, string user);
+        Task TakeAwayRoles(List<string> role, string user);
         void Dispose();
 
 

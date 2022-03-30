@@ -21,12 +21,12 @@ namespace NetFlex.BLL.Services
             Database = database;
         }
 
-        public UserDTO GetUser(Guid id)
+        public async Task<UserDTO> GetUser(string id)
         {
 
             if (id == null)
                 throw new ValidationException("Пользователь с таким id не найден", "");
-            var user = Database.Users.Get(id);
+            var user = await Database.Users.Get(id);
             if (user == null)
                 throw new ValidationException("Пользователь не найден", "");
 
@@ -48,6 +48,12 @@ namespace NetFlex.BLL.Services
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUser, UserDTO>()).CreateMapper();
             return mapper.Map<IEnumerable<ApplicationUser>, List<UserDTO>>(Database.Users.GetAll());
+        }
+
+        public async Task<IEnumerable<string>> GetRoles(string userName)
+        {
+
+            return await Database.Users.GetRoles(userName);
         }
 
         public void Dispose()

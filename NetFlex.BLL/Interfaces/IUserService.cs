@@ -10,8 +10,9 @@ namespace NetFlex.BLL.Interfaces
 {
     public interface IUserService
     {
-        UserDTO GetUser(Guid id);
+        Task<UserDTO> GetUser(string id);
         IEnumerable<UserDTO> GetUsers();
+        Task<IEnumerable<string>> GetRoles(string userName);
         void Dispose();
     }
 }

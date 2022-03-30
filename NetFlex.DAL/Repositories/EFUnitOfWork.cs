@@ -99,12 +99,12 @@ namespace NetFlex.DAL.Repositories
                 return _reviewRepository;
             }
         }
-        public IRepository<ApplicationUser> Users
+        public IUserRepository Users
         {
             get
             {
                 if (_userRepository == null)
-                    _userRepository = new UserRepository(_db);
+                    _userRepository = new UserRepository(_userManager,_db);
                 return _userRepository;
             }
         }
