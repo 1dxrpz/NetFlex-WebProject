@@ -1,5 +1,12 @@
-﻿@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityRole>
+﻿@using NetFlex.DAL.Enums
+
+@model IEnumerable<NetFlex.WEB.ViewModels.RoleViewModel>
  
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["CurrentPage"] = AdminPages.Roles;
+}
+
 <h2>Список ролей</h2>
 <table class="table">
     @foreach (var role in Model)
@@ -16,5 +23,6 @@
         </tr>
     }
 </table>
+
 <a asp-action="Create">Добавить роль</a>
-<a asp-action="UserList">Список пользователей</a>
+<a asp-action="Users">Список пользователей</a>
