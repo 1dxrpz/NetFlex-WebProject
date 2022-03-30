@@ -1,111 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="~/css/MainLayout.min.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <script src="https://kit.fontawesome.com/3ee70c58bc.js" crossorigin="anonymous"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="~/css/MainLayout.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://kit.fontawesome.com/3ee70c58bc.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+    @await RenderSectionAsync("Styles", required: false)
+
 </head>
 
 
 <header>
-  <nav class="nav">
-    <div class="container-netflex">
-      <div class="nav_row">
-        <div class="logo-navigation">
-          <div class="logo">
-            <img src="~/images/Logo.svg" alt="Logo">
-          </div>
-          <div class="navigation-list">
-            <ul>
-              <li><a href="">Главная</a></li>
-              <li><a href="">Сериалы</a></li>
-              <li><a href="">Фильмы</a></li>
-              <li><a href="">Новые и популярные</a></li>
-              <li><a href="">Мой список</a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="actions-list">
-          <ul>
-            <li>
-              <div class="search">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <div class="input">
-                  <input type="text" name="" value="" placeholder="Search" id="mysearch">
-                </div>
-                <span class="clear" onclick=" document.getElementById('mysearch').value = ''"></span>
-              </div>
-            </li>
-            <li>
-              <div class="action-list-container">
-                <a href=""><i class="fa-solid fa-gift"></i></a>
-              </div>
-            </li>
-            <li>
-              <div class="action-list-container">
-                <a href=""><i class="fa-solid fa-bell"></i></a>
-              </div>
-            </li>
-            <li>
-              <div class="action-list-container">
-                <a href=""><i class="fa-solid fa-gears"></i></a>
-              </div>
-            </li>
-            <li>
-              <div class="user" >
-                <div class="user-icon">
-                  <i class="fa-solid fa-user"></i>
-                  <i class="fa-solid fa-chevron-down"></i>
-                </div>
-                <div class="user-dropdown closed">
-                  <ul>
-                    <div class="avatar">
-                      <a href=""><img src="~/images/user-full.svg" alt=""> </a>
-                      <text>Nickname</text>
+    <nav class="nav">
+        <div class="container-netflex">
+            <div class="nav_row">
+                <div class="logo-navigation">
+                    <div class="logo">
+                        <img src="~/images/Logo.svg" alt="Logo">
                     </div>
-
-                    <li>
-                      <i class="fa-solid fa-screwdriver-wrench"></i>
-                      <a href=""><text>Настройки профиля</text></a>
-                    </li>
-                    <li>
-                      <i class="fa-solid fa-circle-info"></i>
-                      <a href=""><text>Помощь</text></a>
-                    </li>
-                    <li>
-                      <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                      <a href=""><text>Выйти</text></a>
-                    </li>
-                  </ul>
+                    <div class="navigation-list">
+                        <ul>
+                            <li><a href="">Главная</a></li>
+                            <li><a href="">Сериалы</a></li>
+                            <li><a href="">Фильмы</a></li>
+                            <li><a href="">Новые и популярные</a></li>
+                            <li><a href="">Мой список</a></li>
+                        </ul>
+                    </div>
                 </div>
-              </div>
-            </li>
-          </ul>
+                <div class="actions-list">
+                    <ul>
+                        <li>
+                            <div class="search">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <div class="input">
+                                    <input type="text" name="" value="" placeholder="Search" id="mysearch">
+                                </div>
+                                <span class="clear" onclick=" document.getElementById('mysearch').value = ''"></span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="action-list-container">
+                                <a href=""><i class="fa-solid fa-gift"></i></a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="action-list-container">
+                                <a href=""><i class="fa-solid fa-bell"></i></a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="action-list-container">
+                                <a href=""><i class="fa-solid fa-gears"></i></a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="user">
+                                <div class="user-icon">
+                                    <i class="fa-solid fa-user"></i>
+                                    <i class="fa-solid fa-chevron-down"></i>
+                                </div>
+                                <div class="user-dropdown closed">
+                                    <ul>
+                                        <div class="avatar">
+                                            <a href=""><img src="~/images/user-full.svg" alt=""> </a>
+                                            <text>Nickname</text>
+                                        </div>
+
+                                        <li>
+                                            <i class="fa-solid fa-screwdriver-wrench"></i>
+                                            <a href=""><text>Настройки профиля</text></a>
+                                        </li>
+                                        <li>
+                                            <i class="fa-solid fa-circle-info"></i>
+                                            <a href=""><text>Помощь</text></a>
+                                        </li>
+                                        <li>
+                                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                                            <a href=""><text>Выйти</text></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </nav>
+    </nav>
 </header>
 
 @RenderBody()
 
+@await RenderSectionAsync("Scripts", required: false)
 <script type="text/javascript">
 
-  const search = document.querySelector('.search');
-  const magnifire = document.querySelector('.fa-magnifying-glass');
-  magnifire.addEventListener('click', (e) => {
-    if (search.classList.contains('active')) {
-      search.classList.remove('active')
-      } else {
-      search.classList.add('active')
-      }
-      })
-  
+    const search = document.querySelector('.search');
+    const magnifire = document.querySelector('.fa-magnifying-glass');
+    magnifire.addEventListener('click', (e) => {
+      if (search.classList.contains('active')) {
+        search.classList.remove('active')
+        } else {
+        search.classList.add('active')
+        }
+        })
+
 </script>
 
 </html>

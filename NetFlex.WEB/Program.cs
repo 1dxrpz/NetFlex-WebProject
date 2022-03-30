@@ -18,10 +18,10 @@ builder.Services.AddEntityFrameworkNpgsql().AddDbContext<DatabaseContext>(option
                 )
             );
 
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>(opts =>
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
-    opts.User.RequireUniqueEmail = true;    // уникальный email
-    opts.SignIn.RequireConfirmedAccount = true;
+    options.User.RequireUniqueEmail = true;    // уникальный email
+    options.SignIn.RequireConfirmedAccount = true;
 
 })
     .AddEntityFrameworkStores<DatabaseContext>()
@@ -45,6 +45,12 @@ builder.Services.AddRazorPages(options =>
     options.Conventions.AuthorizeFolder("/Private");
     options.Conventions.AllowAnonymousToPage("/Private/PublicPage");
     options.Conventions.AllowAnonymousToFolder("/Private/PublicPages");
+});
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.AccessDeniedPath = "/Home/Index";
+
 });
 
 builder.Services.AddAuthentication()
@@ -72,6 +78,16 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.Use(async (context, next) =>
+{
+    await next();
+    if (context.Response.StatusCode == 404)
+    {
+        context.Request.Path = "/Main";
+        await next();
+    }
+});
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
@@ -80,7 +96,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Main}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.MapRazorPages();
 
