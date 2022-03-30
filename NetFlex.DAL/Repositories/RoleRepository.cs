@@ -37,15 +37,15 @@ namespace NetFlex.DAL.Repositories
             await _roleManager.CreateAsync(role);
         }
 
-        public async Task GiveRole(string role, string userName)
+        public async Task GiveRoles(List<string> role, string userName)
         {
-            var user = _db.Users.FirstOrDefault(u => u.UserName == userName);
-            await _userManager.AddToRoleAsync(user, role);
+            var user = await _userManager.FindByNameAsync(userName);
+            await _userManager.AddToRolesAsync(user, role);
         }
-        public async Task TakeAwayRole(string role, string userName)
+        public async Task TakeAwayRoles(List<string> role, string userName)
         {
-            var user = _db.Users.FirstOrDefault(u => u.UserName == userName);
-            await _userManager.RemoveFromRoleAsync(user, role);
+            var user = await _userManager.FindByNameAsync(userName);
+            await _userManager.RemoveFromRolesAsync(user, role);
         }
 
         public async Task Delete(IdentityRole role)

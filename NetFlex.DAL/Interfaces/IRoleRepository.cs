@@ -14,8 +14,8 @@ namespace NetFlex.DAL.Interfaces
         IdentityRole Get(string Name);
         Task Create(IdentityRole name);
         Task Delete(IdentityRole name);
-        Task GiveRole(string role, string user);
-        Task TakeAwayRole(string role, string user);
+        Task GiveRoles(List<string> role, string user);
+        Task TakeAwayRoles(List<string> role, string user);
 
     }
 }

@@ -17,7 +17,7 @@ namespace NetFlex.DAL.Interfaces
         IRepository<Subscription> Subscriptions { get; }
         IRepository<UserSubscription> UserSubscriptions { get; }
         IRepository<Review> Reviews { get; }
-        IRepository<ApplicationUser> Users { get; }
+        IUserRepository Users { get; }
         IRoleRepository Roles { get; }
 
 

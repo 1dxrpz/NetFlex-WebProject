@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace NetFlex.WEB.Controllers
 {
-    //[Authorize(Policy = Constants.Policies.RequireAdmin)]
+    [Authorize(Policy = Constants.Policies.RequireAdmin)]
     public class AdminController : Controller
 	{
         RoleManager<IdentityRole> _roleManager;
@@ -41,6 +41,22 @@ namespace NetFlex.WEB.Controllers
         public IActionResult Episodes()
         {
             return View();
+        }
+        public IActionResult Create() => View();
+
+        [HttpPost]
+        public async Task<IActionResult> Create(string role)
+        {
+            try
+            {
+                await _roleService.Create(role);
+
+            }
+            catch (ValidationException ex)
+            {
+                ModelState.AddModelError(ex.Property, ex.Message);
+            }
+            return RedirectToAction("Users");
         }
 
         [HttpGet]
@@ -142,70 +158,62 @@ namespace NetFlex.WEB.Controllers
 
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddRole(string name)
+        public async Task<IActionResult> Edit(string userId)
         {
-            try
+            // получаем пользователя
+            
+            var user = await _userService.GetUser(userId);
+            if (user != null)
             {
-                var roleDto = new RoleDTO()
+                // получем список ролей пользователя
+
+                var userRoles = await _userService.GetRoles(user.UserName);
+
+                var allRolesDto = _roleService.GetRoles();
+
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<RoleDTO, RoleViewModel>());
+                var mapper = new Mapper(config);
+                var allRoles = mapper.Map<IEnumerable<RoleDTO>, List<RoleViewModel>>(allRolesDto);
+
+
+                ChangeRoleViewModel model = new ChangeRoleViewModel
                 {
-                    Name = name,
+                    UserId = user.Id,
+                    UserEmail = user.Email,
+                    UserRoles = userRoles.ToList(),
+                    AllRoles = allRoles
                 };
-
-                await _roleService.Create(roleDto);
-
+                return View(model);
             }
-            catch (ValidationException ex)
-            {
-                ModelState.AddModelError(ex.Property, ex.Message);
-            }
-            return RedirectToAction("Roles");
+
+            return NotFound();
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteRole(string role)
+        public async Task<IActionResult> Edit(string userId, List<string> roles)
         {
-            try
-            {
-                await _roleService.Delete(role);
+            // получаем пользователя
+            var user = await _userService.GetUser(userId);
 
-            }
-            catch (ValidationException ex)
+            if (user != null)
             {
-                ModelState.AddModelError(ex.Property, ex.Message);
-            }
-            return RedirectToAction("Roles");
-        }
+                // получем список ролей пользователя
+                var userRoles = await _userService.GetRoles(user.UserName);
+                // получаем все роли
+                var allRolesDto = _roleService.GetRoles();
+                // получаем список ролей, которые были добавлены
+                var addedRoles = roles.Except(userRoles);
+                // получаем роли, которые были удалены
+                var removedRoles = userRoles.Except(roles);
 
-        [HttpPost]
-        public async Task<IActionResult> GiveRole(string user, string role)
-        {
-            try
-            {
-                await _roleService.GiveRole(role, user);
+                await _roleService.GiveRoles(addedRoles.ToList(), user.UserName);
 
-            }
-            catch (ValidationException ex)
-            {
-                ModelState.AddModelError(ex.Property, ex.Message);
-            }
-            return StatusCode(200);
-        }
+                await _roleService.TakeAwayRoles(removedRoles.ToList(), user.UserName);
 
-        [HttpPost]
-        public IActionResult TakeAwayRole([FromBody] string user, string role)
-        {
-            try
-            {
-                _roleService.TakeAwayRole(role, user);
-
-            }
-            catch (ValidationException ex)
-            {
-                ModelState.AddModelError(ex.Property, ex.Message);
+                return RedirectToAction("Users");
             }
 
-            return StatusCode(200);
+            return NotFound();
         }
     }
 }
