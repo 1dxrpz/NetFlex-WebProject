@@ -1,0 +1,273 @@
+header {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+body {
+  margin: 0px;
+  background-color: black;
+  font-family: "Montserrat", sans-serif;
+}
+
+.container-netflex {
+  max-width: 1770px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 75px;
+  padding-right: 75px;
+}
+
+.nav {
+  padding-top: 35px;
+  padding-bottom: 35px;
+}
+
+.nav_row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-navigation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.navigation-list ul {
+  display: flex;
+  list-style: none;
+}
+.navigation-list li {
+  margin-right: 25px;
+}
+.navigation-list li:last-child {
+  margin-right: 0px;
+}
+.navigation-list a {
+  text-decoration: none;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.actions-list .action-list-container {
+  border-radius: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  margin: -10px;
+  transition: 0.5s;
+}
+.actions-list .action-list-container:hover {
+  background-color: #141414;
+}
+.actions-list ul {
+  display: flex;
+  list-style: none;
+}
+.actions-list li {
+  margin-right: 25px;
+}
+.actions-list li:last-child {
+  margin-right: 0px;
+}
+.actions-list li i {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 24px;
+}
+.actions-list li a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 24px;
+}
+.actions-list li .search:hover {
+  background-color: #141414;
+}
+.actions-list li .search {
+  padding: 10px;
+  margin: -10px;
+  position: relative;
+  border-radius: 60px;
+  width: 24px;
+  transition: 0.5s;
+  position: relative;
+  overflow: hidden;
+}
+.actions-list li .search input {
+  display: none;
+}
+.actions-list li .search i {
+  cursor: pointer;
+}
+.actions-list li .search.active {
+  width: 300px;
+  transition: 10s;
+  transition: 0.5s;
+  display: flex;
+  align-items: center;
+  background-color: #141414;
+}
+.actions-list li .search.active .input {
+  width: 250px;
+  height: 24px;
+  margin-left: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.actions-list li .search.active .input input {
+  width: 100%;
+  height: 100%;
+  outline: none;
+  border: none;
+  background-color: rgba(0, 0, 0, 0);
+  font-weight: 500;
+  font-size: 20px;
+  color: #FFFFFF;
+  display: flex;
+}
+.actions-list li .search.active .clear {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  min-width: 15px;
+  height: 15px;
+  right: 15px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.actions-list li .search.active .clear::before {
+  position: absolute;
+  content: "";
+  width: 1px;
+  height: 15px;
+  background: #FFFFFF;
+  transform: rotate(45deg);
+}
+.actions-list li .search.active .clear::after {
+  position: absolute;
+  content: "";
+  width: 1px;
+  height: 15px;
+  background: #FFFFFF;
+  transform: rotate(315deg);
+}
+.actions-list li .user {
+  cursor: pointer;
+  display: flex;
+  justify-content: end;
+  padding: 10px 10px 10px 10px;
+  margin: -10px -10px -10px -10px;
+  border-radius: 20px 10px 0 0;
+  transition: all 0.5s;
+}
+.actions-list li .user .user-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 60px;
+  padding: 10px;
+  margin: -10px;
+  transition: 0.5s;
+}
+.actions-list li .user .user-icon:hover {
+  background-color: #141414;
+}
+.actions-list li .user i {
+  color: #FFFFFF;
+  font-size: 24px;
+}
+.actions-list li .user .fa-solid.fa-chevron-down {
+  margin-left: 10px;
+  font-size: 12px;
+}
+.actions-list li .user .user-dropdown.closed {
+  opacity: 0;
+  animation: ani 2.5s forwards;
+  pointer-events: none;
+  background-color: #141414;
+}
+.actions-list li .user .user-dropdown {
+  position: absolute;
+  margin-top: 34px;
+  margin-right: -10px;
+  border-radius: 20px 0 5px 20px;
+  transition: all 0.5s;
+  background-color: #141414;
+}
+.actions-list li .user .user-dropdown .avatar {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+}
+.actions-list li .user .user-dropdown .avatar img {
+  max-height: 70px;
+  min-width: 70px;
+}
+.actions-list li .user .user-dropdown .avatar text {
+  min-width: 150px;
+  display: flex;
+  justify-content: center;
+}
+.actions-list li .user .user-dropdown ul {
+  display: block;
+  padding: 0;
+}
+.actions-list li .user .user-dropdown ul li {
+  margin: 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  display: flex;
+  justify-content: start;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.actions-list li .user .user-dropdown ul li:last-child {
+  margin-bottom: 10px;
+}
+.actions-list li .user .user-dropdown ul li i {
+  max-height: 20px;
+  max-width: 20px;
+  margin-right: 20px;
+  font-weight: 700;
+  font-size: 22px;
+}
+.actions-list li .user .user-dropdown ul a {
+  text-decoration: none;
+}
+.actions-list li .user .user-dropdown ul text {
+  font-weight: 600;
+  font-size: 15px;
+  color: #FFFFFF;
+}
+
+.background {
+  background: url("../images/background.png");
+  max-width: 100%;
+  height: 1080px;
+  width: 1920px;
+  position: absolute;
+  z-index: -1;
+  padding-top: 135px;
+  margin-top: -135px;
+}
+
+/*# sourceMappingURL=MainLayout.css.map */
