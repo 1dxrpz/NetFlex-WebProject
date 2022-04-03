@@ -3,6 +3,7 @@ using NetFlex.BLL.Infrastructure;
 using NetFlex.BLL.Interfaces;
 using NetFlex.BLL.ModelsDTO;
 using NetFlex.DAL.EF;
+using NetFlex.DAL.Entities;
 using NetFlex.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -54,6 +55,24 @@ namespace NetFlex.BLL.Services
         {
 
             return await Database.Users.GetRoles(userName);
+        }
+
+        public void AddToMyList(UserFavoriteDTO favorite)
+        {
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<UserFavoriteDTO, UserFavorite>()).CreateMapper();
+            var add = mapper.Map<UserFavoriteDTO, UserFavorite>(favorite);
+            Database.UserFavorites.Create(add);
+        }
+        public void DeleteFromMyList(Guid favorite)
+        {
+            Database.UserFavorites.Delete(favorite);
+        }
+
+        public IEnumerable<UserFavoriteDTO> GetMyList(Guid userId)
+        {
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<UserFavorite, UserFavoriteDTO>()).CreateMapper();
+            return mapper.Map<IEnumerable<UserFavorite>, List<UserFavoriteDTO>>(Database.UserFavorites.GetAll().Where(f => f.UserId == userId));
+
         }
 
         public void Dispose()

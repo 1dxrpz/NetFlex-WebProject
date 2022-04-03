@@ -9,6 +9,7 @@ using NetFlex.BLL.Services;
 using NetFlex.DAL.Interfaces;
 using NetFlex.DAL.Repositories;
 using NetFlex.DAL.Constants;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,8 +29,12 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     .AddDefaultUI()
     .AddDefaultTokenProviders();
 
+builder.Services.AddCors();
 
-
+builder.Services.AddMvc(options =>
+{
+    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+});
 
 builder.Services.AddScoped<IUnitOfWork, EFUnitOfWork>();
 builder.Services.AddScoped<IUserService, UserService>();
@@ -64,6 +69,7 @@ builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy(Constants.Policies.RequireAdmin, policy => policy.RequireRole(Constants.Roles.Administrator));
     options.AddPolicy(Constants.Policies.RequireManager, policy => policy.RequireRole(Constants.Roles.Manager));
+    //options.AddPolicy("Subscription", policy => policy.AddRequirements());
 });
 
 builder.Services.AddControllersWithViews();
@@ -88,11 +94,19 @@ app.Use(async (context, next) =>
     }
 });
 
+app.UseCors(builder =>
+    builder.AllowAnyOrigin()
+      .AllowAnyHeader()
+      .AllowAnyMethod()
+  );
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+
+
 
 app.MapControllerRoute(
     name: "default",

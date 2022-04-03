@@ -18,15 +18,18 @@ namespace NetFlex.DAL.Repositories
         private RoleManager<IdentityRole> _roleManager;
         private UserManager<ApplicationUser> _userManager;
 
-        private EpisodeRepository _episodeRepository;
         private FilmRepository _filmRepository;
-        private SerialRepository _serialRepository;
-        private RatingRepository _ratingRepository;
-        private SubscriptionRepository _subscriptionRepository;
-        private UserSubscriptionRepository _userSubscriptionRepository;
-        private ReviewRepository _reviewRepository;
         private UserRepository _userRepository;
         private RoleRepository _roleRepository;
+        private GenreRepository _genreRepository;
+        private SerialRepository _serialRepository;
+        private RatingRepository _ratingRepository;
+        private ReviewRepository _reviewRepository; 
+        private EpisodeRepository _episodeRepository;
+        private GenreVideoRepository _genreVideoRepository;
+        private SubscriptionRepository _subscriptionRepository;
+        private UserFavoriteRepository _userFavoriteRepository;
+        private UserSubscriptionRepository _userSubscriptionRepository;
 
         public EFUnitOfWork(DbContextOptions<DatabaseContext> options, RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
         {
@@ -99,6 +102,39 @@ namespace NetFlex.DAL.Repositories
                 return _reviewRepository;
             }
         }
+
+        public IRepository<UserFavorite> UserFavorites
+        {
+            get
+            {
+                if (_userFavoriteRepository == null)
+                    _userFavoriteRepository = new UserFavoriteRepository(_db);
+                return _userFavoriteRepository;
+            }
+        }
+
+        public IRepository<Genre> Genres
+        {
+            get
+            {
+                if (_genreRepository == null)
+                    _genreRepository = new GenreRepository(_db);
+                return _genreRepository;
+
+            }
+        }
+
+        public IRepository<GenreVideo> GenreVideos
+        {
+            get
+            {
+                if (_genreVideoRepository == null)
+                    _genreVideoRepository = new GenreVideoRepository(_db);
+                return _genreVideoRepository;
+
+            }
+        }
+
         public IUserRepository Users
         {
             get

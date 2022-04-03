@@ -29,34 +29,48 @@ namespace NetFlex.WEB.Controllers
             _roleManager = rm;
         }
 
-        public IActionResult Index()
-		{
-            return View();
-		}
+        [HttpGet]
+        public IActionResult Index() => View();
 
-        public IActionResult SubsriptionPlans()
-        {
-            return View();
-        }
-        public IActionResult Episodes()
-        {
-            return View();
-        }
+        [HttpGet]
+        public IActionResult SubsriptionPlans() => View();
+
+        [HttpGet]
+        public IActionResult Episodes() => View();
+
+        [HttpGet]
         public IActionResult Create() => View();
 
-        [HttpPost]
-        public async Task<IActionResult> Create(string role)
+        [HttpGet]
+        public async Task<IActionResult> Edit(string userId)
         {
-            try
-            {
-                await _roleService.Create(role);
+            // получаем пользователя
 
-            }
-            catch (ValidationException ex)
+            var user = await _userService.GetUser(userId);
+            if (user != null)
             {
-                ModelState.AddModelError(ex.Property, ex.Message);
+                // получем список ролей пользователя
+
+                var userRoles = await _userService.GetRoles(user.UserName);
+
+                var allRolesDto = _roleService.GetRoles();
+
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<RoleDTO, RoleViewModel>());
+                var mapper = new Mapper(config);
+                var allRoles = mapper.Map<IEnumerable<RoleDTO>, List<RoleViewModel>>(allRolesDto);
+
+
+                ChangeRoleViewModel model = new ChangeRoleViewModel
+                {
+                    UserId = user.Id,
+                    UserEmail = user.Email,
+                    UserRoles = userRoles.ToList(),
+                    AllRoles = allRoles
+                };
+                return View(model);
             }
-            return RedirectToAction("Users");
+
+            return NotFound();
         }
 
         [HttpGet]
@@ -78,21 +92,59 @@ namespace NetFlex.WEB.Controllers
 		[HttpGet]
 		public IActionResult Serials()
 		{
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<SerialDTO, SerialViewModel>());
-            var mapper = new Mapper(config);
-            var serials = mapper.Map<IEnumerable<SerialDTO>, IEnumerable<SerialViewModel>>(_videoService.GetSerials());
+            try
+            {
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<SerialDTO, SerialViewModel>());
+                var mapper = new Mapper(config);
+                var serials = mapper.Map<IEnumerable<SerialDTO>, IEnumerable<SerialViewModel>>(_videoService.GetSerials());
 
-			return View(serials);
-		}
+                var config2 = new MapperConfiguration(cfg => cfg.CreateMap<GenreDTO, GenreViewModel>());
+                var mapper2 = new Mapper(config);
+                var genres = mapper.Map<IEnumerable<GenreDTO>, IEnumerable<GenreViewModel>>(_videoService.GetGenres());
+
+
+                var serialsView = new AllContentViewModel
+                {
+                    Serials = serials.ToList(),
+                    Genres = genres.ToList(),
+                };
+
+                return View(serialsView);
+            }
+            catch
+            {
+
+            }
+            return View();
+        }
 
 		[HttpGet]
 		public IActionResult Films()
 		{
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<FilmDTO, FilmViewModel>());
-            var mapper = new Mapper(config);
-            var films = mapper.Map<IEnumerable<FilmDTO>, IEnumerable<FilmViewModel>>(_videoService.GetFilms());
+            try
+            {
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<FilmDTO, FilmViewModel>());
+                var mapper = new Mapper(config);
+                var films = mapper.Map<IEnumerable<FilmDTO>, IEnumerable<FilmViewModel>>(_videoService.GetFilms());
 
-			return View(films);
+                var config2 = new MapperConfiguration(cfg => cfg.CreateMap<GenreDTO, GenreViewModel>());
+                var mapper2 = new Mapper(config);
+                var genres = mapper.Map<IEnumerable<GenreDTO>, IEnumerable<GenreViewModel>>(_videoService.GetGenres());
+
+
+                var filmsView = new AllContentViewModel
+                {
+                    Films = films.ToList(),
+                    Genres = genres.ToList(),
+                };
+
+                return View(filmsView);
+            }
+            catch
+            {
+
+            }
+            return View();
 		}
 
 		[HttpGet]
@@ -158,37 +210,6 @@ namespace NetFlex.WEB.Controllers
 
         }
 
-        public async Task<IActionResult> Edit(string userId)
-        {
-            // получаем пользователя
-            
-            var user = await _userService.GetUser(userId);
-            if (user != null)
-            {
-                // получем список ролей пользователя
-
-                var userRoles = await _userService.GetRoles(user.UserName);
-
-                var allRolesDto = _roleService.GetRoles();
-
-                var config = new MapperConfiguration(cfg => cfg.CreateMap<RoleDTO, RoleViewModel>());
-                var mapper = new Mapper(config);
-                var allRoles = mapper.Map<IEnumerable<RoleDTO>, List<RoleViewModel>>(allRolesDto);
-
-
-                ChangeRoleViewModel model = new ChangeRoleViewModel
-                {
-                    UserId = user.Id,
-                    UserEmail = user.Email,
-                    UserRoles = userRoles.ToList(),
-                    AllRoles = allRoles
-                };
-                return View(model);
-            }
-
-            return NotFound();
-        }
-
         [HttpPost]
         public async Task<IActionResult> Edit(string userId, List<string> roles)
         {
@@ -214,6 +235,21 @@ namespace NetFlex.WEB.Controllers
             }
 
             return NotFound();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(string role)
+        {
+            try
+            {
+                await _roleService.Create(role);
+
+            }
+            catch (ValidationException ex)
+            {
+                ModelState.AddModelError(ex.Property, ex.Message);
+            }
+            return RedirectToAction("Users");
         }
     }
 }
