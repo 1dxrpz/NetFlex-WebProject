@@ -1,9 +1,71 @@
 ﻿@using NetFlex.DAL.Enums
 @model IEnumerable<NetFlex.WEB.ViewModels.FilmViewModel>;
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+
 @{
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    ViewData["CurrentPage"] = AdminPages.Movies;
+	Layout = "~/Views/Shared/_AdminLayout.cshtml";
+	ViewData["CurrentPage"] = AdminPages.Movies;
 }
+
+<div class="layout">
+	<div class="vertical">
+		<div class="block">
+			<div class="wrapper">
+				<div class="topic">Movies</div>
+				<div class="description">Add & edit movies</div>
+			</div>
+		</div>
+	</div>
+	<div class="horizontal">
+		<div class="block blue">
+			<div class="icon corner">
+				<span><i class="fa-brands fa-apple"></i></span>
+			</div>
+			<div class="wrapper center">
+				<div class="topic">12</div>
+				<div class="spacer"></div>
+				<div class="description">Film count</div>
+			</div>
+		</div>
+		<div class="block green">
+			<div class="wrapper center">
+				<div class="topic">12</div>
+				<div class="spacer"></div>
+				<div class="description">Review count</div>
+			</div>
+		</div>
+	</div>
+	<div class="vertical">
+		<div class="horizontal m-0">
+			<div class="block">
+				<div class="horizontal m-0">
+					<a asp-action="Create" class="btn btn-warning m-1">Добавить роль</a>
+					<div>
+						<ul class="pagination">
+							<li class="page-item">
+								<a class="page-link btn-dark" href="#" aria-label="Previous">
+									<span aria-hidden="true">&laquo;</span>
+								</a>
+							</li>
+							<li class="page-item btn-dark"><a class="page-link" href="#">1</a></li>
+							<li class="page-item btn-dark"><a class="page-link" href="#">2</a></li>
+							<li class="page-item btn-dark"><a class="page-link" href="#">3</a></li>
+							<li class="page-item btn-dark">
+								<a class="page-link" href="#" aria-label="Next">
+									<span aria-hidden="true">&raquo;</span>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="horizontal m-0 justify-content-end">
+					<button type="button" class="btn btn-primary m-1">Save</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="vertical">
+		<div class="block" label="test"></div>
+		<div class="block" label="test"></div>
+		<div class="block" label="test"></div>
+	</div>
+</div>
