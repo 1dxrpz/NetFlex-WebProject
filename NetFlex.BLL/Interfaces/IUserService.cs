@@ -13,6 +13,12 @@ namespace NetFlex.BLL.Interfaces
         Task<UserDTO> GetUser(string id);
         IEnumerable<UserDTO> GetUsers();
         Task<IEnumerable<string>> GetRoles(string userName);
+
+        void AddToMyList(UserFavoriteDTO favorite);
+
+        IEnumerable<UserFavoriteDTO> GetMyList(Guid userId);
+        void DeleteFromMyList(Guid favorite);
+
         void Dispose();
     }
 }

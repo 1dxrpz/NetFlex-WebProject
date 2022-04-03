@@ -10,14 +10,16 @@ namespace NetFlex.WEB.Controllers
 	public class VideoController : Controller
 	{
 		private readonly IVideoService _videoService;
+        private readonly IUserService _userService;
         public readonly IRatingService _ratingService;
         public readonly IReviewService _reviewService;
 
-        public VideoController(IVideoService videoService, IReviewService reviewService,IRatingService ratingService)
+        public VideoController(IVideoService videoService, IReviewService reviewService,IRatingService ratingService, IUserService userService)
         {
             _videoService = videoService;
             _reviewService = reviewService;
             _ratingService = ratingService;
+            _userService = userService;
         }
 
         public IActionResult Index()
@@ -73,10 +75,29 @@ namespace NetFlex.WEB.Controllers
             {
                 ModelState.AddModelError(ex.Property, ex.Message);
             }
-            return View(model);
+            return StatusCode(200);
         }
 
+        [HttpPost]
+        public IActionResult AddToMyList(UserFavoriteViewModel model)
+        {
+            try
+            {
+                if(_userService.GetMyList(model.UserId).Where(x => x.ContentId == model.ContentId) == null)
+                {
+                    var config = new MapperConfiguration(cfg => cfg.CreateMap<UserFavoriteViewModel, UserFavoriteDTO>());
+                    var mapper = new Mapper(config);
+                    var favoritesDto = mapper.Map<UserFavoriteViewModel, UserFavoriteDTO>(model);
 
+                    _userService.AddToMyList(favoritesDto);
+                };
+            }
+            catch (ValidationException ex)
+            {
+                ModelState.AddModelError(ex.Property, ex.Message);
+            }
+            return StatusCode(200);
+        }
 
     }
 }

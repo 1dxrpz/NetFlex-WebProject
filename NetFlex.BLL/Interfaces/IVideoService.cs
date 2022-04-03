@@ -18,6 +18,10 @@ namespace NetFlex.BLL.Interfaces
         IEnumerable<FilmDTO> GetFilms();
         IEnumerable<SerialDTO> GetSerials();
         IEnumerable<EpisodeDTO> GetEpisodes();
+
+        IEnumerable<GenreDTO> GetGenres();
+        IEnumerable<GenreVideoDTO> GetGenres(Guid id);
+
         void Dispose();
     }
 }

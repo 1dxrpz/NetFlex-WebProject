@@ -128,6 +128,17 @@ namespace NetFlex.BLL.Services
             Database.Save();
         }
 
+        public IEnumerable<GenreDTO> GetGenres()
+        {
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Genre, GenreDTO>()).CreateMapper();
+            return mapper.Map<IEnumerable<Genre>, List<GenreDTO>>(Database.Genres.GetAll());
+        }
+
+        public IEnumerable<GenreVideoDTO> GetGenres(Guid id)
+        {
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<GenreVideo, GenreVideoDTO>()).CreateMapper();
+            return mapper.Map<IEnumerable<GenreVideo>, List<GenreVideoDTO>>(Database.GenreVideos.GetAll().Where(c => c.ContentId == id));
+        }
         public void Dispose()
         {
             Database.Dispose();

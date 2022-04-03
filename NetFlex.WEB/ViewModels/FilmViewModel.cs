@@ -11,5 +11,12 @@
         public string Description { get; set; }
         public string VideoLink { get; set; }
         public string PreviewVideo { get; set; }
+
+        public List<GenreViewModel> Genres { get; set; }
+
+        public FilmViewModel()
+        {
+            Genres = new List<GenreViewModel>();
+        }
     }
 }
