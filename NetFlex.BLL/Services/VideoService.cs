@@ -139,6 +139,15 @@ namespace NetFlex.BLL.Services
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<GenreVideo, GenreVideoDTO>()).CreateMapper();
             return mapper.Map<IEnumerable<GenreVideo>, List<GenreVideoDTO>>(Database.GenreVideos.GetAll().Where(c => c.ContentId == id));
         }
+
+        public void SetGenres(GenreVideoDTO genres)
+        {
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<GenreVideoDTO, GenreVideo>()).CreateMapper();
+            var res = mapper.Map<GenreVideoDTO, GenreVideo>(genres);
+
+            Database.GenreVideos.Create(res);
+            Database.Save();
+        }
         public void Dispose()
         {
             Database.Dispose();

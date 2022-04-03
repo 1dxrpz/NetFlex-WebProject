@@ -103,7 +103,7 @@ namespace NetFlex.WEB.Controllers
                 var genres = mapper.Map<IEnumerable<GenreDTO>, IEnumerable<GenreViewModel>>(_videoService.GetGenres());
 
 
-                var serialsView = new AllContentViewModel
+                var serialsView = new FullInfoViewModel
                 {
                     Serials = serials.ToList(),
                     Genres = genres.ToList(),
@@ -132,7 +132,7 @@ namespace NetFlex.WEB.Controllers
                 var genres = mapper.Map<IEnumerable<GenreDTO>, IEnumerable<GenreViewModel>>(_videoService.GetGenres());
 
 
-                var filmsView = new AllContentViewModel
+                var filmsView = new FullInfoViewModel
                 {
                     Films = films.ToList(),
                     Genres = genres.ToList(),
@@ -166,6 +166,18 @@ namespace NetFlex.WEB.Controllers
                 var mapper = new Mapper(config);
                 var filmDTO = mapper.Map<FilmViewModel, FilmDTO>(model);
                 _videoService.UploadFilm(filmDTO);
+
+                foreach(var item in model.Genres)
+                {
+                    var genresDto = new GenreVideoDTO
+                    {
+                        Id = Guid.NewGuid(),
+                        ContentId = model.Id,
+                        GenreName = item.GenreName,
+                    };
+                    _videoService.SetGenres(genresDto);
+                }
+                
             }
             catch (ValidationException ex)
             {
@@ -183,6 +195,17 @@ namespace NetFlex.WEB.Controllers
                 var mapper = new Mapper(config);
                 var serialDTO = mapper.Map<SerialViewModel, SerialDTO>(model);
                 _videoService.UploadSerial(serialDTO);
+
+                foreach (var item in model.Genres)
+                {
+                    var genresDto = new GenreVideoDTO
+                    {
+                        Id = Guid.NewGuid(),
+                        ContentId = model.Id,
+                        GenreName = item.GenreName,
+                    };
+                    _videoService.SetGenres(genresDto);
+                }
             }
             catch (ValidationException ex)
             {

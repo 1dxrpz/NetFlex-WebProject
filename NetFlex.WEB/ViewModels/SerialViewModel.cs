@@ -11,5 +11,11 @@
         public float UserRating { get; set; }
         public string Description { get; set; }
 
+        public List<GenreViewModel> Genres { get; set; }
+
+        public SerialViewModel()
+        {
+            Genres = new List<GenreViewModel>();
+        }
     }
 }

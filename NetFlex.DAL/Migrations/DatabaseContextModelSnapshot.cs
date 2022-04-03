@@ -101,12 +101,10 @@ namespace NetFlex.DAL.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("text");
@@ -143,12 +141,10 @@ namespace NetFlex.DAL.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Value")
                         .HasColumnType("text");
@@ -289,6 +285,37 @@ namespace NetFlex.DAL.Migrations
                     b.ToTable("Films");
                 });
 
+            modelBuilder.Entity("NetFlex.DAL.Entities.Genre", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("GenreName")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Genres");
+                });
+
+            modelBuilder.Entity("NetFlex.DAL.Entities.GenreVideo", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ContentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("GenreName")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GenreVideos");
+                });
+
             modelBuilder.Entity("NetFlex.DAL.Entities.Rating", b =>
                 {
                     b.Property<Guid>("Id")
@@ -379,6 +406,23 @@ namespace NetFlex.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Subscriptions");
+                });
+
+            modelBuilder.Entity("NetFlex.DAL.Entities.UserFavorite", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ContentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserFavorites");
                 });
 
             modelBuilder.Entity("NetFlex.DAL.Entities.UserSubscription", b =>
