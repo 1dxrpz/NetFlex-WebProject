@@ -1,28 +1,46 @@
 ﻿@using NetFlex.DAL.Enums
 
 @model IEnumerable<NetFlex.WEB.ViewModels.RoleViewModel>
- 
+
 @{
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    ViewData["CurrentPage"] = AdminPages.Roles;
+	Layout = "~/Views/Shared/_AdminLayout.cshtml";
+	ViewData["CurrentPage"] = AdminPages.Roles;
 }
 
-<h2>Список ролей</h2>
-<table class="table">
-    @foreach (var role in Model)
-    {
-        <tr>
-            <td>@role.Name</td>
-            <td>
-                <form asp-action="Delete" asp-route-id="@role.Id" method="post">
-                    <button type="submit" class="btn btn-sm btn-danger">
-                        Удалить
-                    </button>
-                </form>
-            </td>
-        </tr>
-    }
-</table>
-
-<a asp-action="Create">Добавить роль</a>
-<a asp-action="Users">Список пользователей</a>
+<div class="layout">
+	<div class="vertical">
+		<div class="block">
+			<div class="wrapper">
+				<div class="topic">Role list</div>
+			</div>
+		</div>
+		<div class="horizontal m-0">
+			<div class="block">
+				<div class="horizontal m-0">
+					<a asp-action="Create" class="btn btn-warning m-1">Добавить роль</a>
+					<a asp-action="Users" class="btn btn-warning m-1">Список пользователей</a>
+				</div>
+				<div class="horizontal m-0 justify-content-end">
+					<button type="button" class="btn btn-primary m-1">Save</button>
+				</div>
+			</div>
+		</div>
+		<div class="block" label="test">
+			<table class="table">
+				@foreach (var role in Model)
+				{
+					<tr>
+						<td>@role.Name</td>
+						<td>
+							<form asp-action="Delete" asp-route-id="@role.Id" method="post">
+								<button type="submit" class="btn btn-sm btn-danger">
+									Удалить
+								</button>
+							</form>
+						</td>
+					</tr>
+				}
+			</table>
+		</div>
+	</div>
+</div>
