@@ -295,10 +295,34 @@ namespace NetFlex.WEB.Controllers
             if (genre != null && _videoService.GetGenres().FirstOrDefault(g => g.GenreName == genre) == null)
             {
                 _videoService.AddGenre(genre);
-                return Ok();
+                return StatusCode(200);
             }
 
-            return BadRequest();
+            return StatusCode(400);
+        }
+        [HttpPost]
+        public IActionResult RemoveGenre(string genre)
+        {
+            var _genre = _videoService.GetGenres().FirstOrDefault(g => g.GenreName == genre);
+            if (_genre != null)
+            {
+                /// REMOVE GENRE
+                return StatusCode(200);
+            }
+
+            return StatusCode(400);
+        }
+        [HttpPost]
+        public IActionResult EditGenre(string genre)
+        {
+            var _genre = _videoService.GetGenres().FirstOrDefault(g => g.GenreName == genre);
+            if (_genre != null)
+            {
+                /// EDIT GENRE
+                return StatusCode(200);
+            }
+
+            return StatusCode(400);
         }
 
         [HttpPost]
