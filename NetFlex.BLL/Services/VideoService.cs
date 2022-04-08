@@ -162,6 +162,12 @@ namespace NetFlex.BLL.Services
             Database.Save();
         }
 
+        public void RemoveGenre(Guid id)
+        {
+            Database.Genres.Delete(id);
+            Database.Save();
+        }
+
         public void Dispose()
         {
             Database.Dispose();

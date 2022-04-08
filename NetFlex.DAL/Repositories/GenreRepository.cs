@@ -21,7 +21,7 @@ namespace NetFlex.DAL.Repositories
 
         public IEnumerable<Genre> GetAll()
         {
-            return _db.Genres;
+            return _db.Genres.;
         }
 
         public Genre Get(Guid id)

@@ -23,6 +23,7 @@ namespace NetFlex.BLL.Interfaces
         IEnumerable<GenreDTO> GetGenres();
         IEnumerable<GenreVideoDTO> GetGenres(Guid id);
         void SetGenres(GenreVideoDTO genres);
+        void RemoveGenre(Guid id);
         void Dispose();
     }
 }

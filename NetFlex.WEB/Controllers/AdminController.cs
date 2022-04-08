@@ -29,20 +29,15 @@ namespace NetFlex.WEB.Controllers
             _roleManager = rm;
         }
 
-        [HttpGet]
         public IActionResult Index() => View();
 
-        [HttpGet]
         public IActionResult SubsriptionPlans() => View();
 
-        [HttpGet]
         public IActionResult Episodes() => View();
 
-        [HttpGet]
         public IActionResult Create() => View();
 
-        [HttpGet]
-        public async Task<IActionResult> Edit(string userId)
+        public async Task<IActionResult> EditUserRole(string userId)
         {
             // получаем пользователя
 
@@ -73,7 +68,6 @@ namespace NetFlex.WEB.Controllers
             return NotFound();
         }
 
-        [HttpGet]
         public IActionResult Users()
 		{
             var users = _userService.GetUsers().Select(u => new AdminUserVievModel
@@ -89,7 +83,6 @@ namespace NetFlex.WEB.Controllers
             return View(users);
 		}
 
-		[HttpGet]
 		public IActionResult Serials()
 		{
             try
@@ -118,7 +111,6 @@ namespace NetFlex.WEB.Controllers
             return View();
         }
 
-		[HttpGet]
 		public IActionResult Films()
 		{
             try
@@ -147,7 +139,6 @@ namespace NetFlex.WEB.Controllers
             return View();
 		}
 
-		[HttpGet]
         public IActionResult Genres() 
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<GenreDTO, GenreViewModel>());
@@ -157,7 +148,6 @@ namespace NetFlex.WEB.Controllers
             return View(genres);
         }
 
-        [HttpGet]
         public IActionResult Roles()
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<RoleDTO, RoleViewModel>());
@@ -167,7 +157,6 @@ namespace NetFlex.WEB.Controllers
             return View(roles);
         }
 
-        [HttpGet]
         public IActionResult UploadFilm()
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<GenreDTO, GenreViewModel>());
@@ -258,7 +247,7 @@ namespace NetFlex.WEB.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(string userId, List<string> roles)
+        public async Task<IActionResult> EditUserRole(string userId, List<string> roles)
         {
             // получаем пользователя
             var user = await _userService.GetUser(userId);
@@ -285,7 +274,7 @@ namespace NetFlex.WEB.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(string role)
+        public async Task<IActionResult> CreateRole(string role)
         {
             try
             {
@@ -311,5 +300,25 @@ namespace NetFlex.WEB.Controllers
 
             return BadRequest();
         }
+
+        [HttpPost]
+        public IActionResult RemoveGenre(string id)
+        {
+
+            if (id != null)
+            {
+                _videoService.RemoveGenre(Guid.Parse(id));
+                return Ok();
+            }
+
+            return BadRequest();
+        }
+
+        [HttpPost]
+        public IActionResult EditGenre(string id)
+        {
+
+        }
+
     }
 }
