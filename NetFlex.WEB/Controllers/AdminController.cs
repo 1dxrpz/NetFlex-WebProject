@@ -148,7 +148,17 @@ namespace NetFlex.WEB.Controllers
 		}
 
 		[HttpGet]
-        public IActionResult Roles() 
+        public IActionResult Genres() 
+        {
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<GenreDTO, GenreViewModel>());
+            var mapper = new Mapper(config);
+            var genres = mapper.Map<IEnumerable<GenreDTO>, List<GenreViewModel>>(_videoService.GetGenres());
+
+            return View(genres);
+        }
+
+        [HttpGet]
+        public IActionResult Roles()
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<RoleDTO, RoleViewModel>());
             var mapper = new Mapper(config);

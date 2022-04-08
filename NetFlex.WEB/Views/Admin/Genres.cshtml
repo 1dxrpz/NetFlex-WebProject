@@ -1,0 +1,61 @@
+﻿@using NetFlex.DAL.Enums
+@model IEnumerable<NetFlex.WEB.ViewModels.GenreViewModel>
+@{
+	Layout = "~/Views/Shared/_AdminLayout.cshtml";
+	ViewData["CurrentPage"] = AdminPages.Genres;
+}
+<div class="layout">
+	<div class="vertical">
+		<div class="block">
+			<div class="wrapper">
+				<div class="topic">Genres</div>
+				<div class="description">Add & edit Genres</div>
+			</div>
+		</div>
+	</div>
+	<div class="vertical">
+		<div class="horizontal m-0">
+			<div class="block">
+				<div class="horizontal m-0">
+					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
+						Add Genre
+					</button>
+				</div>
+			</div>
+			<div class="block">
+				@foreach (var item in Model)
+				{
+					<div class="genre">
+						<div class="name">@item.GenreName</div>
+						<div class="btn-danger btn">Remove</div>
+						<div class="btn-btn-primary btn">Edi</div>
+					</div>
+				}
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Edit Genre</h5>
+				<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form class="input-group mb-3" method="post" asp-action="AddGenre" asp-controller="Admin">
+				<div class="modal-body">
+					@await Html.PartialAsync("partials/_AddGenrePartial.cshtml")
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<button class="btn btn-primary" type="submit">Save changes</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
