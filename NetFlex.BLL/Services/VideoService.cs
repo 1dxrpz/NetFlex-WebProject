@@ -24,7 +24,9 @@ namespace NetFlex.BLL.Services
 
             if (id == null)
                 throw new ValidationException("Эпизод с таким id не найден", "");
+
             var episode = Database.Episodes.Get(id);
+
             if (episode == null)
                 throw new ValidationException("Эпизод не найден", "");
 
@@ -148,9 +150,21 @@ namespace NetFlex.BLL.Services
             Database.GenreVideos.Create(res);
             Database.Save();
         }
+
+        public void AddGenre(string genre)
+        {
+            Database.Genres.Create(new Genre
+            {
+                Id = Guid.NewGuid(),
+                GenreName = genre
+            });
+        }
+
         public void Dispose()
         {
             Database.Dispose();
         }
+
+        
     }
 }

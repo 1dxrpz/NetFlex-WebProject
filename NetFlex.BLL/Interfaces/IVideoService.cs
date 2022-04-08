@@ -19,6 +19,7 @@ namespace NetFlex.BLL.Interfaces
         IEnumerable<SerialDTO> GetSerials();
         IEnumerable<EpisodeDTO> GetEpisodes();
 
+        void AddGenre (string genre);
         IEnumerable<GenreDTO> GetGenres();
         IEnumerable<GenreVideoDTO> GetGenres(Guid id);
         void SetGenres(GenreVideoDTO genres);

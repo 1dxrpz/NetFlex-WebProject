@@ -1,5 +1,5 @@
 ﻿@using NetFlex.DAL.Enums
-@model IEnumerable<NetFlex.WEB.ViewModels.FilmViewModel>;
+@model NetFlex.WEB.ViewModels.FullInfoViewModel;
 
 @{
 	Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -38,7 +38,7 @@
 		<div class="horizontal m-0">
 			<div class="block">
 				<div class="horizontal m-0">
-					<a asp-action="Create" class="btn btn-warning m-1">Добавить роль</a>
+					<a asp-action="UploadFilm" class="btn btn-warning m-1">Добавить фильм</a>
 					<div>
 						<ul class="pagination">
 							<li class="page-item">
@@ -64,8 +64,8 @@
 		</div>
 	</div>
 	<div class="vertical">
-		<div class="block" label="test"></div>
-		<div class="block" label="test"></div>
-		<div class="block" label="test"></div>
+		@foreach(var item in Model.Films){
+
+		}
 	</div>
 </div>
