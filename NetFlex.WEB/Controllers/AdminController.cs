@@ -300,18 +300,7 @@ namespace NetFlex.WEB.Controllers
 
             return StatusCode(400);
         }
-        [HttpPost]
-        public IActionResult RemoveGenre(string genre)
-        {
-            var _genre = _videoService.GetGenres().FirstOrDefault(g => g.GenreName == genre);
-            if (_genre != null)
-            {
-                /// REMOVE GENRE
-                return StatusCode(200);
-            }
 
-            return StatusCode(400);
-        }
         [HttpPost]
         public IActionResult EditGenre(string genre)
         {
@@ -336,12 +325,6 @@ namespace NetFlex.WEB.Controllers
             }
 
             return BadRequest();
-        }
-
-        [HttpPost]
-        public IActionResult EditGenre(string id)
-        {
-
         }
 
     }
