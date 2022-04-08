@@ -158,6 +158,8 @@ namespace NetFlex.BLL.Services
                 Id = Guid.NewGuid(),
                 GenreName = genre
             });
+
+            Database.Save();
         }
 
         public void Dispose()

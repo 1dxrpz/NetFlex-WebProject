@@ -303,7 +303,7 @@ namespace NetFlex.WEB.Controllers
         public IActionResult AddGenre(string genre)
         {
 
-            if (genre != null && _videoService.GetGenres().Select(g => g.GenreName == genre) == null)
+            if (genre != null && _videoService.GetGenres().FirstOrDefault(g => g.GenreName == genre) == null)
             {
                 _videoService.AddGenre(genre);
                 return Ok();
