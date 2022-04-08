@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace NetFlex.WEB.Controllers
 {
-    [Authorize(Policy = Constants.Policies.RequireAdmin)]
+    //[Authorize(Policy = Constants.Policies.RequireAdmin)]
     public class AdminController : Controller
 	{
         RoleManager<IdentityRole> _roleManager;
@@ -157,6 +157,19 @@ namespace NetFlex.WEB.Controllers
             return View(roles);
         }
 
+        [HttpGet]
+        public IActionResult UploadFilm()
+        {
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<GenreDTO, GenreViewModel>());
+            var mapper = new Mapper(config);
+            var genres = mapper.Map<IEnumerable<GenreDTO>, List<GenreViewModel>>(_videoService.GetGenres());
+
+            return View(new FilmViewModel
+            {
+                AllGenres = genres,
+            });
+        }
+
         [HttpPost]
         public IActionResult UploadFilm(FilmViewModel model)
         {
@@ -165,19 +178,20 @@ namespace NetFlex.WEB.Controllers
                 var config = new MapperConfiguration(cfg => cfg.CreateMap<FilmViewModel, FilmDTO>());
                 var mapper = new Mapper(config);
                 var filmDTO = mapper.Map<FilmViewModel, FilmDTO>(model);
+                filmDTO.Id = Guid.NewGuid();
+
                 _videoService.UploadFilm(filmDTO);
 
-                foreach(var item in model.Genres)
+                for (int i = 0; i < model.FilmGenres.Count; i++)
                 {
                     var genresDto = new GenreVideoDTO
                     {
                         Id = Guid.NewGuid(),
-                        ContentId = model.Id,
-                        GenreName = item.GenreName,
+                        ContentId = filmDTO.Id,
+                        GenreName = model.FilmGenres[i],
                     };
                     _videoService.SetGenres(genresDto);
                 }
-                
             }
             catch (ValidationException ex)
             {
@@ -273,6 +287,19 @@ namespace NetFlex.WEB.Controllers
                 ModelState.AddModelError(ex.Property, ex.Message);
             }
             return RedirectToAction("Users");
+        }
+
+        [HttpPost]
+        public IActionResult AddGenre(string genre)
+        {
+
+            if (genre != null && _videoService.GetGenres().Select(g => g.GenreName == genre) == null)
+            {
+                _videoService.AddGenre(genre);
+                return Ok();
+            }
+
+            return BadRequest();
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace NetFlex.WEB.ViewModels
+﻿using System.Collections.Generic;
+
+namespace NetFlex.WEB.ViewModels
 {
     public class FilmViewModel
     {
@@ -10,13 +12,14 @@
         public float UserRating { get; set; }
         public string Description { get; set; }
         public string VideoLink { get; set; }
-        public string PreviewVideo { get; set; }
 
-        public List<GenreViewModel> Genres { get; set; }
+        public IList<string> FilmGenres { get; set; }
+        public List<GenreViewModel> AllGenres { get; set; }
 
         public FilmViewModel()
         {
-            Genres = new List<GenreViewModel>();
+            FilmGenres = new List<string>();
+            AllGenres = new List<GenreViewModel>();
         }
     }
 }
