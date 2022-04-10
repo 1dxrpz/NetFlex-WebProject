@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <script src="https://kit.fontawesome.com/3ee70c58bc.js" crossorigin="anonymous"></script>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+  @await RenderSectionAsync("Styles", required: false)
 </head>
 
 
@@ -22,7 +23,7 @@
           </div>
           <div class="navigation-list">
             <ul>
-              <li><a href="">Главная</a></li>
+              <li><a asp-controller="main">Главная</a></li>
               <li><a href="">Сериалы</a></li>
               <li><a href="">Фильмы</a></li>
               <li><a href="">Новые и популярные</a></li>
@@ -99,6 +100,7 @@
 
 @RenderBody()
 
+@await RenderSectionAsync("Scripts", required: false)
 <script type="text/javascript">
 
   let user_dropdown = document.querySelector('.user')

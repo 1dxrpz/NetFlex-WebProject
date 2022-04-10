@@ -35,6 +35,7 @@ document.addEventListener("keydown", (e) => {
 		case 37: SkipTime(-5); break;
 		case 39: SkipTime(5); break;
 		case 32: ToggleVideo(); break;
+		case 70: ToggleFullscreen(); break;
 		default: break;
 	}
 });
@@ -80,6 +81,7 @@ document.addEventListener("mousemove", e => {
 		});
 	}
 });
+
 document.addEventListener("mousedown", e => {
 	mousePressed = true;
 });
@@ -116,6 +118,9 @@ document.onfullscreenchange = (e) => {
 var loaded = false;
 video.onload = () => loaded = true;
 
+function ToggleFullscreen() {
+	fullscreenButton.getAttribute("data-fullscreen") === 'true' ? Compress() : Expand();
+}
 
 function ToggleVideo() {
 	paused ? Play() : Pause();

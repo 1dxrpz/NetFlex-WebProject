@@ -7,12 +7,37 @@ body, html {
     min-height: 100%;
 }
 
-header {
-    position: absolute !important;
+header, .container-netflex {
+    //position: absolute !important;
+    //z-index: 4;
+    //display: block;
+    //width: 100% !important;
+
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    max-width: 100%;
+
+    * {
+        box-sizing: revert !important;
+    }
+    a:hover {
+        color: #fff !important;
+    }
+}
+.search {
+    
+}
+.nav {
+    display: block !important;
+    position: absolute;
     z-index: 4;
-    display: block;
-    width: 100% !important;
-    box-sizing: border-box;
+    width: 100%;
+}
+ul {
+    margin-bottom: 0 !important;
+}
+.background {
+    display: none;
 }
 footer {
     color: #666;
@@ -28,7 +53,7 @@ footer {
     width: 100%;
     position: relative;
     background: url(../images/cover.png);
-    z-index: 1;
+    z-index: 3;
     padding-top: 100px;
 
     &:before {
@@ -129,7 +154,6 @@ footer {
             justify-content: center;
             align-items: center;
             padding: 50px 5vw 50px 50px;
-
             img {
                 height: 100%;
             }
@@ -142,6 +166,7 @@ footer {
     position: relative;
     min-height: 100%;
     padding-bottom: 120px;
+    padding-top: 20px;
 
     .background_poster {
         width: 100%;
