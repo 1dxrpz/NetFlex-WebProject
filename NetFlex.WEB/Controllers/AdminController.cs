@@ -96,7 +96,7 @@ namespace NetFlex.WEB.Controllers
                 var genres = mapper.Map<IEnumerable<GenreDTO>, IEnumerable<GenreViewModel>>(_videoService.GetGenres());
 
 
-                var serialsView = new FullInfoViewModel
+                var serialsView = new FullVideoInfoViewModel
                 {
                     Serials = serials.ToList(),
                     Genres = genres.ToList(),
@@ -124,7 +124,7 @@ namespace NetFlex.WEB.Controllers
                 var genres = mapper.Map<IEnumerable<GenreDTO>, IEnumerable<GenreViewModel>>(_videoService.GetGenres());
 
 
-                var filmsView = new FullInfoViewModel
+                var filmsView = new FullVideoInfoViewModel
                 {
                     Films = films.ToList(),
                     Genres = genres.ToList(),
@@ -302,12 +302,13 @@ namespace NetFlex.WEB.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditGenre(string genre)
+        public IActionResult EditGenre(string oldName, string newName)
         {
-            var _genre = _videoService.GetGenres().FirstOrDefault(g => g.GenreName == genre);
-            if (_genre != null)
+            var oldGenre = _videoService.GetGenres().FirstOrDefault(g => g.GenreName == oldName);
+            if (oldGenre != null)
             {
-                /// EDIT GENRE
+                oldGenre.GenreName = newName;
+                _videoService.UpdateGenre(oldGenre);
                 return StatusCode(200);
             }
 
