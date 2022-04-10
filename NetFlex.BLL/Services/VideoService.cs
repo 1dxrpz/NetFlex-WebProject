@@ -168,6 +168,18 @@ namespace NetFlex.BLL.Services
             Database.Save();
         }
 
+        public void UpdateGenre(GenreDTO editedGenre)
+        {
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<GenreDTO, Genre>());
+            var mapper = new Mapper(config);
+            var temp = mapper.Map<GenreDTO, Genre>(editedGenre);
+
+            var g = Database.Genres.Get(editedGenre.Id);
+            g = temp;
+
+            Database.Save();
+
+        }
         public void Dispose()
         {
             Database.Dispose();

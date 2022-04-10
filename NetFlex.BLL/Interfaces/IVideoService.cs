@@ -12,9 +12,11 @@ namespace NetFlex.BLL.Interfaces
         void UploadFilm(FilmDTO filmDTO);
         void UploadEpisode(EpisodeDTO episodeDTO);
         void UploadSerial(SerialDTO serialDTO);
+
         FilmDTO GetFilm(Guid id);
         SerialDTO GetSerial(Guid id);
         EpisodeDTO GetEpisode(Guid id);
+
         IEnumerable<FilmDTO> GetFilms();
         IEnumerable<SerialDTO> GetSerials();
         IEnumerable<EpisodeDTO> GetEpisodes();
@@ -24,6 +26,7 @@ namespace NetFlex.BLL.Interfaces
         IEnumerable<GenreVideoDTO> GetGenres(Guid id);
         void SetGenres(GenreVideoDTO genres);
         void RemoveGenre(Guid id);
+        void UpdateGenre(GenreDTO editedGenre);
         void Dispose();
     }
 }
