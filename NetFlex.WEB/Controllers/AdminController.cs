@@ -29,20 +29,15 @@ namespace NetFlex.WEB.Controllers
             _roleManager = rm;
         }
 
-        [HttpGet]
         public IActionResult Index() => View();
 
-        [HttpGet]
         public IActionResult SubsriptionPlans() => View();
 
-        [HttpGet]
         public IActionResult Episodes() => View();
 
-        [HttpGet]
         public IActionResult Create() => View();
 
-        [HttpGet]
-        public async Task<IActionResult> Edit(string userId)
+        public async Task<IActionResult> EditUserRole(string userId)
         {
             // получаем пользователя
 
@@ -73,7 +68,6 @@ namespace NetFlex.WEB.Controllers
             return NotFound();
         }
 
-        [HttpGet]
         public IActionResult Users()
 		{
             var users = _userService.GetUsers().Select(u => new AdminUserVievModel
@@ -89,7 +83,6 @@ namespace NetFlex.WEB.Controllers
             return View(users);
 		}
 
-		[HttpGet]
 		public IActionResult Serials()
 		{
             try
@@ -118,7 +111,6 @@ namespace NetFlex.WEB.Controllers
             return View();
         }
 
-		[HttpGet]
 		public IActionResult Films()
 		{
             try
@@ -147,8 +139,16 @@ namespace NetFlex.WEB.Controllers
             return View();
 		}
 
-		[HttpGet]
-        public IActionResult Roles() 
+        public IActionResult Genres() 
+        {
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<GenreDTO, GenreViewModel>());
+            var mapper = new Mapper(config);
+            var genres = mapper.Map<IEnumerable<GenreDTO>, List<GenreViewModel>>(_videoService.GetGenres());
+
+            return View(genres);
+        }
+
+        public IActionResult Roles()
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<RoleDTO, RoleViewModel>());
             var mapper = new Mapper(config);
@@ -157,7 +157,6 @@ namespace NetFlex.WEB.Controllers
             return View(roles);
         }
 
-        [HttpGet]
         public IActionResult UploadFilm()
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<GenreDTO, GenreViewModel>());
@@ -248,7 +247,7 @@ namespace NetFlex.WEB.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(string userId, List<string> roles)
+        public async Task<IActionResult> EditUserRole(string userId, List<string> roles)
         {
             // получаем пользователя
             var user = await _userService.GetUser(userId);
@@ -275,7 +274,7 @@ namespace NetFlex.WEB.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(string role)
+        public async Task<IActionResult> CreateRole(string role)
         {
             try
             {
@@ -293,13 +292,40 @@ namespace NetFlex.WEB.Controllers
         public IActionResult AddGenre(string genre)
         {
 
-            if (genre != null && _videoService.GetGenres().Select(g => g.GenreName == genre) == null)
+            if (genre != null && _videoService.GetGenres().FirstOrDefault(g => g.GenreName == genre) == null)
             {
                 _videoService.AddGenre(genre);
+                return StatusCode(200);
+            }
+
+            return StatusCode(400);
+        }
+
+        [HttpPost]
+        public IActionResult EditGenre(string genre)
+        {
+            var _genre = _videoService.GetGenres().FirstOrDefault(g => g.GenreName == genre);
+            if (_genre != null)
+            {
+                /// EDIT GENRE
+                return StatusCode(200);
+            }
+
+            return StatusCode(400);
+        }
+
+        [HttpPost]
+        public IActionResult RemoveGenre(string id)
+        {
+
+            if (id != null)
+            {
+                _videoService.RemoveGenre(Guid.Parse(id));
                 return Ok();
             }
 
             return BadRequest();
         }
+
     }
 }

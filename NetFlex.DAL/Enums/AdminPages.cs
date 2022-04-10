@@ -14,6 +14,7 @@ namespace NetFlex.DAL.Enums
 		Movies,
 		Series,
 		Episodes,
-		Roles
+		Roles,
+		Genres
 	}
 }
