@@ -204,10 +204,22 @@ namespace NetFlex.WEB.Controllers
         {
             try
             {
-                var config = new MapperConfiguration(cfg => cfg.CreateMap<SerialViewModel, SerialDTO>());
-                var mapper = new Mapper(config);
-                var serialDTO = mapper.Map<SerialViewModel, SerialDTO>(model);
+                var configS = new MapperConfiguration(cfg => cfg.CreateMap<SerialViewModel, SerialDTO>());
+                var mapperS = new Mapper(configS);
+                var serialDTO = mapperS.Map<SerialViewModel, SerialDTO>(model);
+
+                var configE = new MapperConfiguration(cfg => cfg.CreateMap<EpisodeViewModel, EpisodeDTO>());
+                var mapperE = new Mapper(configE);
+                var episdoesDTO = mapperE.Map<List<EpisodeViewModel>, List<EpisodeDTO>>(model.Episodes);
+
                 _videoService.UploadSerial(serialDTO);
+                
+
+                foreach(var item in episdoesDTO)
+                {
+                    item.SerialId = model.Id;
+                    _videoService.UploadEpisode(item);
+                }
 
                 foreach (var item in model.Genres)
                 {
@@ -225,25 +237,6 @@ namespace NetFlex.WEB.Controllers
                 ModelState.AddModelError(ex.Property, ex.Message);
             }
             return RedirectToAction("Serials");
-        }
-
-        [HttpPost]
-        public IActionResult UploadEpisode(EpisodeViewModel model)
-        {
-            try
-            {
-                var config = new MapperConfiguration(cfg => cfg.CreateMap<EpisodeViewModel, EpisodeDTO>());
-                var mapper = new Mapper(config);
-                var episodeDTO = mapper.Map<EpisodeViewModel, EpisodeDTO>(model);
-                _videoService.UploadEpisode(episodeDTO);
-
-            }
-            catch (ValidationException ex)
-            {
-                ModelState.AddModelError(ex.Property, ex.Message);
-            }
-            return StatusCode(200);
-
         }
 
         [HttpPost]

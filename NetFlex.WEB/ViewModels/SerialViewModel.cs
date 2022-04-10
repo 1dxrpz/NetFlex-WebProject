@@ -12,6 +12,7 @@
         public string Description { get; set; }
 
         public List<GenreViewModel> Genres { get; set; }
+        public List<EpisodeViewModel> Episodes { get; set; }
 
         public SerialViewModel()
         {
