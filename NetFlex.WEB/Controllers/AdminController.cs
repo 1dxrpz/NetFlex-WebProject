@@ -120,8 +120,8 @@ namespace NetFlex.WEB.Controllers
                 var films = mapper.Map<IEnumerable<FilmDTO>, IEnumerable<FilmViewModel>>(_videoService.GetFilms());
 
                 var config2 = new MapperConfiguration(cfg => cfg.CreateMap<GenreDTO, GenreViewModel>());
-                var mapper2 = new Mapper(config);
-                var genres = mapper.Map<IEnumerable<GenreDTO>, IEnumerable<GenreViewModel>>(_videoService.GetGenres());
+                var mapper2 = new Mapper(config2);
+                var genres = mapper2.Map<IEnumerable<GenreDTO>, IEnumerable<GenreViewModel>>(_videoService.GetGenres());
 
 
                 var filmsView = new FullVideoInfoViewModel
@@ -147,6 +147,14 @@ namespace NetFlex.WEB.Controllers
 
             return View(genres);
         }
+        public List<GenreViewModel> GetGenres()
+        {
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<GenreDTO, GenreViewModel>());
+            var mapper = new Mapper(config);
+            var genres = mapper.Map<IEnumerable<GenreDTO>, List<GenreViewModel>>(_videoService.GetGenres());
+
+            return genres;
+        }
 
         public IActionResult Roles()
         {
@@ -157,6 +165,7 @@ namespace NetFlex.WEB.Controllers
             return View(roles);
         }
 
+        /*
         public IActionResult UploadFilm()
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<GenreDTO, GenreViewModel>());
@@ -168,9 +177,9 @@ namespace NetFlex.WEB.Controllers
                 AllGenres = genres,
             });
         }
-
+        */
         [HttpPost]
-        public IActionResult UploadFilm(FilmViewModel model)
+        public void UploadFilm([FromForm]FilmViewModel model)
         {
             try
             {
@@ -196,7 +205,7 @@ namespace NetFlex.WEB.Controllers
             {
                 ModelState.AddModelError(ex.Property, ex.Message);
             }
-            return RedirectToAction("Films");
+            //return RedirectToAction("Films");
         }
 
         [HttpPost]
