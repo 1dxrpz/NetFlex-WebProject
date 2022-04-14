@@ -31,6 +31,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 
 builder.Services.AddCors();
 
+builder.Services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
 builder.Services.AddMvc(options =>
 {
     options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());

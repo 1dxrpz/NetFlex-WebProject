@@ -179,7 +179,7 @@ namespace NetFlex.WEB.Controllers
         }
         */
         [HttpPost]
-        public void UploadFilm([FromForm]FilmViewModel model)
+        public IActionResult UploadFilm(FilmViewModel model)
         {
             try
             {
@@ -205,7 +205,7 @@ namespace NetFlex.WEB.Controllers
             {
                 ModelState.AddModelError(ex.Property, ex.Message);
             }
-            //return RedirectToAction("Films");
+            return RedirectToAction("Films");
         }
 
         [HttpPost]
