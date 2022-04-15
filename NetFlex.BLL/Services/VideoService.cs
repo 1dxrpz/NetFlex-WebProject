@@ -175,7 +175,8 @@ namespace NetFlex.BLL.Services
             var temp = mapper.Map<GenreDTO, Genre>(editedGenre);
 
             var g = Database.Genres.Get(editedGenre.Id);
-            g = temp;
+            g.GenreName = temp.GenreName;
+            Database.Genres.Update(g);
 
             Database.Save();
 

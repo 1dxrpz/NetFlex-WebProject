@@ -2,67 +2,126 @@
 @model NetFlex.WEB.ViewModels.FullVideoInfoViewModel;
 
 @{
-	Layout = "~/Views/Shared/_AdminLayout.cshtml";
-	ViewData["CurrentPage"] = AdminPages.Movies;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["CurrentPage"] = AdminPages.Movies;
 }
 
 <div class="layout">
-	<div class="vertical">
-		<div class="block">
-			<div class="wrapper">
-				<div class="topic">Movies</div>
-				<div class="description">Add & edit movies</div>
-			</div>
-		</div>
-	</div>
-	<div class="horizontal">
-		<div class="block blue">
-			<div class="icon corner">
-				<span><i class="fa-brands fa-apple"></i></span>
-			</div>
-			<div class="wrapper center">
-				<div class="topic">12</div>
-				<div class="spacer"></div>
-				<div class="description">Film count</div>
-			</div>
-		</div>
-		<div class="block green">
-			<div class="wrapper center">
-				<div class="topic">12</div>
-				<div class="spacer"></div>
-				<div class="description">Review count</div>
-			</div>
-		</div>
-	</div>
-	<div class="vertical">
-		<div class="horizontal m-0">
-			<div class="block">
-				<div class="horizontal m-0">
-					<a asp-action="UploadFilm" class="btn btn-warning m-1">Добавить фильм</a>
-					<div>
-						<ul class="pagination">
-							<li class="page-item">
-								<a class="page-link btn-dark" href="#" aria-label="Previous">
-									<span aria-hidden="true">&laquo;</span>
-								</a>
-							</li>
-							<li class="page-item btn-dark"><a class="page-link" href="#">1</a></li>
-							<li class="page-item btn-dark"><a class="page-link" href="#">2</a></li>
-							<li class="page-item btn-dark"><a class="page-link" href="#">3</a></li>
-							<li class="page-item btn-dark">
-								<a class="page-link" href="#" aria-label="Next">
-									<span aria-hidden="true">&raquo;</span>
-								</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="vertical">
-		@foreach(var item in Model.Films){
-
-		}
-	</div>
+    <div class="vertical">
+        <div class="block">
+            <div class="wrapper">
+                <div class="topic">Movies</div>
+                <div class="description">Add & edit movies</div>
+            </div>
+        </div>
+    </div>
+    <div class="horizontal">
+        <div class="block blue">
+            <div class="icon corner">
+                <span><i class="fa-brands fa-apple"></i></span>
+            </div>
+            <div class="wrapper center">
+                <div class="topic">12</div>
+                <div class="spacer"></div>
+                <div class="description">Film count</div>
+            </div>
+        </div>
+        <div class="block green">
+            <div class="wrapper center">
+                <div class="topic">12</div>
+                <div class="spacer"></div>
+                <div class="description">Review count</div>
+            </div>
+        </div>
+    </div>
+    <div class="vertical">
+        <div class="horizontal m-0">
+            <div class="block">
+                <div class="horizontal m-0">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddMovieModal">
+                        Добавить фильм
+                    </button>
+                    <div>
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a class="page-link btn-dark" href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item btn-dark"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item btn-dark"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item btn-dark"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item btn-dark">
+                                <a class="page-link" href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="vertical">
+    </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="AddMovieModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="AddMovieForm">
+                <div class="modal-body">
+                    @await Html.PartialAsync("partials/_AddMoviePartial.cshtml")
+                    <div class="genres">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="uploadMovie" class="btn btn-primary">Add Movie</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+
+        $.ajax({
+            url: './GetGenres',
+            type: 'GET',
+            success: function (data) {
+                data.forEach(v => {
+                    document.querySelector(".genres").innerHTML += `<input type='checkbox' name="FilmGenres" value=${v.genreName} />${v.genreName}`
+                });
+            },
+            error: function (error) {
+
+            }
+        });
+
+        $(document).ready(function () {
+            $("#uploadMovie").click(function (e) {
+                var valdata = $("#AddMovieForm").serialize();
+                $.ajax({
+                    url: "/Admin/UploadFilm",
+                    type: "POST",
+                    dataType: 'json',
+                    data: valdata,
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("XSRF-TOKEN",
+                            $('input:hidden[name="__RequestVerificationToken"]').val());
+                    },
+                });
+            });
+        });
+
+</script>
+}
