@@ -165,19 +165,6 @@ namespace NetFlex.WEB.Controllers
             return View(roles);
         }
 
-        /*
-        public IActionResult UploadFilm()
-        {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<GenreDTO, GenreViewModel>());
-            var mapper = new Mapper(config);
-            var genres = mapper.Map<IEnumerable<GenreDTO>, List<GenreViewModel>>(_videoService.GetGenres());
-
-            return View(new FilmViewModel
-            {
-                AllGenres = genres,
-            });
-        }
-        */
         [HttpPost]
         public IActionResult UploadFilm(FilmViewModel model)
         {
@@ -297,23 +284,21 @@ namespace NetFlex.WEB.Controllers
             if (genre != null && _videoService.GetGenres().FirstOrDefault(g => g.GenreName == genre) == null)
             {
                 _videoService.AddGenre(genre);
-                return StatusCode(200);
+                return RedirectToAction("Genres");
             }
-
             return StatusCode(400);
         }
 
         [HttpPost]
-        public IActionResult EditGenre(string oldName, string newName)
+        public IActionResult EditGenre(string id, string newName)
         {
-            var oldGenre = _videoService.GetGenres().FirstOrDefault(g => g.GenreName == oldName);
+            var oldGenre = _videoService.GetGenres().FirstOrDefault(g => g.Id == Guid.Parse(id));
             if (oldGenre != null)
             {
                 oldGenre.GenreName = newName;
                 _videoService.UpdateGenre(oldGenre);
-                return StatusCode(200);
+                return RedirectToAction("Genres");
             }
-
             return StatusCode(400);
         }
 
@@ -324,11 +309,19 @@ namespace NetFlex.WEB.Controllers
             if (id != null)
             {
                 _videoService.RemoveGenre(Guid.Parse(id));
-                return Ok();
+                return RedirectToAction("Genres");
             }
-
             return BadRequest();
         }
+        [HttpGet]
+        public GenreViewModel GetGenre(string id)
+		{
+            var model = _videoService.GetGenres().FirstOrDefault(v => v.Id == Guid.Parse(id));
 
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<GenreDTO, GenreViewModel>());
+            var mapper = new Mapper(config);
+            return mapper.Map<GenreDTO, GenreViewModel>(model);
+
+        }
     }
 }

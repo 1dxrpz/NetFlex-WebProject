@@ -44,9 +44,9 @@ namespace NetFlex.DAL.Repositories
         }
         public void Delete(Guid id)
         {
-            Review genre = _db.Reviews.Find(id);
+            Genre genre = _db.Genres.Find(id);
             if (genre != null)
-                _db.Reviews.Remove(genre);
+                _db.Genres.Remove(genre);
         }
     }
 }

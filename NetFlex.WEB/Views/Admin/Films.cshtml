@@ -94,25 +94,22 @@
 @section Scripts {
 <script>
 
-        //$.ajax({
-        //    url: './GetGenres',
-        //    type: 'GET',
-        //    success: function (data) {
-        //        data.forEach(v => {
-        //            document.querySelector(".genres").innerHTML += `<input type='checkbox' name="FilmGenres" value=${v.genreName} />${v.genreName}`
-        //        });
-        //    },
-        //    error: function (error) {
+        $.ajax({
+            url: './GetGenres',
+            type: 'GET',
+            success: function (data) {
+                data.forEach(v => {
+                    document.querySelector(".genres").innerHTML += `<input type='checkbox' name="FilmGenres" value=${v.genreName} />${v.genreName}`
+                });
+            },
+            error: function (error) {
 
-        //    }
-        //});
+            }
+        });
 
         $(document).ready(function () {
             $("#uploadMovie").click(function (e) {
-                //Serialize the form datas.
                 var valdata = $("#AddMovieForm").serialize();
-                //to get alert popup
-                alert(valdata);
                 $.ajax({
                     url: "/Admin/UploadFilm",
                     type: "POST",
