@@ -14,6 +14,7 @@ namespace NetFlex.BLL.Interfaces
 
         Task Create(string role);
         Task Delete(string role);
+        Task Update(RoleDTO editedRole);
         Task GiveRoles(List<string> role, string user);
         Task TakeAwayRoles(List<string> role, string user);
         void Dispose();

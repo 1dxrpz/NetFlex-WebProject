@@ -313,15 +313,6 @@ namespace NetFlex.WEB.Controllers
             }
             return BadRequest();
         }
-        [HttpGet]
-        public GenreViewModel GetGenre(string id)
-		{
-            var model = _videoService.GetGenres().FirstOrDefault(v => v.Id == Guid.Parse(id));
 
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<GenreDTO, GenreViewModel>());
-            var mapper = new Mapper(config);
-            return mapper.Map<GenreDTO, GenreViewModel>(model);
-
-        }
     }
 }
