@@ -49,6 +49,19 @@ namespace NetFlex.BLL.Services
             Database.Save();
             
         }
+
+        public async Task Update(RoleDTO editedRole)
+        {
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<RoleDTO, IdentityRole>());
+            var mapper = new Mapper(config);
+            var temp = mapper.Map<RoleDTO, IdentityRole>(editedRole);
+
+            var g = Database.Roles.Get(editedRole.Name);
+            g.Name = temp.Name;
+            await Database.Roles.Update(g);
+
+            Database.Save();
+        }
         
         public async Task GiveRoles(List<string> role, string user)
         {

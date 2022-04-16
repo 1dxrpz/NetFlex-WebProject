@@ -37,6 +37,12 @@ namespace NetFlex.DAL.Repositories
             await _roleManager.CreateAsync(role);
         }
 
+        public async Task Update(IdentityRole role)
+        {
+            var roleUpdate = await _roleManager.FindByIdAsync(role.Id);
+            await _roleManager.UpdateAsync(roleUpdate);
+        }
+
         public async Task GiveRoles(List<string> role, string userName)
         {
             var user = await _userManager.FindByNameAsync(userName);
