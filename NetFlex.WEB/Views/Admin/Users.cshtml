@@ -1,66 +1,76 @@
-﻿@using NetFlex.DAL.Enums
+﻿@using Microsoft.AspNetCore.Identity
+@using NetFlex.DAL.EF
+@using NetFlex.DAL.Enums
 @model IEnumerable<NetFlex.WEB.ViewModels.AdminUserVievModel>
+@inject NetFlex.BLL.Interfaces.IRoleService _roleManager
+@inject NetFlex.BLL.Interfaces.IUserService _userService
 
 @{
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    ViewData["CurrentPage"] = AdminPages.Users;
-    var i = 0;
+	Layout = "~/Views/Shared/_AdminLayout.cshtml";
+	ViewData["CurrentPage"] = AdminPages.Users;
+	var i = 0;
 }
+
+
 <div class="input-group mb-3">
-    <span class="input-group-text">$</span>
-    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-    <span class="input-group-text">.00</span>
+	<span class="input-group-text">$</span>
+	<input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+	<span class="input-group-text">.00</span>
 </div>
 <nav aria-label="Page navigation example">
-    <ul class="pagination">
-        <li class="page-item">
-            <a class="page-link btn-dark" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
-        <li class="page-item btn-dark"><a class="page-link" href="#">1</a></li>
-        <li class="page-item btn-dark"><a class="page-link" href="#">2</a></li>
-        <li class="page-item btn-dark"><a class="page-link" href="#">3</a></li>
-        <li class="page-item btn-dark">
-            <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
-    </ul>
+	<ul class="pagination">
+		<li class="page-item">
+			<a class="page-link btn-dark" href="#" aria-label="Previous">
+				<span aria-hidden="true">&laquo;</span>
+			</a>
+		</li>
+		<li class="page-item btn-dark"><a class="page-link" href="#">1</a></li>
+		<li class="page-item btn-dark"><a class="page-link" href="#">2</a></li>
+		<li class="page-item btn-dark"><a class="page-link" href="#">3</a></li>
+		<li class="page-item btn-dark">
+			<a class="page-link" href="#" aria-label="Next">
+				<span aria-hidden="true">&raquo;</span>
+			</a>
+		</li>
+	</ul>
 </nav>
 <div class="layout">
-    <div class="vertical">
-        <div class="block" label="users">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Password</th>
-                        <th scope="col">Role</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        i++;
-                        <tr>
-                            <th scope="row">@i</th>
-                            <td>@item.UserName</td>
-                            <td>@item.Email</td>
-                            <td>@item.Password</td>
-                            <td>
-                                <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-userid="@item.UserId">Права доступа</a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
+	<div class="vertical">
+		<div class="block" label="users">
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Name</th>
+						<th scope="col">Email</th>
+						<th scope="col">Password</th>
+						<th scope="col">Role</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var item in Model)
+					{
+						i++;
+						<tr>
+							<th scope="row">@i</th>
+							<td>@item.UserName</td>
+							<td>@item.Email</td>
+							<td>@item.Password</td>
+							<td>
+								<button onclick="loadChageUserRoles('@item.UserId')" type="button" class="btn btn-primary m-2">
+									Roles
+								</button>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
 </div>
+
 @section Scripts {
 <script>
+	
 </script>
 }

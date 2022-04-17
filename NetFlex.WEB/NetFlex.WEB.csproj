@@ -35,6 +35,21 @@
 
   <ItemGroup>
     <None Include="compilerconfig.json" />
+    <None Include="wwwroot\lib\jquery-confirm\.github\ISSUE_TEMPLATE.md" />
+    <None Include="wwwroot\lib\jquery-confirm\.gitignore" />
+    <None Include="wwwroot\lib\jquery-confirm\css\jquery-confirm.less" />
+    <None Include="wwwroot\lib\jquery-confirm\demo\demo.js" />
+    <None Include="wwwroot\lib\jquery-confirm\demo\libs\bundled.js" />
+    <None Include="wwwroot\lib\jquery-confirm\demo\libs\fonts\fontawesome-webfont.svg" />
+    <None Include="wwwroot\lib\jquery-confirm\demo\libs\fonts\fontawesome-webfont.woff2" />
+    <None Include="wwwroot\lib\jquery-confirm\demo\logo-name.svg" />
+    <None Include="wwwroot\lib\jquery-confirm\dist\jquery-confirm.min.js" />
+    <None Include="wwwroot\lib\jquery-confirm\js\jquery-confirm.js" />
+    <None Include="wwwroot\lib\jquery-confirm\LICENSE" />
+    <None Include="wwwroot\lib\jquery-confirm\README.md" />
+    <None Include="wwwroot\lib\jquery-ui-1.12.1\external\jquery\jquery.js" />
+    <None Include="wwwroot\lib\jquery-ui-1.12.1\jquery-ui.js" />
+    <None Include="wwwroot\lib\jquery-ui-1.12.1\jquery-ui.min.js" />
   </ItemGroup>
 
 </Project>

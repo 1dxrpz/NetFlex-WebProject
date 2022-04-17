@@ -1,6 +1,7 @@
 ﻿@using NetFlex.DAL.Enums
 
 @model IEnumerable<NetFlex.WEB.ViewModels.RoleViewModel>
+@inject NetFlex.BLL.Interfaces.IRoleService _roleManager
 
 @{
 	Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -17,8 +18,10 @@
 		<div class="horizontal m-0">
 			<div class="block">
 				<div class="horizontal m-0">
-					<a asp-action="Create" class="btn btn-warning m-1">Добавить роль</a>
-					<a asp-action="Users" class="btn btn-warning m-1">Список пользователей</a>
+					<button type="button" class="btn btn-primary m-2"
+							data-bs-toggle="modal" data-bs-target="#AddRoleModal">
+						Add role
+					</button>
 				</div>
 				<div class="horizontal m-0 justify-content-end">
 					<button type="button" class="btn btn-primary m-1">Save</button>
@@ -27,16 +30,20 @@
 		</div>
 		<div class="block" label="test">
 			<table class="table">
-				@foreach (var role in Model)
+				@foreach (var item in Model)
 				{
 					<tr>
-						<td>@role.Name</td>
+						<td>@item.Name</td>
 						<td>
-							<form asp-action="Delete" asp-route-id="@role.Id" method="post">
-								<button type="submit" class="btn btn-sm btn-danger">
-									Удалить
-								</button>
-							</form>
+							<button type="button" class="btn btn-danger m-2" onclick="RemoveRole('@item.Name')">
+								Remove
+							</button>
+						</td>
+						<td>
+							<button onclick="LoadEditRole('@item.Id')" type="button" class="btn btn-primary m-2"
+								data-bs-toggle="modal" data-bs-target="#EditRoleModal">
+								Edit
+							</button>
 						</td>
 					</tr>
 				}
@@ -44,3 +51,70 @@
 		</div>
 	</div>
 </div>
+
+<div class="modal fade" id="AddRoleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Add Genre</h5>
+				<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form class="input-group mb-3" method="post" asp-action="CreateRole" asp-controller="Admin">
+				<div class="modal-body">
+					<input name="role" type="text" class="form-control" placeholder="Role" aria-label="Role" aria-describedby="basic-addon1">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<button class="btn btn-primary" type="submit">Save changes</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="EditRoleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Add Genre</h5>
+				<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form class="input-group mb-3" id="EditGenreForm">
+				<div class="modal-body">
+					<input name="genre" value="" id="EditGenreName"
+						   type="text" class="form-control" placeholder="Genre"
+						   aria-label="Genre" aria-describedby="basic-addon1">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<button class="btn btn-primary" type="submit"> Save changes </button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+	<script>
+		function RemoveRole(role) {
+			$.ajax({
+				url: `./RemoveRole?role=${role}`,
+				type: "POST",
+				success: (data) => {
+					window.location.reload();
+				},
+				error: (error) => {
+					console.log(error);
+				},
+				beforeSend: function (xhr) {
+					xhr.setRequestHeader("XSRF-TOKEN",
+						$('input:hidden[name="__RequestVerificationToken"]').val());
+				}
+			});
+		}
+	</script>
+}

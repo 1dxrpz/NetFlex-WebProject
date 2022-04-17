@@ -35,7 +35,7 @@ namespace NetFlex.WEB.Controllers
 
         public IActionResult Episodes() => View();
 
-        public IActionResult Create() => View();
+        public IActionResult CreateRole() => View();
 
         public async Task<IActionResult> EditUserRole(string userId)
         {
@@ -166,7 +166,7 @@ namespace NetFlex.WEB.Controllers
         }
 
         [HttpPost]
-        public IActionResult UploadFilm(FilmViewModel model)
+        public void UploadFilm(FilmViewModel model)
         {
             try
             {
@@ -192,7 +192,12 @@ namespace NetFlex.WEB.Controllers
             {
                 ModelState.AddModelError(ex.Property, ex.Message);
             }
-            return RedirectToAction("Films");
+        }
+
+        [HttpPost]
+        public void RemoveMovie(string id)
+        {
+            /////////// remove movie
         }
 
         [HttpPost]
@@ -236,7 +241,7 @@ namespace NetFlex.WEB.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditUserRole(string userId, List<string> roles)
+        public async Task<IActionResult> ChangeUserRoles(string userId, List<string> roles)
         {
             // получаем пользователя
             var user = await _userService.GetUser(userId);
@@ -274,7 +279,31 @@ namespace NetFlex.WEB.Controllers
             {
                 ModelState.AddModelError(ex.Property, ex.Message);
             }
-            return RedirectToAction("Users");
+            return RedirectToAction("Roles");
+        }
+        [HttpPost]
+        public async Task<IActionResult> RemoveRole(string role)
+        {
+
+            if (role != null)
+            {
+                await _roleService.Delete(role);
+                return RedirectToAction("Roles");
+            }
+            return BadRequest();
+        }
+
+        [HttpPost]
+        public IActionResult EditRole(string name, string newName)
+        {
+            var oldRole = _roleService.GetRoles().FirstOrDefault(g => g.Name == name);
+            if (oldRole != null)
+            {
+                oldRole.Name = newName;
+                ////////////////////////////////////////////////////////////////////// Update
+                return RedirectToAction("Roles");
+            }
+            return StatusCode(400);
         }
 
         [HttpPost]
@@ -323,5 +352,38 @@ namespace NetFlex.WEB.Controllers
             return mapper.Map<GenreDTO, GenreViewModel>(model);
 
         }
+
+        /// Всю эту залупонь сверху /\ удалить нахуй и сделать api
+
+        /// Все в partials
+
+        [HttpGet]
+        public async Task<IActionResult> GetEditUserRolesPartial(string userID)
+        {
+            var user = await _userService.GetUser(userID);
+            if (user != null)
+            {
+                var userRoles = await _userService.GetRoles(user.UserName);
+
+                var allRolesDto = _roleService.GetRoles();
+
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<RoleDTO, RoleViewModel>());
+                var mapper = new Mapper(config);
+                var allRoles = mapper.Map<IEnumerable<RoleDTO>, List<RoleViewModel>>(allRolesDto);
+
+
+                ChangeRoleViewModel model = new ChangeRoleViewModel
+                {
+                    UserId = user.Id,
+                    UserEmail = user.Email,
+                    UserRoles = userRoles.ToList(),
+                    AllRoles = allRoles
+                };
+                return PartialView("Partial/_EditUserRoles", model);
+            }
+
+            return NotFound();
+        }
+
     }
 }
