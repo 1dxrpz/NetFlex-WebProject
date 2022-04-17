@@ -42,7 +42,6 @@ namespace NetFlex.DAL.Repositories
             await Task.Run(() =>
             {
                 _db.Entry(role).State = EntityState.Modified;
-
             });
         }
         public async Task GiveRoles(List<string> role, string userName)

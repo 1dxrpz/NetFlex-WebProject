@@ -39,12 +39,12 @@ namespace NetFlex.WEB.Controllers
 
         public async Task<IActionResult> EditUserRole(string userId)
         {
-            // получаем пользователя
+            // ГЇГ®Г«ГіГ·Г ГҐГ¬ ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«Гї
 
             var user = await _userService.GetUser(userId);
             if (user != null)
             {
-                // получем список ролей пользователя
+                // ГЇГ®Г«ГіГ·ГҐГ¬ Г±ГЇГЁГ±Г®ГЄ Г°Г®Г«ГҐГ© ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«Гї
 
                 var userRoles = await _userService.GetRoles(user.UserName);
 
@@ -243,18 +243,18 @@ namespace NetFlex.WEB.Controllers
         [HttpPost]
         public async Task<IActionResult> ChangeUserRoles(string userId, List<string> roles)
         {
-            // получаем пользователя
+            // ГЇГ®Г«ГіГ·Г ГҐГ¬ ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«Гї
             var user = await _userService.GetUser(userId);
 
             if (user != null)
             {
-                // получем список ролей пользователя
+                // ГЇГ®Г«ГіГ·ГҐГ¬ Г±ГЇГЁГ±Г®ГЄ Г°Г®Г«ГҐГ© ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«Гї
                 var userRoles = await _userService.GetRoles(user.UserName);
-                // получаем все роли
+                // ГЇГ®Г«ГіГ·Г ГҐГ¬ ГўГ±ГҐ Г°Г®Г«ГЁ
                 var allRolesDto = _roleService.GetRoles();
-                // получаем список ролей, которые были добавлены
+                // ГЇГ®Г«ГіГ·Г ГҐГ¬ Г±ГЇГЁГ±Г®ГЄ Г°Г®Г«ГҐГ©, ГЄГ®ГІГ®Г°Г»ГҐ ГЎГ»Г«ГЁ Г¤Г®ГЎГ ГўГ«ГҐГ­Г»
                 var addedRoles = roles.Except(userRoles);
-                // получаем роли, которые были удалены
+                // ГЇГ®Г«ГіГ·Г ГҐГ¬ Г°Г®Г«ГЁ, ГЄГ®ГІГ®Г°Г»ГҐ ГЎГ»Г«ГЁ ГіГ¤Г Г«ГҐГ­Г»
                 var removedRoles = userRoles.Except(roles);
 
                 await _roleService.GiveRoles(addedRoles.ToList(), user.UserName);
@@ -303,10 +303,6 @@ namespace NetFlex.WEB.Controllers
             }
             return BadRequest();
         }
-        [HttpGet]
-        public GenreViewModel GetGenre(string id)
-		{
-            var model = _videoService.GetGenres().FirstOrDefault(v => v.Id == Guid.Parse(id));
 
             var config = new MapperConfiguration(cfg => cfg.CreateMap<GenreDTO, GenreViewModel>());
             var mapper = new Mapper(config);
@@ -314,9 +310,9 @@ namespace NetFlex.WEB.Controllers
 
         }
 
-        /// Всю эту залупонь сверху /\ удалить нахуй и сделать api
+        /// Г‚Г±Гѕ ГЅГІГі Г§Г Г«ГіГЇГ®Г­Гј Г±ГўГҐГ°ГµГі /\ ГіГ¤Г Г«ГЁГІГј Г­Г ГµГіГ© ГЁ Г±Г¤ГҐГ«Г ГІГј api
 
-        /// Все в partials
+        /// Г‚Г±ГҐ Гў partials
 
         [HttpGet]
         public async Task<IActionResult> GetEditUserRolesPartial(string userID)
