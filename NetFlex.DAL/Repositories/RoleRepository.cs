@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using NetFlex.DAL.EF;
 using NetFlex.DAL.Interfaces;
 using System;
@@ -27,16 +28,23 @@ namespace NetFlex.DAL.Repositories
             return _roleManager.Roles.ToList();
         }
 
-        public IdentityRole Get(string name)
+        public IdentityRole Get(string id)
         {
-            return _db.Roles.FirstOrDefault(r => r.Name == name);
+            return _db.Roles.FirstOrDefault(r => r.Id == id);
         }
 
         public async Task Create(IdentityRole role)
         {
             await _roleManager.CreateAsync(role);
         }
+        public async Task Update(IdentityRole role)
+        {
+            await Task.Run(() =>
+            {
+                _db.Entry(role).State = EntityState.Modified;
 
+            });
+        }
         public async Task GiveRoles(List<string> role, string userName)
         {
             var user = await _userManager.FindByNameAsync(userName);
@@ -47,7 +55,6 @@ namespace NetFlex.DAL.Repositories
             var user = await _userManager.FindByNameAsync(userName);
             await _userManager.RemoveFromRolesAsync(user, role);
         }
-
         public async Task Delete(IdentityRole role)
         {
             await _roleManager.DeleteAsync(role);

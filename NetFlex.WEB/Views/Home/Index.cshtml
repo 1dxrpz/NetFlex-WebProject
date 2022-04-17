@@ -1,4 +1,9 @@
-﻿
+﻿@using Microsoft.AspNet.Identity.Owin
+@using Microsoft.AspNetCore.Identity
+@using NetFlex.DAL.EF
+@inject UserManager<ApplicationUser> _userManager
+@inject SignInManager<ApplicationUser> _sim
+
 @{
     ViewData["Title"] = "Home Page";
 }
