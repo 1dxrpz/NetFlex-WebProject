@@ -302,17 +302,12 @@ namespace NetFlex.WEB.Controllers
                 return RedirectToAction("Genres");
             }
             return BadRequest();
-        }
-
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<GenreDTO, GenreViewModel>());
-            var mapper = new Mapper(config);
-            return mapper.Map<GenreDTO, GenreViewModel>(model);
 
         }
 
         /// Âñþ ýòó çàëóïîíü ñâåðõó /\ óäàëèòü íàõóé è ñäåëàòü api
 
-        /// Âñå â partials
+        /// Âñå â partialsFix
 
         [HttpGet]
         public async Task<IActionResult> GetEditUserRolesPartial(string userID)
