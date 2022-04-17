@@ -21,9 +21,9 @@ namespace NetFlex.DAL.Repositories
             _userManager = userManager;
         }
 
-        public IEnumerable<ApplicationUser> GetAll()
+        public async Task<IEnumerable<ApplicationUser>> GetAll()
         {
-            return _db.Users;
+            return await _db.Users.ToListAsync();
         }
 
         public async Task<ApplicationUser> Get(string id)
@@ -31,32 +31,48 @@ namespace NetFlex.DAL.Repositories
             return await _userManager.FindByIdAsync(id); ;
         }
 
-        public void Create(ApplicationUser userSubscription)
+        public async Task Create(ApplicationUser userSubscription)
         {
-            _db.Users.Add(userSubscription);
+            await _db.Users.AddAsync(userSubscription);
         }
 
-        public void Update(ApplicationUser userSubscription)
+        public async Task Update(ApplicationUser userSubscription)
         {
-            _db.Entry(userSubscription).State = EntityState.Modified;
+            await Task.Run(() =>
+            {
+                _db.Entry(userSubscription).State = EntityState.Modified;
+
+            });
         }
-        public IEnumerable<ApplicationUser> Find(Func<ApplicationUser, Boolean> predicate)
+        public async Task<IEnumerable<ApplicationUser>> Find(Func<ApplicationUser, Boolean> predicate)
         {
-            return _db.Users.Where(predicate).ToList();
+            await Task.Run(() =>
+            {
+                return _db.Users.Where(predicate).ToList();
+
+            });
+            return null;
+            
         }
 
         public async Task<IEnumerable<string>> GetRoles(string userName)
         {
+
             var user = _db.Users.FirstOrDefault(u => u.UserName == userName);
 
             return await _userManager.GetRolesAsync(user);
         }
 
-        public void Delete(Guid id)
+        public async Task Delete(Guid id)
         {
-            ApplicationUser users = _db.Users.Find(id);
-            if (users != null)
-                _db.Users.Remove(users);
+            await Task.Run(() =>
+            {
+                ApplicationUser users = _db.Users.Find(id);
+                if (users != null)
+                    _db.Users.Remove(users);
+
+            });
+            
         }
     }
 }

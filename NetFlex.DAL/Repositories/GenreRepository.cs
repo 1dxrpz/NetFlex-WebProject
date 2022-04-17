@@ -19,34 +19,47 @@ namespace NetFlex.DAL.Repositories
             this._db = context;
         }
 
-        public IEnumerable<Genre> GetAll()
+        public async Task<IEnumerable<Genre>> GetAll()
         {
-            return _db.Genres;
+            return await _db.Genres.ToListAsync();
         }
 
-        public Genre Get(Guid id)
+        public async Task<Genre> Get(Guid id)
         {
-            return _db.Genres.Find(id);
+            return await _db.Genres.FindAsync(id);
         }
 
-        public void Create(Genre genre)
+        public async Task Create(Genre genre)
         {
-            _db.Genres.Add(genre);
+           await _db.Genres.AddAsync(genre);
         }
 
-        public void Update(Genre genre)
+        public async Task Update(Genre genre)
         {
-            _db.Entry(genre).State = EntityState.Modified;
+            await Task.Run(() =>
+            {
+                _db.Entry(genre).State = EntityState.Modified;
+
+            });
         }
-        public IEnumerable<Genre> Find(Func<Genre, Boolean> predicate)
+        public async Task<IEnumerable<Genre>> Find(Func<Genre, Boolean> predicate)
         {
-            return _db.Genres.Include(o => o.Id).Where(predicate).ToList();
+            await Task.Run(() =>
+            {
+                return _db.Genres.Include(o => o.Id).Where(predicate).ToList();
+
+            });
+            return null;
         }
-        public void Delete(Guid id)
+        public async Task Delete(Guid id)
         {
-            Genre genre = _db.Genres.Find(id);
-            if (genre != null)
-                _db.Genres.Remove(genre);
+            await Task.Run(() =>
+            {
+                Genre genre = _db.Genres.Find(id);
+                if (genre != null)
+                    _db.Genres.Remove(genre);
+
+            });
         }
     }
 }

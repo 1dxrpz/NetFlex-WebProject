@@ -22,25 +22,25 @@ namespace NetFlex.BLL.Services
             Database = database;
         }
 
-        public RoleDTO Get(string id)
+        public async Task<RoleDTO> Get(string id)
         {
+            var role = await Database.Roles.Get(id);
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<IdentityRole, RoleDTO>()).CreateMapper();
-            return mapper.Map<IdentityRole, RoleDTO>(Database.Roles.Get(id));
+            return mapper.Map<IdentityRole, RoleDTO>(role);
         }
 
-        public IEnumerable<RoleDTO> GetRoles()
+        public async Task<IEnumerable<RoleDTO>> GetRoles()
         {
+            var role = await Database.Roles.GetAll();
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<IdentityRole, RoleDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<IdentityRole>, List<RoleDTO>>(Database.Roles.GetAll());
+            return mapper.Map<IEnumerable<IdentityRole>, List<RoleDTO>>(role);
         }
 
         public async Task Create(string role)
         {
             var identityRole = new IdentityRole(role);
-            var temp = Database.Roles
-                .GetAll()
-                .FirstOrDefault(v => v.Name == role);
-            if (temp != null)
+            var roles = await Database.Roles.GetAll();
+            if (roles.FirstOrDefault(r => r.Name == role) != null)
                 throw new ValidationException("", "");
             await Database.Roles.Create(identityRole);
             
@@ -49,7 +49,7 @@ namespace NetFlex.BLL.Services
 
         public async Task Delete(string id)
         {
-            var res = Database.Roles.Get(id);
+            var res = await Database.Roles.Get(id);
             
             await Database.Roles.Delete(res);
             Database.Save();
@@ -61,7 +61,7 @@ namespace NetFlex.BLL.Services
             var config = new MapperConfiguration(cfg => cfg.CreateMap<RoleDTO, IdentityRole>());
             var mapper = new Mapper(config);
             var temp = mapper.Map<RoleDTO, IdentityRole>(editedRole);
-            var g = Database.Roles.Get(editedRole.Id);
+            var g = await Database.Roles.Get(editedRole.Id);
             g.Name = temp.Name;
             await Database.Roles.Update(g);
 

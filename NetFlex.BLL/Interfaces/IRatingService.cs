@@ -9,8 +9,8 @@ namespace NetFlex.BLL.Interfaces
 {
     public interface IRatingService
     {
-        IEnumerable<RatingDTO> GetRatings();
-        void SetRating(ReviewDTO model);
+        Task<IEnumerable<RatingDTO>> GetRatings();
+        Task SetRating(ReviewDTO model);
         void Dispose();
     }
 }

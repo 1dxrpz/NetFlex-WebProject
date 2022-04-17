@@ -19,34 +19,48 @@ namespace NetFlex.DAL.Repositories
             this._db = context;
         }
 
-        public IEnumerable<Episode> GetAll()
+        public async Task<IEnumerable<Episode>> GetAll()
         {
-            return _db.Episodes.Include(o => o.Title);
+            return await _db.Episodes.ToListAsync();
         }
 
-        public Episode Get(Guid id)
+        public async Task<Episode> Get(Guid id)
         {
-            return _db.Episodes.Find(id);
+            return await _db.Episodes.FindAsync(id);
         }
 
-        public void Create(Episode episode)
+        public async Task Create(Episode episode)
         {
-            _db.Episodes.Add(episode);
+            await _db.Episodes.AddAsync(episode);
         }
 
-        public void Update(Episode episode)
+        public async Task Update(Episode episode)
         {
-            _db.Entry(episode).State = EntityState.Modified;
+            await Task.Run(() =>
+            {
+                _db.Entry(episode).State = EntityState.Modified;
+
+            });
         }
-        public IEnumerable<Episode> Find(Func<Episode, Boolean> predicate)
+        public async Task<IEnumerable<Episode>> Find(Func<Episode, Boolean> predicate)
         {
-            return _db.Episodes.Include(o => o.Title).Where(predicate).ToList();
+            await Task.Run(() =>
+            {
+                return _db.Episodes.Include(o => o.Title).Where(predicate).ToList();
+
+            });
+            return null;
         }
-        public void Delete(Guid id)
+        public async Task Delete(Guid id)
         {
-            Episode episode = _db.Episodes.Find(id);
-            if (episode != null)
-                _db.Episodes.Remove(episode);
+            await Task.Run(() =>
+            {
+                Episode episode = _db.Episodes.Find(id);
+                if (episode != null)
+                    _db.Episodes.Remove(episode);
+
+            });
+            
         }
 
         

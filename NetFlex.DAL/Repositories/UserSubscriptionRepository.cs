@@ -19,34 +19,50 @@ namespace NetFlex.DAL.Repositories
             this._db = context;
         }
 
-        public IEnumerable<UserSubscription> GetAll()
+        public async Task<IEnumerable<UserSubscription>> GetAll()
         {
-            return _db.UserSubscriptions;
+            return await _db.UserSubscriptions.ToListAsync();
         }
 
-        public UserSubscription Get(Guid id)
+        public async Task<UserSubscription> Get(Guid id)
         {
-            return _db.UserSubscriptions.Find(id);
+            return await _db.UserSubscriptions.FindAsync(id);
         }
 
-        public void Create(UserSubscription userSubscription)
+        public async Task Create(UserSubscription userSubscription)
         {
-            _db.UserSubscriptions.Add(userSubscription);
+            await _db.UserSubscriptions.AddAsync(userSubscription);
         }
 
-        public void Update(UserSubscription userSubscription)
+        public async Task Update(UserSubscription userSubscription)
         {
-            _db.Entry(userSubscription).State = EntityState.Modified;
+            await Task.Run(() =>
+            {
+                _db.Entry(userSubscription).State = EntityState.Modified;
+
+            });
         }
-        public IEnumerable<UserSubscription> Find(Func<UserSubscription, Boolean> predicate)
+        public async Task<IEnumerable<UserSubscription>> Find(Func<UserSubscription, Boolean> predicate)
         {
-            return _db.UserSubscriptions.Where(predicate).ToList();
+            await Task.Run(() =>
+            {
+                return _db.UserSubscriptions.Where(predicate).ToList(); 
+
+            });
+
+            return null;
         }
-        public void Delete(Guid id)
+        public async Task Delete(Guid id)
         {
-            UserSubscription userSubscription = _db.UserSubscriptions.Find(id);
-            if (userSubscription != null)
-                _db.UserSubscriptions.Remove(userSubscription);
+            await Task.Run(() =>
+            {
+                UserSubscription userSubscription = _db.UserSubscriptions.Find(id);
+                if (userSubscription != null)
+                    _db.UserSubscriptions.Remove(userSubscription);
+
+            });
+
+           
         }
     }
 }

@@ -9,24 +9,24 @@ namespace NetFlex.BLL.Interfaces
 {
     public interface IVideoService
     {
-        void UploadFilm(FilmDTO filmDTO);
-        void UploadEpisode(EpisodeDTO episodeDTO);
-        void UploadSerial(SerialDTO serialDTO);
+        Task UploadFilm(FilmDTO filmDTO);
+        Task UploadEpisode(EpisodeDTO episodeDTO);
+        Task UploadSerial(SerialDTO serialDTO);
 
-        FilmDTO GetFilm(Guid id);
-        SerialDTO GetSerial(Guid id);
-        EpisodeDTO GetEpisode(Guid id);
+        Task<FilmDTO> GetFilm(Guid id);
+        Task<SerialDTO> GetSerial(Guid id);
+        Task<EpisodeDTO> GetEpisode(Guid id);
 
-        IEnumerable<FilmDTO> GetFilms();
-        IEnumerable<SerialDTO> GetSerials();
-        IEnumerable<EpisodeDTO> GetEpisodes();
+        Task<IEnumerable<FilmDTO>> GetFilms();
+        Task<IEnumerable<SerialDTO>> GetSerials();
+        Task<IEnumerable<EpisodeDTO>>GetEpisodes();
 
-        void AddGenre (string genre);
-        IEnumerable<GenreDTO> GetGenres();
-        IEnumerable<GenreVideoDTO> GetGenres(Guid id);
-        void SetGenres(GenreVideoDTO genres);
-        void RemoveGenre(Guid id);
-        void UpdateGenre(GenreDTO editedGenre);
+        Task AddGenre (string genre);
+        Task<IEnumerable<GenreDTO>> GetGenres();
+        Task<IEnumerable<GenreVideoDTO>> GetGenres(Guid id);
+        Task SetGenres(GenreVideoDTO genres);
+        Task RemoveGenre(Guid id);
+        Task UpdateGenre(GenreDTO editedGenre);
         void Dispose();
     }
 }

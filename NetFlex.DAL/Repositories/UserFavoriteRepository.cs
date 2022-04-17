@@ -19,36 +19,51 @@ namespace NetFlex.DAL.Repositories
             this._db = context;
         }
 
-        public  IEnumerable<UserFavorite> GetAll()
+        public async Task<IEnumerable<UserFavorite>> GetAll()
         {
-            return _db.UserFavorites;
+            return await _db.UserFavorites.ToListAsync();
         }
 
-        public UserFavorite Get(Guid id)
+        public async Task<UserFavorite> Get(Guid id)
         {
-            return _db.UserFavorites.Find(id);
+            return await _db.UserFavorites.FindAsync(id);
         }
 
-        public void Create(UserFavorite favorite)
+        public async Task Create(UserFavorite favorite)
         {
-            _db.UserFavorites.Add(favorite);
+            await _db.UserFavorites.AddAsync(favorite);
         }
 
-        public void Update(UserFavorite favorite)
+        public async Task Update(UserFavorite favorite)
         {
-            _db.Entry(favorite).State = EntityState.Modified;
+            await Task.Run(() =>
+            {
+                _db.Entry(favorite).State = EntityState.Modified;
+
+            });
         }
 
-        public IEnumerable<UserFavorite> Find(Func<UserFavorite, Boolean> predicate)
+        public async Task <IEnumerable<UserFavorite>> Find(Func<UserFavorite, Boolean> predicate)
         {
-            return _db.UserFavorites.Include(o => o.UserId).Where(predicate).ToList();
+            await Task.Run(() =>
+            {
+                return _db.UserFavorites.Include(o => o.UserId).Where(predicate).ToList();
+
+            });
+
+            return null;
         }
 
-        public void Delete(Guid id)
+        public async Task Delete(Guid id)
         {
-            UserFavorite favorite = _db.UserFavorites.FirstOrDefault(f => f.ContentId == id);
-            if (favorite != null)
-                _db.UserFavorites.Remove(favorite);
+            await Task.Run(() =>
+            {
+                UserFavorite favorite = _db.UserFavorites.FirstOrDefault(f => f.ContentId == id);
+                if (favorite != null)
+                    _db.UserFavorites.Remove(favorite);
+
+            });
+            
         }
     }
 }
