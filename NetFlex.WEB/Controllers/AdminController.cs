@@ -35,16 +35,16 @@ namespace NetFlex.WEB.Controllers
 
         public IActionResult Episodes() => View();
 
-        public IActionResult Create() => View();
+        public IActionResult CreateRole() => View();
 
         public async Task<IActionResult> EditUserRole(string userId)
         {
-            // получаем пользователя
+            // ГЇГ®Г«ГіГ·Г ГҐГ¬ ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«Гї
 
             var user = await _userService.GetUser(userId);
             if (user != null)
             {
-                // получем список ролей пользователя
+                // ГЇГ®Г«ГіГ·ГҐГ¬ Г±ГЇГЁГ±Г®ГЄ Г°Г®Г«ГҐГ© ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«Гї
 
                 var userRoles = await _userService.GetRoles(user.UserName);
 
@@ -166,7 +166,7 @@ namespace NetFlex.WEB.Controllers
         }
 
         [HttpPost]
-        public IActionResult UploadFilm(FilmViewModel model)
+        public void UploadFilm(FilmViewModel model)
         {
             try
             {
@@ -192,7 +192,12 @@ namespace NetFlex.WEB.Controllers
             {
                 ModelState.AddModelError(ex.Property, ex.Message);
             }
-            return RedirectToAction("Films");
+        }
+
+        [HttpPost]
+        public void RemoveMovie(string id)
+        {
+            /////////// remove movie
         }
 
         [HttpPost]
@@ -236,20 +241,20 @@ namespace NetFlex.WEB.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditUserRole(string userId, List<string> roles)
+        public async Task<IActionResult> ChangeUserRoles(string userId, List<string> roles)
         {
-            // получаем пользователя
+            // ГЇГ®Г«ГіГ·Г ГҐГ¬ ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«Гї
             var user = await _userService.GetUser(userId);
 
             if (user != null)
             {
-                // получем список ролей пользователя
+                // ГЇГ®Г«ГіГ·ГҐГ¬ Г±ГЇГЁГ±Г®ГЄ Г°Г®Г«ГҐГ© ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«Гї
                 var userRoles = await _userService.GetRoles(user.UserName);
-                // получаем все роли
+                // ГЇГ®Г«ГіГ·Г ГҐГ¬ ГўГ±ГҐ Г°Г®Г«ГЁ
                 var allRolesDto = _roleService.GetRoles();
-                // получаем список ролей, которые были добавлены
+                // ГЇГ®Г«ГіГ·Г ГҐГ¬ Г±ГЇГЁГ±Г®ГЄ Г°Г®Г«ГҐГ©, ГЄГ®ГІГ®Г°Г»ГҐ ГЎГ»Г«ГЁ Г¤Г®ГЎГ ГўГ«ГҐГ­Г»
                 var addedRoles = roles.Except(userRoles);
-                // получаем роли, которые были удалены
+                // ГЇГ®Г«ГіГ·Г ГҐГ¬ Г°Г®Г«ГЁ, ГЄГ®ГІГ®Г°Г»ГҐ ГЎГ»Г«ГЁ ГіГ¤Г Г«ГҐГ­Г»
                 var removedRoles = userRoles.Except(roles);
 
                 await _roleService.GiveRoles(addedRoles.ToList(), user.UserName);
@@ -260,21 +265,6 @@ namespace NetFlex.WEB.Controllers
             }
 
             return NotFound();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> CreateRole(string role)
-        {
-            try
-            {
-                await _roleService.Create(role);
-
-            }
-            catch (ValidationException ex)
-            {
-                ModelState.AddModelError(ex.Property, ex.Message);
-            }
-            return RedirectToAction("Users");
         }
 
         [HttpPost]
@@ -314,5 +304,109 @@ namespace NetFlex.WEB.Controllers
             return BadRequest();
         }
 
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<GenreDTO, GenreViewModel>());
+            var mapper = new Mapper(config);
+            return mapper.Map<GenreDTO, GenreViewModel>(model);
+
+        }
+
+        /// Г‚Г±Гѕ ГЅГІГі Г§Г Г«ГіГЇГ®Г­Гј Г±ГўГҐГ°ГµГі /\ ГіГ¤Г Г«ГЁГІГј Г­Г ГµГіГ© ГЁ Г±Г¤ГҐГ«Г ГІГј api
+
+        /// Г‚Г±ГҐ Гў partials
+
+        [HttpGet]
+        public async Task<IActionResult> GetEditUserRolesPartial(string userID)
+        {
+            var user = await _userService.GetUser(userID);
+            if (user != null)
+            {
+                var userRoles = await _userService.GetRoles(user.UserName);
+
+                var allRolesDto = _roleService.GetRoles();
+
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<RoleDTO, RoleViewModel>());
+                var mapper = new Mapper(config);
+                var allRoles = mapper.Map<IEnumerable<RoleDTO>, List<RoleViewModel>>(allRolesDto);
+
+
+                ChangeRoleViewModel model = new ChangeRoleViewModel
+                {
+                    UserId = user.Id,
+                    UserEmail = user.Email,
+                    UserRoles = userRoles.ToList(),
+                    AllRoles = allRoles
+                };
+                return PartialView("Partial/_EditUserRoles", model);
+            }
+
+            return NotFound();
+        }
+        [HttpGet]
+        public IActionResult GetAddRolesPartial()
+		{
+            return PartialView("Partial/_AddRole");
+        }
+        [HttpGet]
+        public IActionResult GetEditRolePartial(string id)
+        {
+            var oldRole = _roleService.Get(id);
+            if (oldRole != null)
+            {
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<RoleDTO, RoleViewModel>());
+                var mapper = new Mapper(config);
+                var newRole = mapper.Map<RoleDTO, RoleViewModel>(oldRole);
+
+                return PartialView("Partial/_EditRole", newRole);
+            }
+
+            return NotFound();
+        }
+
+        [HttpPost]
+        public async Task<RoleViewModel> CreateRole(string role)
+        {
+            try
+            {
+                await _roleService.Create(role);
+            }
+            catch (ValidationException ex)
+            {
+                ModelState.AddModelError(ex.Property, ex.Message);
+                return null;
+            }
+            
+            var createdRole = _roleService.GetRoles().FirstOrDefault(g => g.Name == role);
+
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<RoleDTO, RoleViewModel>());
+            var mapper = new Mapper(config);
+            var newRole = mapper.Map<RoleDTO, RoleViewModel>(createdRole);
+            return newRole;
+        }
+        [HttpPost]
+        public async Task<IActionResult> RemoveRole(string id)
+        {
+            if (id != null)
+            {
+                await _roleService.Delete(id);
+                return RedirectToAction("Roles");
+            }
+            return BadRequest();
+        }
+        [HttpPost]
+        public async Task<RoleViewModel> EditRole(string id, string newName)
+        {
+            var role = _roleService.GetRoles().FirstOrDefault(g => g.Id == id);
+            role.Name = newName;
+            await _roleService.Update(role);
+            return GetRole(id);
+        }
+        public RoleViewModel GetRole(string id)
+		{
+            var role = _roleService.Get(id);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<RoleDTO, RoleViewModel>());
+            var mapper = new Mapper(config);
+            var newRole = mapper.Map<RoleDTO, RoleViewModel>(role);
+            return newRole;
+        }
     }
 }

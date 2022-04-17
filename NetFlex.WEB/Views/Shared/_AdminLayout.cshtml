@@ -10,6 +10,8 @@
 	<link rel="stylesheet" href="~/NetFlex.WEB.styles.css" asp-append-version="true" />
 	<script src="https://kit.fontawesome.com/3ee70c58bc.js" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="~/css/Admin/Admin.min.css" />
+	<link rel="stylesheet" href="~/lib/jquery-confirm/css/jquery-confirm.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/lib/jquery-ui-1.12.1/jquery-ui.css">
 	<link rel="stylesheet" href="~/css/PanelsUI.css" />
 	@await RenderSectionAsync("Styles", required: false)
 </head>
@@ -66,7 +68,10 @@
 	</div>
 
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/jquery-ui-1.12.1/jquery-ui.js"></script>
+	<script src="~/lib/jquery-confirm/dist/jquery-confirm.min.js" asp-append-version="true"></script>
 	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/AdminPage.js"></script>
 	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

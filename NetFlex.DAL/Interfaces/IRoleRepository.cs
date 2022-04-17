@@ -11,8 +11,9 @@ namespace NetFlex.DAL.Interfaces
     public interface IRoleRepository
     {
         IEnumerable<IdentityRole> GetAll();
-        IdentityRole Get(string Name);
+        IdentityRole Get(string id);
         Task Create(IdentityRole name);
+        Task Update(IdentityRole role);
         Task Delete(IdentityRole name);
         Task Update(IdentityRole role);
         Task GiveRoles(List<string> role, string user);

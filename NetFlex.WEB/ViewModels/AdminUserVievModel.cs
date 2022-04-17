@@ -11,6 +11,6 @@ namespace NetFlex.WEB.ViewModels
         public string PhoneNumber { get; set; }
         public bool LockoutEnabled { get; set; }
         public string Avatar { get; set; }
-        public string Role { get; set; }
+        public List<RoleViewModel> Roles { get; set; }
     }
 }   

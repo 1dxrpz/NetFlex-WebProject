@@ -47,8 +47,6 @@
 	</div>
 </div>
 
-
-<!-- Modal -->
 <div class="modal fade" id="AddGenreModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
@@ -60,7 +58,7 @@
 			</div>
 			<form class="input-group mb-3" method="post" asp-action="AddGenre" asp-controller="Admin">
 				<div class="modal-body">
-					@await Html.PartialAsync("partials/_AddGenrePartial.cshtml")
+					<input name="genre" type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

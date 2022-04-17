@@ -1,6 +1,7 @@
 ﻿@using NetFlex.DAL.Enums
 
 @model IEnumerable<NetFlex.WEB.ViewModels.RoleViewModel>
+@inject NetFlex.BLL.Interfaces.IRoleService _roleManager
 
 @{
 	Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -17,26 +18,27 @@
 		<div class="horizontal m-0">
 			<div class="block">
 				<div class="horizontal m-0">
-					<a asp-action="Create" class="btn btn-warning m-1">Добавить роль</a>
-					<a asp-action="Users" class="btn btn-warning m-1">Список пользователей</a>
-				</div>
-				<div class="horizontal m-0 justify-content-end">
-					<button type="button" class="btn btn-primary m-1">Save</button>
+					<button type="button" class="btn btn-primary m-2" onclick="loadAddRole()">
+						Add role
+					</button>
 				</div>
 			</div>
 		</div>
 		<div class="block" label="test">
-			<table class="table">
-				@foreach (var role in Model)
+			<table class="table rolesTable">
+				@foreach (var item in Model)
 				{
-					<tr>
-						<td>@role.Name</td>
+					<tr class="AllRoles" data-name="@item.Name" data-id="@item.Id">
+						<td class="rolename">@item.Name</td>
 						<td>
-							<form asp-action="Delete" asp-route-id="@role.Id" method="post">
-								<button type="submit" class="btn btn-sm btn-danger">
-									Удалить
-								</button>
-							</form>
+							<button type="button" class="btn btn-danger m-2" onclick="RemoveRole('@item.Id')">
+								Remove
+							</button>
+						</td>
+						<td>
+							<button onclick="loadEditRole('@item.Id')" type="button" class="btn btn-primary m-2">
+								Edit
+							</button>
 						</td>
 					</tr>
 				}
@@ -44,3 +46,8 @@
 		</div>
 	</div>
 </div>
+
+@section Scripts {
+	<script>
+	</script>
+}
