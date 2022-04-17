@@ -12,43 +12,58 @@ namespace NetFlex.DAL.Repositories
 {
     public class RatingRepository : IRepository<Rating>
     {
-        private readonly DatabaseContext db;
+        private readonly DatabaseContext _db;
 
         public RatingRepository(DatabaseContext context)
         {
-            this.db = context;
+            this._db = context;
         }
 
-        public IEnumerable<Rating> GetAll()
+        public async Task<IEnumerable<Rating>> GetAll()
         {
-            return db.Ratings;
+            return await _db.Ratings.ToListAsync();
         }
 
-        public Rating Get(Guid id)
+        public async Task<Rating> Get(Guid id)
         {
-            return db.Ratings.Find(id);
+            return await _db.Ratings.FindAsync(id);
         }
 
-        public void Create(Rating rating)
+        public async Task Create(Rating rating)
         {
-            db.Ratings.Add(rating);
+            await _db.Ratings.AddAsync(rating);
         }
 
-        public void Update(Rating rating)
+        public async Task Update(Rating rating)
         {
-            db.Entry(rating).State = EntityState.Modified;
+            await Task.Run(() =>
+            {
+                _db.Entry(rating).State = EntityState.Modified;
+
+            });
+
         }
 
-        public IEnumerable<Rating> Find(Func<Rating, Boolean> predicate)
+        public async Task<IEnumerable<Rating>> Find(Func<Rating, Boolean> predicate)
         {
-            return db.Ratings.Where(predicate).ToList();
+            await Task.Run(() =>
+            {
+                return _db.Ratings.Where(predicate).ToList();
+
+            });
+
+            return null;
         }
 
-        public void Delete(Guid id)
+        public async Task Delete(Guid id)
         {
-            Rating rating = db.Ratings.Find(id);
-            if (rating != null)
-                db.Ratings.Remove(rating);
+            await Task.Run(() =>
+            {
+                Rating rating = _db.Ratings.Find(id);
+                if (rating != null)
+                    _db.Ratings.Remove(rating);
+            });
+            
         }
     }
 }

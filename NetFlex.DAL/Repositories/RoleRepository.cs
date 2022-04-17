@@ -23,14 +23,14 @@ namespace NetFlex.DAL.Repositories
             _db = db;
         }
 
-        public IEnumerable<IdentityRole> GetAll()
+        public async Task<IEnumerable<IdentityRole>> GetAll()
         {
-            return _roleManager.Roles.ToList();
+            return await _roleManager.Roles.ToListAsync();
         }
 
-        public IdentityRole Get(string id)
+        public async Task<IdentityRole> Get(string id)
         {
-            return _db.Roles.FirstOrDefault(r => r.Id == id);
+            return await _db.Roles.FirstOrDefaultAsync(r => r.Id == id);
         }
 
         public async Task Create(IdentityRole role)

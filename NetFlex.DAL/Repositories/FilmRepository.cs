@@ -20,34 +20,51 @@ namespace NetFlex.DAL.Repositories
             this._db = context;
         }
 
-        public IEnumerable<Film> GetAll()
+        public async Task<IEnumerable<Film>> GetAll()
         {
-            return _db.Films;
+            return await _db.Films.ToListAsync();
         }
 
-        public Film Get(Guid id)
+        public async Task<Film> Get(Guid id)
         {
-            return _db.Films.Find(id);
+            return await _db.Films.FindAsync(id);
         }
 
-        public void Create(Film film)
+        public async Task  Create(Film film)
         {
-            _db.Films.Add(film);
+            await _db.Films.AddAsync(film);
         }
 
-        public void Update(Film film)
+        public async Task  Update(Film film)
         {
-            _db.Entry(film).State = EntityState.Modified;
+            await Task.Run(() =>
+            {
+                _db.Entry(film).State = EntityState.Modified;
+
+            });
+            
         }
-        public IEnumerable<Film> Find(Func<Film, Boolean> predicate)
+        public async Task<IEnumerable<Film>> Find(Func<Film, Boolean> predicate)
         {
-            return _db.Films.Include(o => o.Title).Where(predicate).ToList();
+            await Task.Run(() =>
+            {
+                return _db.Films.Include(o => o.Title).Where(predicate).ToList();
+
+            });
+
+
+            return null;
         }
-        public void Delete(Guid id)
+        public async Task Delete(Guid id)
         {
-            Film order = _db.Films.Find(id);
-            if (order != null)
-                _db.Films.Remove(order);
+            await Task.Run(() =>
+            {
+                Film order = _db.Films.Find(id);
+                if (order != null)
+                    _db.Films.Remove(order);
+
+            });
+            
         }
     }
 }

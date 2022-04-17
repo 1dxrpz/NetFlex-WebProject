@@ -19,34 +19,50 @@ namespace NetFlex.DAL.Repositories
             this._db = context;
         }
 
-        public IEnumerable<Review> GetAll()
+        public async Task<IEnumerable<Review>> GetAll()
         {
-            return _db.Reviews.Include(o => o.Id);
+            return await _db.Reviews.ToListAsync();
         }
 
-        public Review Get(Guid id)
+        public async Task<Review> Get(Guid id)
         {
-            return _db.Reviews.Find(id);
+            return await _db.Reviews.FindAsync(id);
         }
 
-        public void Create(Review review)
+        public async Task Create(Review review)
         {
-            _db.Reviews.Add(review);
+            await _db.Reviews.AddAsync(review);
         }
 
-        public void Update(Review review)
+        public async Task Update(Review review)
         {
-            _db.Entry(review).State = EntityState.Modified;
+            await Task.Run(() =>
+            {
+                _db.Entry(review).State = EntityState.Modified;
+
+            });
+
         }
-        public IEnumerable<Review> Find(Func<Review, Boolean> predicate)
+        public async Task<IEnumerable<Review>> Find(Func<Review, Boolean> predicate)
         {
-            return _db.Reviews.Include(o => o.Id).Where(predicate).ToList();
+            await Task.Run(() =>
+            {
+                return _db.Reviews.Include(o => o.Id).Where(predicate).ToList();
+
+            });
+
+            return null;
         }
-        public void Delete(Guid id)
+        public async Task Delete(Guid id)
         {
-            Review order = _db.Reviews.Find(id);
-            if (order != null)
-                _db.Reviews.Remove(order);
+            await Task.Run(() =>
+            {
+                Review order = _db.Reviews.Find(id);
+                if (order != null)
+                    _db.Reviews.Remove(order);
+
+            });
+            
         }
     }
 }

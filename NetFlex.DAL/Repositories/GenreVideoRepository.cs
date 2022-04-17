@@ -19,34 +19,49 @@ namespace NetFlex.DAL.Repositories
             this._db = context;
         }
 
-        public IEnumerable<GenreVideo> GetAll()
+        public async Task<IEnumerable<GenreVideo>> GetAll()
         {
-            return _db.GenreVideos;
+            return await _db.GenreVideos.ToListAsync();
         }
 
-        public GenreVideo Get(Guid id)
+        public async Task<GenreVideo> Get(Guid id)
         {
-            return _db.GenreVideos.Find(id);
+            return await _db.GenreVideos.FindAsync(id);
         }
 
-        public void Create(GenreVideo genre)
+        public async Task Create(GenreVideo genre)
         {
-            _db.GenreVideos.Add(genre);
+           await _db.GenreVideos.AddAsync(genre);
         }
 
-        public void Update(GenreVideo genre)
+        public async Task Update(GenreVideo genre)
         {
-            _db.Entry(genre).State = EntityState.Modified;
+            await Task.Run(() =>
+            {
+                _db.Entry(genre).State = EntityState.Modified;
+
+            });
+            
         }
-        public IEnumerable<GenreVideo> Find(Func<GenreVideo, Boolean> predicate)
+        public async Task<IEnumerable<GenreVideo>> Find(Func<GenreVideo, Boolean> predicate)
         {
-            return _db.GenreVideos.Include(o => o.Id).Where(predicate).ToList();
+            await Task.Run(() =>
+            {
+                return _db.GenreVideos.Include(o => o.Id).Where(predicate).ToList();
+
+            });
+
+            return null;
         }
-        public void Delete(Guid id)
+        public async Task Delete(Guid id)
         {
-            Review genreVideo = _db.Reviews.Find(id);
-            if (genreVideo != null)
-                _db.Reviews.Remove(genreVideo);
+            await Task.Run(() =>
+            {
+                Review genreVideo = _db.Reviews.Find(id);
+                if (genreVideo != null)
+                    _db.Reviews.Remove(genreVideo);
+
+            });
         }
 
     }

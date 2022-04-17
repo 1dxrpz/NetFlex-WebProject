@@ -9,12 +9,12 @@ namespace NetFlex.DAL.Interfaces
 {
     public interface IUserRepository
     {
-        IEnumerable<ApplicationUser> GetAll();
+        Task<IEnumerable<ApplicationUser>> GetAll();
         Task<ApplicationUser> Get(string id);
-        IEnumerable<ApplicationUser> Find(Func<ApplicationUser, Boolean> predicate);
-        void Create(ApplicationUser item);
-        void Update(ApplicationUser item);
+        Task<IEnumerable<ApplicationUser>> Find(Func<ApplicationUser, Boolean> predicate);
+        Task Create(ApplicationUser item);
+        Task Update(ApplicationUser item);
         Task<IEnumerable<string>> GetRoles(string userName);
-        void Delete(Guid id);
+        Task Delete(Guid id);
     }
 }

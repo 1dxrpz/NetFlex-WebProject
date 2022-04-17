@@ -10,8 +10,8 @@ namespace NetFlex.DAL.Interfaces
 {
     public interface IRoleRepository
     {
-        IEnumerable<IdentityRole> GetAll();
-        IdentityRole Get(string id);
+        Task<IEnumerable<IdentityRole>> GetAll();
+        Task<IdentityRole> Get(string id);
         Task Create(IdentityRole name);
         Task Update(IdentityRole role);
         Task Delete(IdentityRole name);

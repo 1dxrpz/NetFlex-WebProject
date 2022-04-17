@@ -18,10 +18,11 @@ namespace NetFlex.BLL.Services
             Database = database;
         }
 
-        public IEnumerable<ReviewDTO> GetReviews()
+        public async Task<IEnumerable<ReviewDTO>> GetReviews()
         {
+            var reviews = await Database.Reviews.GetAll();
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Review, ReviewDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<Review>, List<ReviewDTO>>(Database.Reviews.GetAll());
+            return mapper.Map<IEnumerable<Review>, List<ReviewDTO>>(reviews);
         }
 
         public async Task PublishReview(ReviewDTO reviewDTO)
@@ -30,11 +31,8 @@ namespace NetFlex.BLL.Services
             var mapper = new Mapper(config);
             var review = mapper.Map<ReviewDTO, Review>(reviewDTO);
 
-            await Task.Run(() =>
-            {
-                Database.Reviews.Create(review);
-                Database.Save();
-            });
+            await Database.Reviews.Create(review);
+            Database.Save();
             
 
             Rating rating = new Rating
@@ -44,13 +42,9 @@ namespace NetFlex.BLL.Services
                 UserRating = review.Rating,
             };
 
-            await Task.Run(() =>
-            {
-                Database.Ratings.Create(rating);
-                Database.Save();
-            });
+            await Database.Ratings.Create(rating);
+            Database.Save();
 
-            
         }
 
         public void Dispose()

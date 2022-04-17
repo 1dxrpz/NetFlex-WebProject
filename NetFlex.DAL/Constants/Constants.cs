@@ -15,10 +15,19 @@ namespace NetFlex.DAL.Constants
             public const string User = "User";
         }
 
+        public static class Subscriptions
+        {
+            public const string RequireS = "RequireS";
+            public const string RequireSS = "RequireSS";
+            public const string RequireSSS = "RequireSSS";
+        }
+
         public static class Policies
         {
             public const string RequireAdmin = "RequireAdmin";
             public const string RequireManager = "RequireManager";
         }
+
+
     }
 }

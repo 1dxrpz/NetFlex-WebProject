@@ -22,26 +22,28 @@ namespace NetFlex.BLL.Services
             Database = database;
         }
 
-        public IEnumerable<RatingDTO> GetRatings()
+        public async Task<IEnumerable<RatingDTO>> GetRatings()
         {
+            var ratings = await Database.Ratings.GetAll();
+
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Rating, RatingDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<Rating>, List<RatingDTO>>(Database.Ratings.GetAll());
+            return  mapper.Map<IEnumerable<Rating>, List<RatingDTO>>(ratings);
         }
 
-        public void SetRating(ReviewDTO model)
+        public async Task SetRating(ReviewDTO model)
         {
-            var calc = new CalculateRating(GetRatings());
+            var calc = new CalculateRating(await GetRatings());
             var rating = calc.CalcRating(model.ContentId);
 
             Film filmRating = null;
             Serial serialRating = null;
 
-            filmRating = Database.Films.Get(model.ContentId);
+            filmRating = await Database.Films.Get(model.ContentId);
             filmRating.UserRating = rating;
 
             if (filmRating == null)
             {
-                serialRating = Database.Serials.Get(model.ContentId);
+                serialRating = await Database.Serials.Get(model.ContentId);
                 serialRating.UserRating = rating;
 
                 if (serialRating == null)

@@ -45,10 +45,11 @@ namespace NetFlex.BLL.Services
             };
         }
 
-        public IEnumerable<UserDTO> GetUsers()
+        public async Task<IEnumerable<UserDTO>> GetUsers()
         {
+            var users = await Database.Users.GetAll();
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUser, UserDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<ApplicationUser>, List<UserDTO>>(Database.Users.GetAll());
+            return mapper.Map<IEnumerable<ApplicationUser>, List<UserDTO>>(users);
         }
 
         public async Task<IEnumerable<string>> GetRoles(string userName)
@@ -57,21 +58,22 @@ namespace NetFlex.BLL.Services
             return await Database.Users.GetRoles(userName);
         }
 
-        public void AddToMyList(UserFavoriteDTO favorite)
+        public async Task AddToMyList(UserFavoriteDTO favorite)
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<UserFavoriteDTO, UserFavorite>()).CreateMapper();
             var add = mapper.Map<UserFavoriteDTO, UserFavorite>(favorite);
-            Database.UserFavorites.Create(add);
+            await Database.UserFavorites.Create(add);
         }
-        public void DeleteFromMyList(Guid favorite)
+        public async Task DeleteFromMyList(Guid favorite)
         {
-            Database.UserFavorites.Delete(favorite);
+            await Database.UserFavorites.Delete(favorite);
         }
 
-        public IEnumerable<UserFavoriteDTO> GetMyList(Guid userId)
+        public async Task<IEnumerable<UserFavoriteDTO>> GetMyList(Guid userId)
         {
+            var userFavorites = await Database.UserFavorites.GetAll();
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<UserFavorite, UserFavoriteDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<UserFavorite>, List<UserFavoriteDTO>>(Database.UserFavorites.GetAll().Where(f => f.UserId == userId));
+            return mapper.Map<IEnumerable<UserFavorite>, List<UserFavoriteDTO>>(userFavorites.Where(f => f.UserId == userId));
 
         }
 

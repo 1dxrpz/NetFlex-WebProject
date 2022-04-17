@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Threading.Tasks;
 using NetFlex.DAL.EF;
 using NetFlex.DAL.Entities;
 using NetFlex.DAL.Interfaces;
@@ -6,49 +6,63 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace NetFlex.DAL.Repositories
 {
     public class SubscriptionRepository : IRepository<Subscription>
     {
-        private readonly DatabaseContext db;
+        private readonly DatabaseContext _db;
 
         public SubscriptionRepository(DatabaseContext context)
         {
-            this.db = context;
+            this._db = context;
         }
 
-        public IEnumerable<Subscription> GetAll()
+        public async Task<IEnumerable<Subscription>> GetAll()
         {
-            return db.Subscriptions.Include(o => o.Name);
+            return await _db.Subscriptions.ToListAsync();
         }
 
-        public Subscription Get(Guid id)
+        public async Task<Subscription> Get(Guid id)
         {
-            return db.Subscriptions.Find(id);
+            return await _db.Subscriptions.FindAsync(id);
         }
 
-        public void Create(Subscription subscription)
+        public async Task Create(Subscription subscription)
         {
-            db.Subscriptions.Add(subscription);
+            await _db.Subscriptions.AddAsync(subscription);
         }
 
-        public void Update(Subscription subscription)
+        public async Task Update(Subscription subscription)
         {
-            db.Entry(subscription).State = EntityState.Modified;
+            await Task.Run(() =>
+            {
+                _db.Entry(subscription).State = EntityState.Modified;
+
+            });
         }
 
-        public IEnumerable<Subscription> Find(Func<Subscription, Boolean> predicate)
+        public async Task<IEnumerable<Subscription>> Find(Func<Subscription, Boolean> predicate)
         {
-            return db.Subscriptions.Where(predicate).ToList();
+            await Task.Run(() =>
+            {
+                return _db.Subscriptions.Where(predicate).ToList();
+
+            });
+
+            return null;
         }
 
-        public void Delete(Guid id)
+        public async Task Delete(Guid id)
         {
-            Subscription subscription = db.Subscriptions.Find(id);
-            if (subscription != null)
-                db.Subscriptions.Remove(subscription);
+            await Task.Run(() =>
+            {
+                Subscription subscription = _db.Subscriptions.Find(id);
+                if (subscription != null)
+                    _db.Subscriptions.Remove(subscription);
+            });
+            
         }
     }
 }

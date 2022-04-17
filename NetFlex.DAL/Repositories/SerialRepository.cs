@@ -12,43 +12,58 @@ namespace NetFlex.DAL.Repositories
 {
     public class SerialRepository : IRepository<Serial>
     {
-        private readonly DatabaseContext db;
+        private readonly DatabaseContext _db;
 
         public SerialRepository(DatabaseContext context)
         {
-            this.db = context;
+            this._db = context;
         }
 
-        public IEnumerable<Serial> GetAll()
+        public async Task<IEnumerable<Serial>> GetAll()
         {
-            return db.Serials;
+            return await _db.Serials.ToListAsync();
         }
 
-        public Serial Get(Guid id)
+        public async Task<Serial> Get(Guid id)
         {
-            return db.Serials.Find(id);
+            return await _db.Serials.FindAsync(id);
         }
 
-        public void Create(Serial serial)
+        public async Task Create(Serial serial)
         {
-            db.Serials.Add(serial);
+            await _db.Serials.AddAsync(serial);
         }
 
-        public void Update(Serial serial)
+        public async Task Update(Serial serial)
         {
-            db.Entry(serial).State = EntityState.Modified;
+            await Task.Run(() =>
+            {
+                _db.Entry(serial).State = EntityState.Modified;
+
+            });
+            
         }
 
-        public IEnumerable<Serial> Find(Func<Serial, Boolean> predicate)
+        public async Task<IEnumerable<Serial>> Find(Func<Serial, Boolean> predicate)
         {
-            return db.Serials.Include(o => o.Title).Where(predicate).ToList();
+            await Task.Run(() =>
+            {
+                return _db.Serials.Include(o => o.Title).Where(predicate).ToList();
+
+            });
+            return null;
         }
 
-        public void Delete(Guid id)
+        public async Task Delete(Guid id)
         {
-            Serial serial = db.Serials.Find(id);
-            if (serial != null)
-                db.Serials.Remove(serial);
+            await Task.Run(() =>
+            {
+                Serial serial = _db.Serials.Find(id);
+                if (serial != null)
+                    _db.Serials.Remove(serial);
+
+            });
+            
         }
     }
 }

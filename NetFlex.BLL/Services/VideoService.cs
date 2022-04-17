@@ -19,13 +19,13 @@ namespace NetFlex.BLL.Services
             Database = database;
         }
 
-        public EpisodeDTO GetEpisode(Guid id)
+        public async Task<EpisodeDTO> GetEpisode(Guid id)
         {
 
             if (id == null)
                 throw new ValidationException("Эпизод с таким id не найден", "");
 
-            var episode = Database.Episodes.Get(id);
+            var episode = await Database.Episodes.Get(id);
 
             if (episode == null)
                 throw new ValidationException("Эпизод не найден", "");
@@ -41,11 +41,11 @@ namespace NetFlex.BLL.Services
             };
         }
 
-        public FilmDTO GetFilm(Guid id)
+        public async Task<FilmDTO> GetFilm(Guid id)
         {
             if (id == null)
                 throw new ValidationException("Фильм с таким id не найден", "");
-            var film = Database.Films.Get(id);
+            var film = await Database.Films.Get(id);
             if (film == null)
                 throw new ValidationException("Фильм не найден", "");
 
@@ -62,11 +62,11 @@ namespace NetFlex.BLL.Services
             };
         }
 
-        public SerialDTO GetSerial(Guid id)
+        public async Task<SerialDTO> GetSerial(Guid id)
         {
             if (id == null)
                 throw new ValidationException("Фильм с таким id не найден", "");
-            var serial = Database.Serials.Get(id);
+            var serial = await Database.Serials.Get(id);
             if (serial == null)
                 throw new ValidationException("Фильм не найден", "");
 
@@ -82,78 +82,142 @@ namespace NetFlex.BLL.Services
             };
         }
 
-        public IEnumerable<EpisodeDTO> GetEpisodes()
+        public async Task<IEnumerable<EpisodeDTO>> GetEpisodes()
         {
+            var episodes = await Database.Episodes.GetAll();
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Episode, EpisodeDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<Episode>, List<EpisodeDTO>>(Database.Episodes.GetAll());
+            return mapper.Map<IEnumerable<Episode>, List<EpisodeDTO>>(episodes);
         }
 
-        public IEnumerable<FilmDTO> GetFilms()
+        public async Task<IEnumerable<FilmDTO>> GetFilms()
         {
+            var films = await Database.Films.GetAll();
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Film, FilmDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<Film>, List<FilmDTO>>(Database.Films.GetAll());
+            return mapper.Map<IEnumerable<Film>, List<FilmDTO>>(films);
         }
 
-        public IEnumerable<SerialDTO> GetSerials()
+        public async Task<IEnumerable<SerialDTO>> GetSerials()
         {
+            var serials = await Database.Serials.GetAll();
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Serial, SerialDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<Serial>, List<SerialDTO>>(Database.Serials.GetAll());
+            return mapper.Map<IEnumerable<Serial>, List<SerialDTO>>(serials);
         }
 
-        public void UploadEpisode(EpisodeDTO episodeDTO)
+        public async Task UploadEpisode(EpisodeDTO episodeDTO)
         {
+            var episodes = await Database.Episodes.GetAll();
+
+            if (episodes.FirstOrDefault(f => f.Title == episodeDTO.Title) != null)
+            {
+                throw new ValidationException("Епи с таким названием уже существует", "");
+            }
+
             var config = new MapperConfiguration(cfg => cfg.CreateMap<EpisodeDTO, Episode>());
             var mapper = new Mapper(config);
             var episode = mapper.Map<EpisodeDTO, Episode>(episodeDTO);
 
-            Database.Episodes.Create(episode);
-            Database.Save();
+           await  Database.Episodes.Create(episode);
         }
 
-        public void UploadFilm(FilmDTO filmDTO)
+        public async Task UploadFilm(FilmDTO filmDTO)
         {
+            var films = await Database.Films.GetAll();
+
+            if(films.FirstOrDefault(f => f.Title == filmDTO.Title) != null)
+            {
+                throw new ValidationException("Фильм с таким названием уже существует", "");
+            }
+
             var config = new MapperConfiguration(cfg => cfg.CreateMap<FilmDTO, Film>());
             var mapper = new Mapper(config);
             var film = mapper.Map<FilmDTO, Film>(filmDTO);
 
-            Database.Films.Create(film);
+            await Database.Films.Create(film);
             Database.Save();
         }
 
-        public void UploadSerial(SerialDTO serialDTO)
+        public async Task UploadSerial(SerialDTO serialDTO)
         {
+            var serials = await Database.Serials.GetAll();
+
+            if (serials.FirstOrDefault(f => f.Title == serialDTO.Title) != null)
+            {
+                throw new ValidationException("Сериал с таким названием уже существует", "");
+            }
+
             var config = new MapperConfiguration(cfg => cfg.CreateMap<SerialDTO, Serial>());
             var mapper = new Mapper(config);
             var serial = mapper.Map<SerialDTO, Serial>(serialDTO);
 
-            Database.Serials.Create(serial);
+            await Database.Serials.Create(serial);
             Database.Save();
         }
 
-        public IEnumerable<GenreDTO> GetGenres()
+        public async Task UpdateFilm(FilmDTO updatedFilm)
         {
+
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<FilmDTO, Film>());
+            var mapper = new Mapper(config);
+            var film = mapper.Map<FilmDTO, Film>(updatedFilm);
+
+            await Database.Films.Update(film);
+
+            Database.Save();
+
+        }
+
+        public async Task UpdateSerial(SerialDTO updatedSerial)
+        {
+
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<SerialDTO, Serial>());
+            var mapper = new Mapper(config);
+            var serial = mapper.Map<SerialDTO, Serial>(updatedSerial);
+
+            await Database.Serials.Update(serial);
+
+            Database.Save();
+
+        }
+
+        public async Task UpdateEpisode(EpisodeDTO updatedSerial)
+        {
+
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<EpisodeDTO, Episode>());
+            var mapper = new Mapper(config);
+            var episode = mapper.Map<EpisodeDTO, Episode>(updatedSerial);
+
+            await Database.Episodes.Update(episode);
+
+            Database.Save();
+
+        }
+
+        public async Task<IEnumerable<GenreDTO>> GetGenres()
+        {
+            var genres = await Database.Genres.GetAll();
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Genre, GenreDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<Genre>, List<GenreDTO>>(Database.Genres.GetAll());
+            return mapper.Map<IEnumerable<Genre>, List<GenreDTO>>(genres);
         }
 
-        public IEnumerable<GenreVideoDTO> GetGenres(Guid id)
+        public async Task<IEnumerable<GenreVideoDTO>> GetGenres(Guid id)
         {
+            var gerners = await Database.GenreVideos.GetAll();
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<GenreVideo, GenreVideoDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<GenreVideo>, List<GenreVideoDTO>>(Database.GenreVideos.GetAll().Where(c => c.ContentId == id));
+            return mapper.Map<IEnumerable<GenreVideo>, List<GenreVideoDTO>>(gerners.Where(c => c.ContentId == id));
         }
 
-        public void SetGenres(GenreVideoDTO genres)
+        public async Task SetGenres(GenreVideoDTO genres)
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<GenreVideoDTO, GenreVideo>()).CreateMapper();
             var res = mapper.Map<GenreVideoDTO, GenreVideo>(genres);
 
-            Database.GenreVideos.Create(res);
+            await Database.GenreVideos.Create(res);
             Database.Save();
         }
 
-        public void AddGenre(string genre)
+        public async Task AddGenre(string genre)
         {
-            Database.Genres.Create(new Genre
+            await Database.Genres.Create(new Genre
             {
                 Id = Guid.NewGuid(),
                 GenreName = genre
@@ -162,21 +226,21 @@ namespace NetFlex.BLL.Services
             Database.Save();
         }
 
-        public void RemoveGenre(Guid id)
+        public async Task RemoveGenre(Guid id)
         {
-            Database.Genres.Delete(id);
+            await Database.Genres.Delete(id);
             Database.Save();
         }
 
-        public void UpdateGenre(GenreDTO editedGenre)
+        public async Task UpdateGenre(GenreDTO editedGenre)
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<GenreDTO, Genre>());
             var mapper = new Mapper(config);
             var temp = mapper.Map<GenreDTO, Genre>(editedGenre);
 
-            var g = Database.Genres.Get(editedGenre.Id);
+            var g = await Database.Genres.Get(editedGenre.Id);
             g.GenreName = temp.GenreName;
-            Database.Genres.Update(g);
+            await Database.Genres.Update(g);
 
             Database.Save();
 

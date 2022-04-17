@@ -10,7 +10,7 @@ namespace NetFlex.BLL.Interfaces
 {
     public interface IReviewService
     {
-        IEnumerable<ReviewDTO> GetReviews();
+        Task<IEnumerable<ReviewDTO>> GetReviews();
         Task PublishReview(ReviewDTO model);
         void Dispose();
     }
