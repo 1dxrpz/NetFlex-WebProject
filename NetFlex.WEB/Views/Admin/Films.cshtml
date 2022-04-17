@@ -40,7 +40,7 @@
 		<div class="horizontal m-0">
 			<div class="block">
 				<div class="horizontal m-0">
-					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddMovieModal">
+					<button type="button" class="btn btn-primary" onclick="loadAddMovie()">
 						Добавить фильм
 					</button>
 					<div>
@@ -65,22 +65,20 @@
 		</div>
 	</div>
 	<div class="vertical">
-		<table class="table">
+		<table class="table moviesTable">
 			@foreach (var item in Model.Films)
 			{
-				<tr>
-					<td>@item.Title</td>
-					<td>@item.AgeRating</td>
-					<td>@item.Duration</td>
-					<td>@item.FilmGenres</td>
+				<tr class="AllMovies" data-id='@item.Id'>
+					<td class="title">@item.Title</td>
+					<td class="rating">@item.UserRating</td>
+					<td class="age_rating">@item.AgeRating</td>
 					<td>
 						<button type="button" class="btn btn-danger m-2" onclick="RemoveMovie('@item.Id')">
 							Remove
 						</button>
 					</td>
 					<td>
-						<button onclick="LoadEditRole('@item.Id')" type="button" class="btn btn-primary m-2"
-							data-bs-toggle="modal" data-bs-target="#EditRoleModal">
+						<button onclick="loadEditMovie('@item.Id')" type="button" class="btn btn-primary m-2">
 							Edit
 						</button>
 					</td>
@@ -90,75 +88,8 @@
 	</div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="AddMovieModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-				<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<form id="AddMovieForm" enctype="multipart/form-data">
-				<div class="modal-body">
-					<input name="Title" type="text" placeholder="Movie title" />
-					<input name="Poster" type="text" placeholder="Poster link" />
-					<input name="Duration" type="number" placeholder="duration (legacy)" />
-					<input name="AgeRating" type="text" placeholder="Age rating" />
-					<input name="UserRating" type="number" placeholder="user Rating" />
-					<input name="Description" type="text" placeholder="Description" />
-					<input name="VideoLink" type="text" placeholder="Video Link" />
-					<div class="genres">
-						@foreach (var genre in _videoService.GetGenres())
-						{
-							<input type='checkbox' name="FilmGenres" value="@genre.GenreName" />
-							<label>@genre.GenreName</label>
-						}
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-					<button type="button" id="uploadMovie" class="btn btn-primary">Add Movie</button>
-				</div>
-			</form>
-		</div>
-	</div>
-</div>
 
 @section Scripts {
 <script>
-	$(document).ready(function () {
-		$("#uploadMovie").click(function (e) {
-			var valdata = $("#AddMovieForm").serialize();
-			$.ajax({
-				url: "./UploadFilm",
-				type: "POST",
-				data: valdata,
-				success: function (data) {
-					window.location.reload();
-				},
-				beforeSend: function (xhr) {
-					xhr.setRequestHeader("XSRF-TOKEN",
-						$('input:hidden[name="__RequestVerificationToken"]').val());
-				},
-			});
-		});
-	});
-
-	function RemoveMovie(id) {
-		$.ajax({
-			url: `./RemoveMovie?id=${id}`,
-			type: "POST",
-			success: function (data) {
-				window.location.reload();
-			},
-			beforeSend: function (xhr) {
-				xhr.setRequestHeader("XSRF-TOKEN",
-					$('input:hidden[name="__RequestVerificationToken"]').val());
-			},
-		});
-	}
-
 </script>
 }

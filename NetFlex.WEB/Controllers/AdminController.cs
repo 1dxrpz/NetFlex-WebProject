@@ -165,34 +165,7 @@ namespace NetFlex.WEB.Controllers
             return View(roles);
         }
 
-        [HttpPost]
-        public void UploadFilm(FilmViewModel model)
-        {
-            try
-            {
-                var config = new MapperConfiguration(cfg => cfg.CreateMap<FilmViewModel, FilmDTO>());
-                var mapper = new Mapper(config);
-                var filmDTO = mapper.Map<FilmViewModel, FilmDTO>(model);
-                filmDTO.Id = Guid.NewGuid();
-
-                _videoService.UploadFilm(filmDTO);
-
-                for (int i = 0; i < model.FilmGenres.Count; i++)
-                {
-                    var genresDto = new GenreVideoDTO
-                    {
-                        Id = Guid.NewGuid(),
-                        ContentId = filmDTO.Id,
-                        GenreName = model.FilmGenres[i],
-                    };
-                    _videoService.SetGenres(genresDto);
-                }
-            }
-            catch (ValidationException ex)
-            {
-                ModelState.AddModelError(ex.Property, ex.Message);
-            }
-        }
+		#region Lagacy
 
         [HttpPost]
         public void RemoveMovie(string id)
@@ -267,49 +240,16 @@ namespace NetFlex.WEB.Controllers
             return NotFound();
         }
 
-        [HttpPost]
-        public IActionResult AddGenre(string genre)
-        {
+		#endregion
 
-            if (genre != null && _videoService.GetGenres().FirstOrDefault(g => g.GenreName == genre) == null)
-            {
-                _videoService.AddGenre(genre);
-                return RedirectToAction("Genres");
-            }
-            return StatusCode(400);
-        }
+		/// Âñþ ýòó çàëóïîíü ñâåðõó /\ óäàëèòü íàõóé è ñäåëàòü api
+		/// ahahahhaha wtf???
+		/// Âñå â partialsFix
 
-        [HttpPost]
-        public IActionResult EditGenre(string id, string newName)
-        {
-            var oldGenre = _videoService.GetGenres().FirstOrDefault(g => g.Id == Guid.Parse(id));
-            if (oldGenre != null)
-            {
-                oldGenre.GenreName = newName;
-                _videoService.UpdateGenre(oldGenre);
-                return RedirectToAction("Genres");
-            }
-            return StatusCode(400);
-        }
+		#region Partials
+		#region Add
 
-        [HttpPost]
-        public IActionResult RemoveGenre(string id)
-        {
-
-            if (id != null)
-            {
-                _videoService.RemoveGenre(Guid.Parse(id));
-                return RedirectToAction("Genres");
-            }
-            return BadRequest();
-
-        }
-
-        /// Âñþ ýòó çàëóïîíü ñâåðõó /\ óäàëèòü íàõóé è ñäåëàòü api
-
-        /// Âñå â partialsFix
-
-        [HttpGet]
+		[HttpGet]
         public async Task<IActionResult> GetEditUserRolesPartial(string userID)
         {
             var user = await _userService.GetUser(userID);
@@ -336,12 +276,26 @@ namespace NetFlex.WEB.Controllers
 
             return NotFound();
         }
+        
         [HttpGet]
         public IActionResult GetAddRolesPartial()
 		{
             return PartialView("Partial/_AddRole");
         }
         [HttpGet]
+        public IActionResult GetAddGenrePartial()
+        {
+            return PartialView("Partial/_AddGenre");
+        }
+        [HttpGet]
+        public IActionResult GetAddMoviePartial()
+        {
+            return PartialView("Partial/_AddMovie");
+        }
+
+		#endregion
+		#region Edit
+		[HttpGet]
         public IActionResult GetEditRolePartial(string id)
         {
             var oldRole = _roleService.Get(id);
@@ -356,7 +310,42 @@ namespace NetFlex.WEB.Controllers
 
             return NotFound();
         }
+        public IActionResult GetEditGenrePartial(string id)
+        {
+            var oldGenre = _videoService
+                .GetGenres()
+                .FirstOrDefault(v => v.Id == Guid.Parse(id));
+            if (oldGenre != null)
+            {
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<GenreDTO, GenreViewModel>());
+                var mapper = new Mapper(config);
+                var newGenre = mapper.Map<GenreDTO, GenreViewModel>(oldGenre);
 
+                return PartialView("Partial/_EditGenre", newGenre);
+            }
+
+            return NotFound();
+        }
+        public IActionResult GetEditMoviePartial(string id)
+        {
+            var movie = _videoService
+                .GetFilms()
+                .FirstOrDefault(v => v.Id == Guid.Parse(id));
+            if (movie != null)
+            {
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<FilmDTO, FilmViewModel>());
+                var mapper = new Mapper(config);
+                var tempMovie = mapper.Map<FilmDTO, FilmViewModel>(movie);
+
+                return PartialView("Partial/_EditMovie", tempMovie);
+            }
+
+            return NotFound();
+        }
+        #endregion
+        #endregion
+
+        #region Roles
         [HttpPost]
         public async Task<RoleViewModel> CreateRole(string role)
         {
@@ -403,5 +392,100 @@ namespace NetFlex.WEB.Controllers
             var newRole = mapper.Map<RoleDTO, RoleViewModel>(role);
             return newRole;
         }
+		#endregion
+
+		#region Genres
+		[HttpPost]
+        public GenreViewModel CreateGenre(string genre)
+        {
+
+            if (genre != null && _videoService.GetGenres().FirstOrDefault(g => g.GenreName == genre) == null)
+            {
+                _videoService.AddGenre(genre);
+                
+                var temp = _videoService.GetGenres().FirstOrDefault(v => v.GenreName == genre);
+
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<GenreDTO, GenreViewModel>());
+                var mapper = new Mapper(config);
+                return mapper.Map<GenreDTO, GenreViewModel>(temp);
+            }
+            return null;
+        }
+        [HttpPost]
+        public IActionResult RemoveGenre(string id)
+        {
+
+            if (id != null)
+            {
+                _videoService.RemoveGenre(Guid.Parse(id));
+                return RedirectToAction("Genres");
+            }
+            return BadRequest();
+
+        }
+        [HttpPost]
+        public GenreViewModel EditGenre(string id, string newName)
+        {
+            var oldGenre = _videoService.GetGenres().FirstOrDefault(g => g.Id == Guid.Parse(id));
+            oldGenre.GenreName = newName;
+            _videoService.UpdateGenre(oldGenre);
+
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<GenreDTO, GenreViewModel>());
+            var mapper = new Mapper(config);
+            return mapper.Map<GenreDTO, GenreViewModel>(oldGenre);
+        }
+        #endregion
+
+        #region Movie
+        
+        [HttpPost]
+        public FilmViewModel CreateMovie(FilmViewModel model)
+        {
+            try
+            {
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<FilmViewModel, FilmDTO>());
+                var mapper = new Mapper(config);
+                var filmDTO = mapper.Map<FilmViewModel, FilmDTO>(model);
+                filmDTO.Id = Guid.NewGuid();
+
+                _videoService.UploadFilm(filmDTO);
+
+                for (int i = 0; i < model.FilmGenres.Count; i++)
+                {
+                    var genresDto = new GenreVideoDTO
+                    {
+                        Id = Guid.NewGuid(),
+                        ContentId = filmDTO.Id,
+                        GenreName = model.FilmGenres[i],
+                    };
+                    _videoService.SetGenres(genresDto);
+                }
+                model.Id = filmDTO.Id;
+                return model;
+            }
+            catch (ValidationException ex)
+            {
+                ModelState.AddModelError(ex.Property, ex.Message);
+                return null;
+            }
+        }
+
+        [HttpPost]
+        public JsonResult EditMovie(FilmViewModel model)
+        {
+            /*
+            var oldMovie = _videoService.GetFilms().FirstOrDefault(g => g.Id == model.Id);
+            
+            
+
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<GenreDTO, GenreViewModel>());
+            var mapper = new Mapper(config);
+            return mapper.Map<GenreDTO, GenreViewModel>(oldGenre);
+            */
+            return null;
+        }
+
+        #endregion
+
     }
 }
