@@ -8,7 +8,7 @@
 	<input name="Description" type="text" placeholder="Description" />
 	<input name="VideoLink" type="text" placeholder="Video Link" />
 	<div class="genres">
-		@foreach (var genre in _videoService.GetGenres())
+		@foreach (var genre in await _videoService.GetGenres())
 		{
 			<input type='checkbox' name="FilmGenres" value="@genre.GenreName" />
 			<label>@genre.GenreName</label>

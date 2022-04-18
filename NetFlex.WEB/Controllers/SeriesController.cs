@@ -15,11 +15,12 @@ namespace NetFlex.WEB.Controllers
             _videoService = videoService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var getSerials = await _videoService.GetSerials();
             var config = new MapperConfiguration(cfg => cfg.CreateMap<SerialDTO, SerialViewModel>());
             var mapper = new Mapper(config);
-            var serials = mapper.Map<IEnumerable<SerialDTO>, IEnumerable<SerialViewModel>>(_videoService.GetSerials());
+            var serials = mapper.Map<IEnumerable<SerialDTO>, IEnumerable<SerialViewModel>>(getSerials);
 
             return View(serials);
         }

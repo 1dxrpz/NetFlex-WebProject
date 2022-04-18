@@ -24,13 +24,17 @@ namespace NetFlex.BLL.Interfaces
         Task UpdateFilm(FilmDTO updatedFilm);
         Task UpdateSerial(SerialDTO updatedSerial);
         Task UpdateEpisode(EpisodeDTO updatedEpisode);
+        Task UpdateGenre(GenreDTO editedGenre);
 
         Task AddGenre (string genre);
         Task<IEnumerable<GenreDTO>> GetGenres();
         Task<IEnumerable<GenreVideoDTO>> GetGenres(Guid id);
         Task SetGenres(GenreVideoDTO genres);
+        Task TakeAwayGenres(string id, List<string> genres);
         Task RemoveGenre(Guid id);
-        Task UpdateGenre(GenreDTO editedGenre);
+        Task RemoveFilm(Guid id);
+        Task RemoveSerial(Guid id);
+        Task RemoveEpisode(Guid id);
         void Dispose();
     }
 }

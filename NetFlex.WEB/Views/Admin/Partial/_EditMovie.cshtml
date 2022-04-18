@@ -9,9 +9,9 @@
 	<input name="Description" type="text" placeholder="Description" value="@Model.Description" />
 	<input name="VideoLink" type="text" placeholder="Video Link" value="@Model.VideoLink" />
 	<div class="genres">
-		@foreach (var genre in _videoService.GetGenres())
+		@foreach (var genre in await _videoService.GetGenres())
 		{
-			<input type='checkbox' name="FilmGenres" value="@genre.GenreName" 
+			<input type='checkbox' name="genres" value="@genre.GenreName" 
 			@(Model.FilmGenres.Contains(genre.GenreName) ? "checked='checked''" : "")/>
 			<label>@genre.GenreName</label>
 		}

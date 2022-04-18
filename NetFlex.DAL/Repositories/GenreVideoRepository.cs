@@ -55,9 +55,9 @@ namespace NetFlex.DAL.Repositories
         }
         public async Task Delete(Guid id)
         {
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
-                Review genreVideo = _db.Reviews.Find(id);
+                Review genreVideo = await _db.Reviews.FindAsync(id);
                 if (genreVideo != null)
                     _db.Reviews.Remove(genreVideo);
 
