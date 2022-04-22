@@ -27,11 +27,11 @@ namespace NetFlex.WEB.Controllers
 			return View();
 		}
 
-		public IActionResult ViewFilm(Guid id)
+		public async Task<IActionResult> ViewFilm(Guid id)
         {
             try
             {
-                FilmDTO filmDTO = _videoService.GetFilm(id);
+                FilmDTO filmDTO = await _videoService.GetFilm(id);
 
                 return View(filmDTO);
             }
@@ -42,20 +42,22 @@ namespace NetFlex.WEB.Controllers
         }
 
         [HttpGet("Seraes")]
-        public IActionResult GetSerial(Guid sereasId)
+        public async Task<IActionResult> GetSerial(Guid sereasId)
         {
+            var getSetial = await _videoService.GetSerial(sereasId);
             var config = new MapperConfiguration(cfg => cfg.CreateMap<SerialDTO, SerialViewModel>());
             var mapper = new Mapper(config);
-            var sereas = mapper.Map<SerialDTO, SerialViewModel>(_videoService.GetSerial(sereasId));
+            var sereas = mapper.Map<SerialDTO, SerialViewModel>(getSetial);
             return View(sereas);
         }
 
         [HttpGet("Movie")]
-        public IActionResult GetFilm(Guid movieId)
+        public async Task<IActionResult> GetFilm(Guid movieId)
         {
+            var getFilm = await _videoService.GetFilm(movieId);
             var config = new MapperConfiguration(cfg => cfg.CreateMap<FilmDTO, FilmViewModel>());
             var mapper = new Mapper(config);
-            var movie = mapper.Map<FilmDTO, FilmViewModel>(_videoService.GetFilm(movieId));
+            var movie = mapper.Map<FilmDTO, FilmViewModel>(getFilm);
             return View(movie);
         }
 
@@ -68,7 +70,7 @@ namespace NetFlex.WEB.Controllers
                 var mapper = new Mapper(config);
                 var reviewDTO = mapper.Map<ReviewViewModel, ReviewDTO>(model);
                 await _reviewService.PublishReview(reviewDTO);
-                _ratingService.SetRating(reviewDTO);
+                await _ratingService.SetRating(reviewDTO);
 
             }
             catch (ValidationException ex)
@@ -79,17 +81,18 @@ namespace NetFlex.WEB.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddToMyList(UserFavoriteViewModel model)
+        public async Task<IActionResult> AddToMyList(UserFavoriteViewModel model)
         {
             try
             {
-                if(_userService.GetMyList(model.UserId).Where(x => x.ContentId == model.ContentId) == null)
+                var myList = await _userService.GetMyList(model.UserId);
+                if (myList.Where(x => x.ContentId == model.ContentId) == null)
                 {
                     var config = new MapperConfiguration(cfg => cfg.CreateMap<UserFavoriteViewModel, UserFavoriteDTO>());
                     var mapper = new Mapper(config);
                     var favoritesDto = mapper.Map<UserFavoriteViewModel, UserFavoriteDTO>(model);
 
-                    _userService.AddToMyList(favoritesDto);
+                    await _userService.AddToMyList(favoritesDto);
                 };
             }
             catch (ValidationException ex)

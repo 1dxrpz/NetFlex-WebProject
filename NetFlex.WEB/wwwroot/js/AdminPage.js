@@ -505,6 +505,62 @@ function loadEditGenre(id) {
     });
 }
 
+function RemoveMovie(id) {
+    $.confirm({
+        columnClass: 'm',
+        title: 'Вы уверены в удалении?',
+        content: 'Подтвердите удаление записи!',
+        Animation: 'zoom',
+        closeAnimation: 'zoom',
+        buttons: {
+            tryAgain: {
+                text: 'Удалить',
+                btnClass: 'btn-red',
+                action: function () {
+                    $.ajax({
+                        type: 'POST',
+                        url: `/Admin/RemoveMovie?id=${id}`,
+                        success: function (data) {
+                            document.querySelector(`.AllMovies[data-id='${id}']`).remove();
+                            $.alert({
+                                title: 'Успешно!',
+                                content: '',
+                                closeAnimation: 'scale',
+                                type: 'green',
+                                buttons: {
+                                    close: {
+                                        text: "Ok",
+                                        btnClass: 'btn-green',
+                                    }
+                                }
+                            });
+                        },
+                        error: function (jsonData) {
+                            $.alert({
+                                title: 'Что-то пошло не так!',
+                                closeAnimation: 'none',
+                                type: 'red',
+                                buttons: {
+                                    close: {
+                                        text: "Ok",
+                                        btnClass: 'btn-red'
+                                    }
+                                }
+                            });
+                        },
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader("XSRF-TOKEN",
+                                $('input:hidden[name="__RequestVerificationToken"]').val());
+                        }
+                    });
+                }
+            },
+            close: {
+                text: 'Отмена'
+            }
+        }
+    });
+}
 function loadAddMovie() {
     $.confirm({
         title: 'Create Genre',
@@ -643,7 +699,9 @@ function loadEditMovie(id) {
                                     }
                                 });
                             } else {
-                                $(`.AllGenres[data-id=${data.id}]>.genrename`).html(data.genreName);
+                                $(`.AllMovies[data-id=${data.id}]>.title`).html(data.title);
+                                $(`.AllMovies[data-id=${data.id}]>.rating`).html(data.userRating);
+                                $(`.AllMovies[data-id=${data.id}]>.age_rating`).html(data.ageRating);
                                 $.alert({
                                     title: 'Успешно!',
                                     content: '',

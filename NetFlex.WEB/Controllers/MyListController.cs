@@ -22,14 +22,15 @@ namespace NetFlex.WEB.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult Delete(Guid userId, Guid contentId)
+		public async Task<IActionResult> Delete(Guid userId, Guid contentId)
         {
             try
             {
-                var selectFavorite = _userService.GetMyList(userId).FirstOrDefault(x => x.ContentId == contentId);
+                var myList = await _userService.GetMyList(userId);
+                var selectFavorite = myList.FirstOrDefault(x => x.ContentId == contentId);
                 if (selectFavorite != null)
                 {
-                    _userService.DeleteFromMyList(selectFavorite.Id);
+                    await _userService.DeleteFromMyList(selectFavorite.Id);
                 }
 
             }

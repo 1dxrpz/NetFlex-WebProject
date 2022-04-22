@@ -205,14 +205,17 @@ namespace NetFlex.BLL.Services
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<GenreVideo, GenreVideoDTO>()).CreateMapper();
             return mapper.Map<IEnumerable<GenreVideo>, List<GenreVideoDTO>>(gerners.Where(c => c.ContentId == id));
         }
-
         public async Task SetGenres(GenreVideoDTO genres)
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<GenreVideoDTO, GenreVideo>()).CreateMapper();
             var res = mapper.Map<GenreVideoDTO, GenreVideo>(genres);
 
-            await Database.GenreVideos.Create(res);
-            Database.Save();
+            var allTable = await Database.GenreVideos.GetAll();
+            if (allTable.FirstOrDefault(g => g.ContentId == genres.ContentId && g.GenreName == genres.GenreName) == null)
+            {
+                await Database.GenreVideos.Create(res);
+                Database.Save();
+            }
         }
 
         public async Task AddGenre(string genre)
@@ -245,11 +248,40 @@ namespace NetFlex.BLL.Services
             Database.Save();
 
         }
+
+		public async Task RemoveFilm(Guid id)
+		{
+            await Database.Films.Delete(id);
+            Database.Save();
+        }
+
+		public async Task RemoveSerial(Guid id)
+		{
+            await Database.Serials.Delete(id);
+            Database.Save();
+        }
+
+		public async Task RemoveEpisode(Guid id)
+		{
+            await Database.Episodes.Delete(id);
+            Database.Save();
+        }
         public void Dispose()
         {
             Database.Dispose();
         }
 
-        
+		public async Task TakeAwayGenres(string id, List<string> genres)
+		{
+            var genresVideos = await Database.GenreVideos.GetAll();
+
+            foreach (var item in genres)
+            {
+                await Database.GenreVideos.Delete(genresVideos
+                    .FirstOrDefault(g => g.GenreName == item && g.ContentId == Guid.Parse(id)).Id );
+            }
+            Database.Save();
+
+        }
     }
 }

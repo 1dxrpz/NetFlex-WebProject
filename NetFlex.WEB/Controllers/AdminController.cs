@@ -48,7 +48,7 @@ namespace NetFlex.WEB.Controllers
 
                 var userRoles = await _userService.GetRoles(user.UserName);
 
-                var allRolesDto = _roleService.GetRoles();
+                var allRolesDto = await _roleService.GetRoles();
 
                 var config = new MapperConfiguration(cfg => cfg.CreateMap<RoleDTO, RoleViewModel>());
                 var mapper = new Mapper(config);
@@ -68,9 +68,10 @@ namespace NetFlex.WEB.Controllers
             return NotFound();
         }
 
-        public IActionResult Users()
+        public async Task<IActionResult> Users()
 		{
-            var users = _userService.GetUsers().Select(u => new AdminUserVievModel
+            var getUsers = await _userService.GetUsers();
+            var users = getUsers.Select(u => new AdminUserVievModel
             {
                 UserId = u.Id,
                 UserName = u.UserName,
@@ -83,17 +84,19 @@ namespace NetFlex.WEB.Controllers
             return View(users);
 		}
 
-		public IActionResult Serials()
+		public async Task<IActionResult> Serials()
 		{
             try
             {
+                var getSerials = await _videoService.GetSerials();
                 var config = new MapperConfiguration(cfg => cfg.CreateMap<SerialDTO, SerialViewModel>());
                 var mapper = new Mapper(config);
-                var serials = mapper.Map<IEnumerable<SerialDTO>, IEnumerable<SerialViewModel>>(_videoService.GetSerials());
+                var serials = mapper.Map<IEnumerable<SerialDTO>, IEnumerable<SerialViewModel>>(getSerials);
 
+                var getGenres = await _videoService.GetGenres();
                 var config2 = new MapperConfiguration(cfg => cfg.CreateMap<GenreDTO, GenreViewModel>());
                 var mapper2 = new Mapper(config);
-                var genres = mapper.Map<IEnumerable<GenreDTO>, IEnumerable<GenreViewModel>>(_videoService.GetGenres());
+                var genres = mapper.Map<IEnumerable<GenreDTO>, IEnumerable<GenreViewModel>>(getGenres);
 
 
                 var serialsView = new FullVideoInfoViewModel
@@ -111,17 +114,19 @@ namespace NetFlex.WEB.Controllers
             return View();
         }
 
-		public IActionResult Films()
+		public async Task<IActionResult> Films()
 		{
             try
             {
+                var getFilms = await _videoService.GetFilms();
                 var config = new MapperConfiguration(cfg => cfg.CreateMap<FilmDTO, FilmViewModel>());
                 var mapper = new Mapper(config);
-                var films = mapper.Map<IEnumerable<FilmDTO>, IEnumerable<FilmViewModel>>(_videoService.GetFilms());
+                var films = mapper.Map<IEnumerable<FilmDTO>, IEnumerable<FilmViewModel>>(getFilms);
 
+                var getGenres = await _videoService.GetGenres();
                 var config2 = new MapperConfiguration(cfg => cfg.CreateMap<GenreDTO, GenreViewModel>());
                 var mapper2 = new Mapper(config2);
-                var genres = mapper2.Map<IEnumerable<GenreDTO>, IEnumerable<GenreViewModel>>(_videoService.GetGenres());
+                var genres = mapper2.Map<IEnumerable<GenreDTO>, IEnumerable<GenreViewModel>>(getGenres);
 
 
                 var filmsView = new FullVideoInfoViewModel
@@ -139,39 +144,36 @@ namespace NetFlex.WEB.Controllers
             return View();
 		}
 
-        public IActionResult Genres() 
+        public async Task<IActionResult> Genres() 
         {
+            var getGenres = await _videoService.GetGenres();
             var config = new MapperConfiguration(cfg => cfg.CreateMap<GenreDTO, GenreViewModel>());
             var mapper = new Mapper(config);
-            var genres = mapper.Map<IEnumerable<GenreDTO>, List<GenreViewModel>>(_videoService.GetGenres());
+            var genres = mapper.Map<IEnumerable<GenreDTO>, List<GenreViewModel>>(getGenres);
 
             return View(genres);
         }
-        public List<GenreViewModel> GetGenres()
+        public async Task<List<GenreViewModel>> GetGenres()
         {
+            var getGenres = await _videoService.GetGenres();
             var config = new MapperConfiguration(cfg => cfg.CreateMap<GenreDTO, GenreViewModel>());
             var mapper = new Mapper(config);
-            var genres = mapper.Map<IEnumerable<GenreDTO>, List<GenreViewModel>>(_videoService.GetGenres());
+            var genres = mapper.Map<IEnumerable<GenreDTO>, List<GenreViewModel>>(getGenres);
 
             return genres;
         }
 
-        public IActionResult Roles()
+        public async Task<IActionResult> Roles()
         {
+            var getRoles = await _roleService.GetRoles();
             var config = new MapperConfiguration(cfg => cfg.CreateMap<RoleDTO, RoleViewModel>());
             var mapper = new Mapper(config);
-            var roles = mapper.Map<IEnumerable<RoleDTO>, List<RoleViewModel>>(_roleService.GetRoles());
+            var roles = mapper.Map<IEnumerable<RoleDTO>, List<RoleViewModel>>(getRoles);
 
             return View(roles);
         }
 
 		#region Lagacy
-
-        [HttpPost]
-        public void RemoveMovie(string id)
-        {
-            /////////// remove movie
-        }
 
         [HttpPost]
         public IActionResult UploadSerial(SerialViewModel model)
@@ -216,18 +218,12 @@ namespace NetFlex.WEB.Controllers
         [HttpPost]
         public async Task<IActionResult> ChangeUserRoles(string userId, List<string> roles)
         {
-            // ïîëó÷àåì ïîëüçîâàòåëÿ
             var user = await _userService.GetUser(userId);
 
             if (user != null)
             {
-                // ïîëó÷åì ñïèñîê ðîëåé ïîëüçîâàòåëÿ
                 var userRoles = await _userService.GetRoles(user.UserName);
-                // ïîëó÷àåì âñå ðîëè
-                var allRolesDto = _roleService.GetRoles();
-                // ïîëó÷àåì ñïèñîê ðîëåé, êîòîðûå áûëè äîáàâëåíû
                 var addedRoles = roles.Except(userRoles);
-                // ïîëó÷àåì ðîëè, êîòîðûå áûëè óäàëåíû
                 var removedRoles = userRoles.Except(roles);
 
                 await _roleService.GiveRoles(addedRoles.ToList(), user.UserName);
@@ -242,14 +238,9 @@ namespace NetFlex.WEB.Controllers
 
 		#endregion
 
-		/// Âñþ ýòó çàëóïîíü ñâåðõó /\ óäàëèòü íàõóé è ñäåëàòü api
-		/// ahahahhaha wtf???
-		/// Âñå â partialsFix
-
 		#region Partials
 		#region Add
 
-		[HttpGet]
         public async Task<IActionResult> GetEditUserRolesPartial(string userID)
         {
             var user = await _userService.GetUser(userID);
@@ -257,14 +248,14 @@ namespace NetFlex.WEB.Controllers
             {
                 var userRoles = await _userService.GetRoles(user.UserName);
 
-                var allRolesDto = _roleService.GetRoles();
+                var allRolesDto = await _roleService.GetRoles();
 
                 var config = new MapperConfiguration(cfg => cfg.CreateMap<RoleDTO, RoleViewModel>());
                 var mapper = new Mapper(config);
                 var allRoles = mapper.Map<IEnumerable<RoleDTO>, List<RoleViewModel>>(allRolesDto);
 
 
-                ChangeRoleViewModel model = new ChangeRoleViewModel
+                ChangeRoleViewModel model = new()
                 {
                     UserId = user.Id,
                     UserEmail = user.Email,
@@ -277,17 +268,14 @@ namespace NetFlex.WEB.Controllers
             return NotFound();
         }
         
-        [HttpGet]
         public IActionResult GetAddRolesPartial()
 		{
             return PartialView("Partial/_AddRole");
         }
-        [HttpGet]
         public IActionResult GetAddGenrePartial()
         {
             return PartialView("Partial/_AddGenre");
         }
-        [HttpGet]
         public IActionResult GetAddMoviePartial()
         {
             return PartialView("Partial/_AddMovie");
@@ -295,10 +283,9 @@ namespace NetFlex.WEB.Controllers
 
 		#endregion
 		#region Edit
-		[HttpGet]
-        public IActionResult GetEditRolePartial(string id)
+        public async Task<IActionResult> GetEditRolePartial(string id)
         {
-            var oldRole = _roleService.Get(id);
+            var oldRole = await _roleService.Get(id);
             if (oldRole != null)
             {
                 var config = new MapperConfiguration(cfg => cfg.CreateMap<RoleDTO, RoleViewModel>());
@@ -310,10 +297,10 @@ namespace NetFlex.WEB.Controllers
 
             return NotFound();
         }
-        public IActionResult GetEditGenrePartial(string id)
+        public async Task<IActionResult> GetEditGenrePartial(string id)
         {
-            var oldGenre = _videoService
-                .GetGenres()
+            var genres = await _videoService.GetGenres();
+            var oldGenre = genres
                 .FirstOrDefault(v => v.Id == Guid.Parse(id));
             if (oldGenre != null)
             {
@@ -326,16 +313,19 @@ namespace NetFlex.WEB.Controllers
 
             return NotFound();
         }
-        public IActionResult GetEditMoviePartial(string id)
+        public async Task<IActionResult> GetEditMoviePartial(string id)
         {
-            var movie = _videoService
-                .GetFilms()
-                .FirstOrDefault(v => v.Id == Guid.Parse(id));
+            var movies = await _videoService.GetFilms();
+            var movie = movies.FirstOrDefault(v => v.Id == Guid.Parse(id));
             if (movie != null)
             {
                 var config = new MapperConfiguration(cfg => cfg.CreateMap<FilmDTO, FilmViewModel>());
                 var mapper = new Mapper(config);
                 var tempMovie = mapper.Map<FilmDTO, FilmViewModel>(movie);
+                
+                var genres = await _videoService.GetGenres(Guid.Parse(id));
+
+                genres.ToList().ForEach(v => tempMovie.FilmGenres.Add(v.GenreName));
 
                 return PartialView("Partial/_EditMovie", tempMovie);
             }
@@ -358,8 +348,8 @@ namespace NetFlex.WEB.Controllers
                 ModelState.AddModelError(ex.Property, ex.Message);
                 return null;
             }
-            
-            var createdRole = _roleService.GetRoles().FirstOrDefault(g => g.Name == role);
+            var roles = await _roleService.GetRoles();
+            var createdRole = roles.FirstOrDefault(g => g.Name == role);
 
             var config = new MapperConfiguration(cfg => cfg.CreateMap<RoleDTO, RoleViewModel>());
             var mapper = new Mapper(config);
@@ -379,14 +369,15 @@ namespace NetFlex.WEB.Controllers
         [HttpPost]
         public async Task<RoleViewModel> EditRole(string id, string newName)
         {
-            var role = _roleService.GetRoles().FirstOrDefault(g => g.Id == id);
+            var roles = await _roleService.GetRoles();
+            var role = roles.FirstOrDefault(g => g.Id == id);
             role.Name = newName;
             await _roleService.Update(role);
-            return GetRole(id);
+            return await GetRole(id);
         }
-        public RoleViewModel GetRole(string id)
+        public async Task<RoleViewModel> GetRole(string id)
 		{
-            var role = _roleService.Get(id);
+            var role = await _roleService.Get(id);
             var config = new MapperConfiguration(cfg => cfg.CreateMap<RoleDTO, RoleViewModel>());
             var mapper = new Mapper(config);
             var newRole = mapper.Map<RoleDTO, RoleViewModel>(role);
@@ -396,14 +387,13 @@ namespace NetFlex.WEB.Controllers
 
 		#region Genres
 		[HttpPost]
-        public GenreViewModel CreateGenre(string genre)
+        public async Task<GenreViewModel> CreateGenre(string genre)
         {
-
-            if (genre != null && _videoService.GetGenres().FirstOrDefault(g => g.GenreName == genre) == null)
+            var genres = await _videoService.GetGenres();
+            var temp = genres.FirstOrDefault(g => g.GenreName == genre);
+            if (genre != null && temp == null)
             {
-                _videoService.AddGenre(genre);
-                
-                var temp = _videoService.GetGenres().FirstOrDefault(v => v.GenreName == genre);
+                await _videoService.AddGenre(genre);
 
                 var config = new MapperConfiguration(cfg => cfg.CreateMap<GenreDTO, GenreViewModel>());
                 var mapper = new Mapper(config);
@@ -412,23 +402,24 @@ namespace NetFlex.WEB.Controllers
             return null;
         }
         [HttpPost]
-        public IActionResult RemoveGenre(string id)
+        public async Task<IActionResult> RemoveGenre(string id)
         {
 
             if (id != null)
             {
-                _videoService.RemoveGenre(Guid.Parse(id));
+                await _videoService.RemoveGenre(Guid.Parse(id));
                 return RedirectToAction("Genres");
             }
             return BadRequest();
 
         }
         [HttpPost]
-        public GenreViewModel EditGenre(string id, string newName)
+        public async Task<GenreViewModel> EditGenre(string id, string newName)
         {
-            var oldGenre = _videoService.GetGenres().FirstOrDefault(g => g.Id == Guid.Parse(id));
+            var genres = await _videoService.GetGenres();
+            var oldGenre = genres.FirstOrDefault(g => g.Id == Guid.Parse(id));
             oldGenre.GenreName = newName;
-            _videoService.UpdateGenre(oldGenre);
+            await _videoService.UpdateGenre(oldGenre);
 
             var config = new MapperConfiguration(cfg => cfg.CreateMap<GenreDTO, GenreViewModel>());
             var mapper = new Mapper(config);
@@ -439,7 +430,7 @@ namespace NetFlex.WEB.Controllers
         #region Movie
         
         [HttpPost]
-        public FilmViewModel CreateMovie(FilmViewModel model)
+        public async Task<FilmViewModel> CreateMovie(FilmViewModel model)
         {
             try
             {
@@ -448,7 +439,7 @@ namespace NetFlex.WEB.Controllers
                 var filmDTO = mapper.Map<FilmViewModel, FilmDTO>(model);
                 filmDTO.Id = Guid.NewGuid();
 
-                _videoService.UploadFilm(filmDTO);
+                await _videoService.UploadFilm(filmDTO);
 
                 for (int i = 0; i < model.FilmGenres.Count; i++)
                 {
@@ -458,7 +449,7 @@ namespace NetFlex.WEB.Controllers
                         ContentId = filmDTO.Id,
                         GenreName = model.FilmGenres[i],
                     };
-                    _videoService.SetGenres(genresDto);
+                    await _videoService.SetGenres(genresDto);
                 }
                 model.Id = filmDTO.Id;
                 return model;
@@ -471,18 +462,46 @@ namespace NetFlex.WEB.Controllers
         }
 
         [HttpPost]
-        public JsonResult EditMovie(FilmViewModel model)
-        {
-            /*
-            var oldMovie = _videoService.GetFilms().FirstOrDefault(g => g.Id == model.Id);
-            
-            
-
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<GenreDTO, GenreViewModel>());
+        public async Task<FilmViewModel> RemoveMovie(string id)
+		{
+            var film = await _videoService.GetFilm(Guid.Parse(id));
+            await _videoService.RemoveFilm(Guid.Parse(id));
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<FilmDTO, FilmViewModel>());
             var mapper = new Mapper(config);
-            return mapper.Map<GenreDTO, GenreViewModel>(oldGenre);
-            */
-            return null;
+            return mapper.Map<FilmDTO, FilmViewModel>(film);
+        }
+
+        [HttpPost]
+        public async Task<FilmViewModel> EditMovie(FilmViewModel model, List<string> genres)
+        {
+            
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<FilmViewModel, FilmDTO>());
+            var mapper = new Mapper(config);
+            var newMovie = mapper.Map<FilmViewModel, FilmDTO>(model);
+
+            var videoGenres = await _videoService.GetGenres(model.Id);
+
+
+            var addedGenres = genres.Except(videoGenres.Select(g => g.GenreName));
+
+            var removedGenres = videoGenres.Select(g => g.GenreName).Except(genres);
+
+            foreach (var item in genres)
+            {
+                var genresDto = new GenreVideoDTO
+                {
+                    Id = Guid.NewGuid(),
+                    ContentId = model.Id,
+                    GenreName = item,
+                };
+                await _videoService.SetGenres(genresDto);
+            }
+
+            await _videoService.TakeAwayGenres(model.Id.ToString(), removedGenres.ToList());
+
+            await _videoService.UpdateFilm(newMovie);
+            
+            return model;
         }
 
         #endregion

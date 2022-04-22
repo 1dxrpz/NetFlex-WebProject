@@ -15,11 +15,12 @@ namespace NetFlex.WEB.Controllers
             _videoService = videoService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
 		{
+            var getFilms = await _videoService.GetFilms();
             var config = new MapperConfiguration(cfg => cfg.CreateMap<FilmDTO, FilmViewModel>());
             var mapper = new Mapper(config);
-            var movies = mapper.Map<IEnumerable<FilmDTO>, IEnumerable<FilmViewModel>>(_videoService.GetFilms());
+            var movies = mapper.Map<IEnumerable<FilmDTO>, IEnumerable<FilmViewModel>>(getFilms);
 
             return View(movies);
 		}
