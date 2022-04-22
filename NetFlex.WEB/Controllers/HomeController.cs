@@ -15,7 +15,7 @@ namespace NetFlex.WEB.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return User.Identity.IsAuthenticated ? RedirectToAction("Index", "Main") : View();
         }
         public IActionResult Subscribe()
         {
