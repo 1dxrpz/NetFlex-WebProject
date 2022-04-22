@@ -210,8 +210,12 @@ namespace NetFlex.BLL.Services
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<GenreVideoDTO, GenreVideo>()).CreateMapper();
             var res = mapper.Map<GenreVideoDTO, GenreVideo>(genres);
 
-            await Database.GenreVideos.Create(res);
-            Database.Save();
+            var allTable = await Database.GenreVideos.GetAll();
+            if (allTable.FirstOrDefault(g => g.ContentId == genres.ContentId && g.GenreName == genres.GenreName) == null)
+            {
+                await Database.GenreVideos.Create(res);
+                Database.Save();
+            }
         }
 
         public async Task AddGenre(string genre)
@@ -270,13 +274,14 @@ namespace NetFlex.BLL.Services
 		public async Task TakeAwayGenres(string id, List<string> genres)
 		{
             var genresVideos = await Database.GenreVideos.GetAll();
-            genres.ForEach(async v =>
+
+            foreach (var item in genres)
             {
                 await Database.GenreVideos.Delete(genresVideos
-                    .FirstOrDefault(g => g.GenreName == v && g.ContentId == Guid.Parse(id)).Id
-                );
-                Database.Save();
-            });
+                    .FirstOrDefault(g => g.GenreName == item && g.ContentId == Guid.Parse(id)).Id );
+            }
+            Database.Save();
+
         }
-	}
+    }
 }

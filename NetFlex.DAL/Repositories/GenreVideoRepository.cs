@@ -47,7 +47,7 @@ namespace NetFlex.DAL.Repositories
         {
             await Task.Run(() =>
             {
-                return _db.GenreVideos.Include(o => o.Id).Where(predicate).ToList();
+                return _db.GenreVideos.Where(predicate).ToList();
 
             });
 
@@ -57,9 +57,9 @@ namespace NetFlex.DAL.Repositories
         {
             await Task.Run(async () =>
             {
-                Review genreVideo = await _db.Reviews.FindAsync(id);
+                GenreVideo genreVideo = await _db.GenreVideos.FindAsync(id);
                 if (genreVideo != null)
-                    _db.Reviews.Remove(genreVideo);
+                    _db.GenreVideos.Remove(genreVideo);
 
             });
         }
