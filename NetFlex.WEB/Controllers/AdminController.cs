@@ -470,6 +470,7 @@ namespace NetFlex.WEB.Controllers
             var mapper = new Mapper(config);
             return mapper.Map<FilmDTO, FilmViewModel>(film);
         }
+
         [HttpPost]
         public async Task<FilmViewModel> EditMovie(FilmViewModel model, List<string> genres)
         {
@@ -481,22 +482,20 @@ namespace NetFlex.WEB.Controllers
             var videoGenres = await _videoService.GetGenres(model.Id);
 
 
+            var addedGenres = genres.Except(videoGenres.Select(g => g.GenreName));
 
+            var removedGenres = videoGenres.Select(g => g.GenreName).Except(genres);
 
-            var addedGenres = genres.Except(model.FilmGenres);
-
-            var removedGenres = model.FilmGenres.Except(genres);
-
-            genres.ToList().ForEach(async v =>
+            foreach (var item in genres)
             {
                 var genresDto = new GenreVideoDTO
                 {
                     Id = Guid.NewGuid(),
                     ContentId = model.Id,
-                    GenreName = v,
+                    GenreName = item,
                 };
                 await _videoService.SetGenres(genresDto);
-            });
+            }
 
             await _videoService.TakeAwayGenres(model.Id.ToString(), removedGenres.ToList());
 
