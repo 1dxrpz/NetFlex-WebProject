@@ -123,19 +123,9 @@ namespace NetFlex.WEB.Controllers
                 var mapper = new Mapper(config);
                 var films = mapper.Map<IEnumerable<FilmDTO>, IEnumerable<FilmViewModel>>(getFilms);
 
-                var getGenres = await _videoService.GetGenres();
-                var config2 = new MapperConfiguration(cfg => cfg.CreateMap<GenreDTO, GenreViewModel>());
-                var mapper2 = new Mapper(config2);
-                var genres = mapper2.Map<IEnumerable<GenreDTO>, IEnumerable<GenreViewModel>>(getGenres);
+                films.OrderBy(v => v.Title);
 
-
-                var filmsView = new FullVideoInfoViewModel
-                {
-                    Films = films.ToList(),
-                    Genres = genres.ToList(),
-                };
-
-                return View(filmsView);
+                return View(films);
             }
             catch
             {
