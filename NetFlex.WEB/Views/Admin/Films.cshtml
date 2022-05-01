@@ -1,5 +1,6 @@
 ﻿@using NetFlex.DAL.Enums
-@model NetFlex.WEB.ViewModels.FullVideoInfoViewModel;
+
+@model IEnumerable<NetFlex.WEB.ViewModels.FilmViewModel>
 
 @inject NetFlex.BLL.Interfaces.IVideoService _videoService
 
@@ -66,7 +67,7 @@
 	</div>
 	<div class="vertical">
 		<table class="table moviesTable">
-			@foreach (var item in Model.Films)
+			@foreach (var item in Model)
 			{
 				<tr class="AllMovies" data-id='@item.Id'>
 					<td class="title">@item.Title</td>
