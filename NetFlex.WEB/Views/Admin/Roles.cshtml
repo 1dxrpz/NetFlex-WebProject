@@ -6,6 +6,7 @@
 @{
 	Layout = "~/Views/Shared/_AdminLayout.cshtml";
 	ViewData["CurrentPage"] = AdminPages.Roles;
+	int i = 0;
 }
 
 <div class="layout">
@@ -24,30 +25,46 @@
 				</div>
 			</div>
 		</div>
-		<div class="block" label="test">
+		<div class="block">
 			<table class="table rolesTable">
-				@foreach (var item in Model)
-				{
-					<tr class="AllRoles" data-name="@item.Name" data-id="@item.Id">
-						<td class="rolename">@item.Name</td>
-						<td>
-							<button type="button" class="btn btn-danger m-2" onclick="RemoveRole('@item.Id')">
-								Remove
-							</button>
-						</td>
-						<td>
-							<button onclick="loadEditRole('@item.Id')" type="button" class="btn btn-primary m-2">
-								Edit
-							</button>
-						</td>
+				<thead>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Role</th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th scope="col">Actions</th>
 					</tr>
-				}
+				</thead>
+				<tbody>
+					
+					@foreach (var item in Model)
+					{
+						i++;
+						<tr class="AllRoles" data-name="@item.Name" data-id="@item.Id">
+							<td class="rolename">@i</td>
+							<td class="rolename">@item.Name</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>
+								<button type="button" class="button light" onclick="RemoveRole('@item.Id')">
+									Remove
+								</button>
+								<button onclick="loadEditRole('@item.Id')" type="button" class="button light">
+									Edit
+								</button>
+							</td>
+						</tr>
+					}
+				</tbody>
 			</table>
 		</div>
 	</div>
 </div>
 
 @section Scripts {
-	<script>
-	</script>
+<script>
+</script>
 }

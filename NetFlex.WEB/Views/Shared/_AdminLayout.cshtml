@@ -16,6 +16,7 @@
 	@await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
+	
 	@Html.AntiForgeryToken()
 	<div class="container">
 		<main role="main" class="pb-3">
@@ -66,12 +67,19 @@
 			</div>
 		</main>
 	</div>
-
+	<div id="loader">
+		<img src="~/images/mini-logo.svg" />
+	</div>
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
 	<script src="~/lib/jquery-ui-1.12.1/jquery-ui.js"></script>
 	<script src="~/lib/jquery-confirm/dist/jquery-confirm.min.js" asp-append-version="true"></script>
 	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="~/js/AdminPage.js"></script>
 	@await RenderSectionAsync("Scripts", required: false)
+	<script>
+		window.addEventListener('DOMContentLoaded', e => {
+			document.querySelector("#loader").setAttribute("loaded", "true");
+		});
+	</script>
 </body>
 </html>

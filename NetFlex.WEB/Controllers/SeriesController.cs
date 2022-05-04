@@ -22,7 +22,7 @@ namespace NetFlex.WEB.Controllers
             var mapper = new Mapper(config);
             var serials = mapper.Map<IEnumerable<SerialDTO>, IEnumerable<SerialViewModel>>(getSerials);
 
-            return View(serials);
+            return User.Identity.IsAuthenticated ? View(serials) : RedirectToAction("Index", "Home");
         }
     }
 }

@@ -1,6 +1,5 @@
 @{
 	ViewData["Title"] = "Video";
-	//Layout = "~/Views/Shared/_VideoLayout.cshtml";
 	Layout = "~/Views/Shared/_MainLayout.cshtml";
 }
 @{
@@ -16,7 +15,10 @@
 <link rel="stylesheet" href="~/css/VideoPlayer.min.css" asp-append-version="true" />
 <link rel="stylesheet" href="~/css/Video/Video.min.css" asp-append-version="true" />
 }
-<main role="main" class="pb-3">
+<div class="container">
+	@await Html.PartialAsync("../Shared/_VideoPlayerPartial.cshtml", @m)
+</div>
+@*<main role="main" class="pb-3">
 	<div class="main_info">
 		<div class="header_info_wrapper">
 			<div class="info_wrapper">
@@ -35,7 +37,7 @@
 			</div>
 		</div>
 	</div>
-	@await Html.PartialAsync("../Shared/_VideoPlayerPartial.cshtml", @m)
+	
 	<div class="page_content">
 		<div class="background_poster">
 			<div class="image">
@@ -113,7 +115,7 @@
 	</div>
 	<footer>
 	</footer>
-</main>
+</main>*@
 @section Scripts {
 <script src="~/js/VideoPlayer.js"></script>
 <script>

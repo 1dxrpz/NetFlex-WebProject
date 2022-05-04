@@ -8,6 +8,7 @@ using NetFlex.BLL.ModelsDTO;
 using NetFlex.DAL.Enums;
 using NetFlex.WEB.ViewModels;
 using Microsoft.AspNetCore.Identity;
+using PagedList;
 
 namespace NetFlex.WEB.Controllers
 {
@@ -68,9 +69,15 @@ namespace NetFlex.WEB.Controllers
             return NotFound();
         }
 
-        public async Task<IActionResult> Users()
+        public async Task<IActionResult> Users(int? page, string searchString)
 		{
             var getUsers = await _userService.GetUsers();
+
+			for (int i = 0; i < 10; i++)
+			{
+                getUsers = getUsers.Concat(getUsers);
+			}
+
             var users = getUsers.Select(u => new AdminUserVievModel
             {
                 UserId = u.Id,
@@ -79,10 +86,25 @@ namespace NetFlex.WEB.Controllers
                 PhoneNumber = u.PhoneNumber,
                 LockoutEnabled = u.LockoutEnable,
                 Avatar = u.Avatar
-            });
+            }).AsQueryable();
 
-            return View(users);
-		}
+            int usersCount = getUsers.Count();
+
+            if (searchString != null)
+            {
+                users = users.Where(v => v.Email.Contains(searchString) || v.UserId.Contains(searchString));
+                usersCount = users.ToList().Count();
+            }
+            ViewBag.searchString = searchString;
+            users = users.ToPagedList(page != null ? (int)page : 1, 32).AsQueryable();
+            
+            UsersPageViewModel model = new UsersPageViewModel()
+            {
+                UsersCount = usersCount,
+                Users = users.AsEnumerable()
+            };
+            return View(model);
+        }
 
 		public async Task<IActionResult> Serials()
 		{

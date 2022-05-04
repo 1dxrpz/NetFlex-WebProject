@@ -22,7 +22,7 @@ namespace NetFlex.WEB.Controllers
             var mapper = new Mapper(config);
             var movies = mapper.Map<IEnumerable<FilmDTO>, IEnumerable<FilmViewModel>>(getFilms);
 
-            return View(movies);
-		}
+            return User.Identity.IsAuthenticated ? View(movies) : RedirectToAction("Index", "Home");
+        }
 	}
 }
