@@ -18,8 +18,8 @@ namespace NetFlex.WEB.Controllers
 
         public IActionResult Index()
 		{
-			return View();
-		}
+            return User.Identity.IsAuthenticated ? View() : RedirectToAction("Index", "Home");
+        }
 
 		[HttpPost]
 		public async Task<IActionResult> Delete(Guid userId, Guid contentId)

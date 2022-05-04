@@ -1,3 +1,11 @@
+@{
+	var topicHeight = "";
+	if ((bool)ViewData["mainpage"] == false)
+	{
+		topicHeight = "height: 30vh !important;";
+	}
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,182 +16,81 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<script src="https://kit.fontawesome.com/3ee70c58bc.js" crossorigin="anonymous"></script>
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
 
-	<link rel="stylesheet" href="~/css/Main/Main.css">
 	<link rel="stylesheet" href="~/css/MainLayout.css">
 	@await RenderSectionAsync("Styles", required: false)
 
 </head>
-
-
-<header>
-	<nav class="nav">
-		<div class="container-netflex">
-			<div class="nav_row">
-				<div class="logo-navigation">
-					<div class="logo">
-						<img src="images/Logo.svg" alt="Logo">
-					</div>
-					<div class="navigation-list">
-						<ul>
-							<li><a asp-controller="main">Главная</a></li>
-							<li><a asp-controller="Series">Сериалы</a></li>
-							<li><a asp-controller="Movies">Фильмы</a></li>
-							<li><a asp-controller="Popular">Новые и популярные</a></li>
-							<li><a asp-controller="MyList">Мой список</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="actions-list">
-					<ul>
-						<li>
-							<div class="search">
-								<i class="fa-solid fa-magnifying-glass"></i>
-								<div class="input">
-									<input type="text" name="" value="" placeholder="Search" id="mysearch">
-								</div>
-								<span class="clear" onclick=" document.getElementById('mysearch').value = ''"></span>
-							</div>
-						</li>
-						<li>
-							<div class="action-list-container">
-								<a href=""><i class="fa-solid fa-gift"></i></a>
-							</div>
-						</li>
-						<li>
-							<div class="action-list-container">
-								<a href=""><i class="fa-solid fa-bell"></i></a>
-							</div>
-						</li>
-						<li>
-							<div class="action-list-container">
-								<a href=""><i class="fa-solid fa-gears"></i></a>
-							</div>
-						</li>
-						<li>
-							<div class="user">
-								<div class="user-icon">
-									<i class="fa-solid fa-user"></i>
-									<i class="fa-solid fa-chevron-down"></i>
-								</div>
-								<div class="user-dropdown closed">
-									<ul>
-										<div class="avatar">
-											<a href=""><img src="images/user-full.svg" alt=""> </a>
-											<text>@User.Identity.Name</text>
-										</div>
-
-										<li>
-											<i class="fa-solid fa-screwdriver-wrench"></i>
-											<a href="~/identity/account/manage"><text>Настройки профиля</text></a>
-										</li>
-										<li>
-											<i class="fa-solid fa-circle-info"></i>
-											<a href=""><text>Помощь</text></a>
-										</li>
-										<li>
-											<i class="fa-solid fa-arrow-right-from-bracket"></i>
-											<a href=""><text>Выйти</text></a>
-										</li>
-									</ul>
-								</div>
-							</div>
-						</li>
-					</ul>
+<body>
+	<header>
+		<div class="logo"></div>
+		<a asp-controller="Main" class="nav_button">Main</a>
+		<a asp-controller="Movies" class="nav_button">Movies</a>
+		<a asp-controller="Series" class="nav_button">Series</a>
+		<a asp-controller="Popular" class="nav_button">Popular</a>
+		<a asp-controller="MyList" class="nav_button">My list</a>
+		<div class="right">
+			<div class="user">
+				<span>Username</span>
+				<i class="fa-solid fa-user"></i>
+				<div class="account_buttons">
+					<div> test</div>
+					<div> test</div>
+					<div> test</div>
+					<div> test</div>
 				</div>
 			</div>
 		</div>
-	</nav>
-	<div class="background">
-		<div>
+	</header>
+
+	<div class="topic" style="@topicHeight">
+		<video autoplay muted loop class="preview">
+			<source src="https://raw.githubusercontent.com/1dxrpz/video-player-test-js/main/videos/background.mp4" type="video/mp4">
+		</video>
+		<div class="dot"></div>
+		<div class="content">
+			<div class="wrapper">
+				<div class="logo">
+					<img src="~/images/Logo.svg" />
+				</div>
+				<div class="text">Watch anywhere. Cancel at any time</div>
+			</div>
 		</div>
 	</div>
-</header>
 
-@RenderBody()
+	@RenderBody()
 
-@await RenderSectionAsync("Scripts", required: false)
-<script type="text/javascript">
+	<div id="loader" loaded="false">
+		<img src="~/images/mini-logo.svg" />
+	</div>
 
-	let user_dropdown = document.querySelector('.user')
-	let user_dropdownmenu = document.querySelector('.user-dropdown')
+	@await RenderSectionAsync("Scripts", required: false)
 
-	user_dropdown.addEventListener('click', (e) => {
-	if (user_dropdownmenu.classList.contains('closed')) {
-	  user_dropdownmenu.classList.remove('closed')
-	  user_dropdown.style.backgroundColor= "rgba(20, 20, 20, 1)"
-	} else {
-	user_dropdownmenu.classList.add('closed')
-	user_dropdown.style.backgroundColor= "rgba(0, 0, 0, 0)"
-	}
-	})
+	
 
-	const search = document.querySelector('.search');
-	const magnifire = document.querySelector('.fa-magnifying-glass');
+	<script type="text/javascript">
+		var video = document.querySelector(".preview");
+		var logo = document.querySelector(".wrapper>.logo");
+		var header = document.querySelector("header");
+		window.addEventListener('DOMContentLoaded', e => {
+			
+		});
+		var logoY = logo.getBoundingClientRect().top;
+		window.onscroll = (e) => {
+			var val = window.scrollY >= logoY - header.getBoundingClientRect().height - 10;
+			header.setAttribute('scroll', val);
+			if (val) {
+				header.style.top = (logoY - header.getBoundingClientRect().height - 10) + 'px';
+			} else {
+				header.style.top = '0px';
+			}
+		}
+		video.addEventListener('loadeddata', (e) => {
+		   if(video.readyState >= 3){
+			   document.querySelector("#loader").setAttribute("loaded", "true");
+		   }
+		});
 
-	magnifire.addEventListener('click', (e) => {
-	if (search.classList.contains('active')) {
-	  search.classList.remove('active')
-	} else {
-	search.classList.add('active')
-	}
-	})
-
-
-</script>
-
+	</script>
+</body>
 </html>
-
-
-<div className="AdminPanel">
-	<div class="menu">
-		<div class="menu_button" data-text="users"><i class="fa-solid fa-users color-light"></i></div>
-		<div class="menu_button" data-text="roles"><i class="fa-solid fa-table-list color-light"></i></div>
-		<div class="menu_button" data-text="movies"><i class="fa-solid fa-house-user color-light"></i></div>
-	</div>
-	<div class="heading">
-		<div class="block">
-			<div class="text-secondary">Welcome to</div>
-			<div class="text-primary color-light">Dashboard</div>
-		</div>
-		<div class="block right inline color-light">
-			<div class="menu_button"><i class="fa-solid fa-arrow-right-from-bracket"></i></div>
-		</div>
-		<div class="icon">
-			<div class="image"></div>
-		</div>
-		<div class="text-primary color-light">Username</div>
-	</div>
-	<div class="contentContainer">
-		<div class="layout">
-			<div class="block horizontal">
-				<div class="block bg-secondary-dark shadow">test</div>
-				<div class="block bg-magenta shadow">test</div>
-				<div class="block bg-light">
-					<div class="text-secondary shadow">December</div>
-					<div class="text-primary color-dark shadow">December</div>
-				</div>
-			</div>
-			<div class="block bg-secondary-dark shadow">
-				<button class="button dark color-light">test</button>
-				<table class="table">
-					<tr class="text-secondary">
-						<th>a</th>
-						<th>a</th>
-						<th class="selected">a</th>
-					</tr>
-					<tr>
-						<td>
-							<div class="text-primary color-light">Main</div>
-							<div class="text-secondary">Description</div>
-						</td>
-						<td>a</td>
-						<td class="selected">a</td>
-					</tr>
-				</table>
-			</div>
-		</div>
-	</div>

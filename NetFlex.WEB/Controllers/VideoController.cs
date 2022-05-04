@@ -24,8 +24,8 @@ namespace NetFlex.WEB.Controllers
 
         public IActionResult Index()
 		{
-			return View();
-		}
+            return User.Identity.IsAuthenticated ? View() : RedirectToAction("Index", "Home");
+        }
 
 		public async Task<IActionResult> ViewFilm(Guid id)
         {

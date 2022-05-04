@@ -22,5 +22,17 @@
   {
     "outputFile": "wwwroot/sass/PanelsUI.css",
     "inputFile": "wwwroot/sass/PanelsUI.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/Home/Mainpage.min.css",
+    "inputFile": "wwwroot/sass/Mainpage.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/MainLayout.css",
+    "inputFile": "wwwroot/css/MainLayout.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/Main/Main.min.css",
+    "inputFile": "wwwroot/sass/Main.scss"
   }
 ]

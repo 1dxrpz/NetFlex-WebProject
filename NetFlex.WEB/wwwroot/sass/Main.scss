@@ -1,0 +1,252 @@
+﻿/*$white: #FFFFFF;
+$black: #000000;
+$grey: #C4C4C4;
+$lowblack: #333336;
+
+
+
+
+body {
+    margin: 0px;
+    background-color: black;
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+    min-height: 100%;
+    min-width: 100%;
+}
+
+main {
+}
+
+.container-netflex {
+    max-width: 1770px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 75px;
+    padding-right: 75px;
+}
+
+.nav {
+    padding-top: 35px;
+    padding-bottom: 35px;
+}
+
+.nav_row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+
+.films-genres {
+    display: flex;
+    align-items: center;
+    margin-top: 60px;
+
+    text {
+        font-size: 48px;
+        font-weight: 700;
+        color: $white;
+    }
+}
+
+.genre-list {
+    padding-left: 80px;
+    cursor: pointer;
+}
+
+.genre-container {
+    width: 140px;
+    height: 35px;
+    left: 375px;
+    top: 208px;
+    border: 1px solid white;
+    background-color: black;
+    display: flex;
+    align-items: center;
+
+    text.genre-text {
+        font-weight: 700;
+        font-size: 18px;
+        margin-left: 17px;
+    }
+
+    i {
+        margin-left: 20px;
+        font-size: 18px;
+    }
+}
+
+.dropdownmenu {
+    a {
+        display: block;
+        text-decoration: none;
+        color: $white;
+    }
+
+    display: block;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.8);
+    transition: all 0.5s;
+    display: flex;
+
+    ul {
+        display: flex;
+        list-style: none;
+    }
+
+    li {
+        padding-right: 50px;
+
+        &:last-child {
+            margin-right: -10px;
+        }
+
+        a {
+            margin-top: 10px;
+        }
+    }
+}
+
+.dropdownmenu.closed {
+    opacity: 0;
+    animation: ani 2.5s forwards;
+    pointer-events: none;
+}
+
+
+.Information {
+    .div_name {
+        text {
+            font-weight: 900;
+            font-size: 144px;
+        }
+    }
+
+    .div_information {
+        max-width: 800px;
+        margin-top: 20px;
+
+        text {
+            font-weight: 700;
+            font-size: 24px;
+        }
+    }
+}
+
+
+
+.watchinformation-age {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 200px;
+
+    .watch-information {
+        display: flex;
+
+        .watch {
+            border-radius: 10px;
+            width: 250px;
+            height: 60px;
+            left: 73px;
+            top: 768px;
+            background-color: $white;
+            display: flex;
+            align-items: center;
+
+            i {
+                margin-left: 25px;
+                color: black;
+                font-weight: 600;
+                font-size: 24px;
+            }
+        }
+
+        text {
+            color: $black;
+            margin-left: 22px;
+            font-weight: 600;
+            font-size: 24px;
+        }
+    }
+
+    .age {
+        width: 145px;
+        height: 50px;
+        left: 1775px;
+        top: 778px;
+        background-color: rgba(200, 200, 200, 0.6);
+        margin-right: -75px;
+        border-left: 5px solid white;
+        display: flex;
+        align-items: center;
+
+        text {
+            font-weight: 600;
+            font-size: 24px;
+            margin-left: 20px;
+        }
+    }
+}
+
+
+.recomendations {
+    margin-top: 20px;
+}
+
+
+.recomendation-block {
+    margin-top: 10px;
+
+    text {
+        font-weight: 700;
+        font-size: 28px;
+        line-height: 44px;
+        color: $white;
+    }
+}
+
+.recomendation-pictures {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 22%;
+    overflow-x: auto;
+    overscroll-behaivor-inline: contain;
+
+    img {
+        max-width: 380px;
+    }
+}
+
+.film-picture {
+}
+
+.snaps-inline {
+    scroll-snap-type: inline mandatory;
+
+    * {
+        scroll-snap-align: start;
+    }
+}
+
+.recomendation-pictures::-webkit-scrollbar {
+    display: none;
+}
+
+.recomendations-container {
+    margin-left: auto;
+    padding-left: 75px;
+}
+*/

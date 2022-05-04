@@ -5,11 +5,64 @@
 @inject SignInManager<ApplicationUser> _sim
 
 @{
-    ViewData["Title"] = "Home Page";
+	ViewData["Title"] = "Home Page";
 }
+@section Styles {
+<link rel="stylesheet" href="~/css/Home/Mainpage.min.css" />
+}
+<div class="main_info">
+	<video autoplay muted loop class="preview">
+		<source src="https://raw.githubusercontent.com/1dxrpz/video-player-test-js/main/videos/preview2.mp4" type="video/mp4">
+	</video>
+	<div class="dot"></div>
+	<div class="info_wrapper">
+		<div class="wrapper">
+			<img class="logo" src="~/images/Logo.svg" />
+			<div class="moto">Unlimited films, TV programmes and more.</div>
 
-<div class="main_wrapper">
-    <div class="info">
-        <div></div>
-    </div>
+			<div class="register_button">
+				<a id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
+			</div>
+			<div class="login_wrapper">
+				<a id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+			</div>
+		</div>
+	</div>
 </div>
+<div class="info_row">
+	<div class="image">
+		<img src="~/images/mobile.webp" />
+	</div>
+	<div class="text">
+		<h1>Download your programmes to watch offline.</h1>
+		<h5>Save your favourites easily and always have something to watch.</h5>
+	</div>
+</div>
+<div class="info_row">
+	<div class="text">
+		<h1>Watch everywhere.</h1>
+		<h5>Stream unlimited films and TV programmes on your phone, tablet, laptop and TV without paying more.</h5>
+	</div>
+	<div class="image">
+		<video class="our-story-card-video" autoplay="" playsinline="" muted="" loop=""><source src="https://assets.nflxext.com/ffe/siteui/acquisition/ourStory/fuji/desktop/video-devices.m4v" type="video/mp4"></video>
+		<img src="~/images/devices.webp" />
+	</div>
+</div>
+<footer>
+	<ul>
+		<li>Creators:</li>
+		<li><a href="https://github.com/sssMac">Mac</a></li>
+		<li><a href="https://github.com/1dxrpz">Kenneth Gibson</a></li>
+		<li><a href="https://github.com/Garr777">Garr777</a></li>
+		<li><a href="https://github.com/Raw1aN">Raw1an</a></li>
+	</ul>
+	<ul>
+		<li><a href="https://fast.com/">Speed test</a></li>
+		<li><a asp-area="Identity" asp-page="/Account/Login">Account</a></li>
+	</ul>
+	<ul>
+		<li><a href="https://fast.com/">Speed test</a></li>
+		<li><a asp-area="Identity" asp-page="/Account/Login">Account</a></li>
+	</ul>
+	<div class="rights">Netflex 2022. All rights reserved.</div>
+</footer>

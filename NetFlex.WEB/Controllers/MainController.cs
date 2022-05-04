@@ -6,7 +6,7 @@ namespace NetFlex.WEB.Controllers
 	{
 		public IActionResult Index()
 		{
-			return View();
+			return User.Identity.IsAuthenticated ? View() : RedirectToAction("Index", "Home");
 		}
 	}
 }
