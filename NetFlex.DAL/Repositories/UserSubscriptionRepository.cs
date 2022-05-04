@@ -26,7 +26,7 @@ namespace NetFlex.DAL.Repositories
 
         public async Task<UserSubscription> Get(Guid id)
         {
-            return await _db.UserSubscriptions.FindAsync(id);
+            return await _db.UserSubscriptions.FindAsync();
         }
 
         public async Task Create(UserSubscription userSubscription)
