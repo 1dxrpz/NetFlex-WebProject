@@ -1,3 +1,7 @@
+@using Microsoft.AspNetCore.Identity
+@using NetFlex.DAL.EF
+@inject SignInManager<ApplicationUser> _sim
+
 @{
 	var topicHeight = "";
 	if ((bool)ViewData["mainpage"] == false)
@@ -31,13 +35,16 @@
 		<a asp-controller="MyList" class="nav_button">My list</a>
 		<div class="right">
 			<div class="user">
-				<span>Username</span>
+				<span>@User.Identity.Name</span>
 				<i class="fa-solid fa-user"></i>
 				<div class="account_buttons">
-					<div> test</div>
-					<div> test</div>
-					<div> test</div>
-					<div> test</div>
+					<a href="~/Identity/Account/Manage" type="submit">Settings</a>
+					@if(User.IsInRole("Administrator")){
+						<a href="~/admin" type="submit">Admin panel</a>
+					}
+					<form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+						<button type="submit">Logout</button>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -64,18 +71,12 @@
 		<img src="~/images/mini-logo.svg" />
 	</div>
 
-	@await RenderSectionAsync("Scripts", required: false)
-
-	
-
 	<script type="text/javascript">
 		var video = document.querySelector(".preview");
 		var logo = document.querySelector(".wrapper>.logo");
 		var header = document.querySelector("header");
-		window.addEventListener('DOMContentLoaded', e => {
-			
-		});
 		var logoY = logo.getBoundingClientRect().top;
+
 		window.onscroll = (e) => {
 			var val = window.scrollY >= logoY - header.getBoundingClientRect().height - 10;
 			header.setAttribute('scroll', val);
@@ -84,13 +85,15 @@
 			} else {
 				header.style.top = '0px';
 			}
+			video.style.top = window.scrollY * 0.5 + 'px';
 		}
 		video.addEventListener('loadeddata', (e) => {
 		   if(video.readyState >= 3){
 			   document.querySelector("#loader").setAttribute("loaded", "true");
 		   }
 		});
-
 	</script>
+	<script src="https://cdn.jsdelivr.net/npm/@@splidejs/splide@4.0.1/dist/js/splide.min.js"></script>
+	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

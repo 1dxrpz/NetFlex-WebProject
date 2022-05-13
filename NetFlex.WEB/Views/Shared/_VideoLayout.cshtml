@@ -8,22 +8,35 @@
     <script src="https://kit.fontawesome.com/3ee70c58bc.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="~/css/VideoPlayer.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/Video/Video.min.css" asp-append-version="true" />
-    @await RenderSectionAsync("Styles", required: false)
+	<link rel="stylesheet" href="~/css/MainLayout.css">
+	@await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
     <header>
-        <img class="logo" src="~/images/Logonetflix.png" />
-        <div class="menu">
-            <a href="#">Главная</a>
-            <a href="#">Сериалы</a>
-            <a href="#">Фильмы</a>
-            <a href="#">Новое и популярные</a>
-            <a href="#">Мой список</a>
-        </div>
-    </header>
-    <main role="main" class="pb-3">
-        @RenderBody()
-    </main>
+		<div class="logo"></div>
+		<a asp-controller="Main" class="nav_button">Main</a>
+		<a asp-controller="Movies" class="nav_button">Movies</a>
+		<a asp-controller="Series" class="nav_button">Series</a>
+		<a asp-controller="Popular" class="nav_button">Popular</a>
+		<a asp-controller="MyList" class="nav_button">My list</a>
+		<div class="right">
+			<div class="user">
+				<span>@User.Identity.Name</span>
+				<i class="fa-solid fa-user"></i>
+				<div class="account_buttons">
+					<a href="~/Identity/Account/Manage" type="submit">Settings</a>
+					@if(User.IsInRole("Administrator")){
+						<a href="~/admin" type="submit">Admin panel</a>
+					}
+					<form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+						<button type="submit">Logout</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</header>
+	@RenderBody()
+    
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)

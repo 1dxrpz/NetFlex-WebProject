@@ -5,5 +5,6 @@
 		public string? VideoTitle { get; set; }
 		public string? EpisodeName { get; set; }
 		public string? VideoLink { get; set; }
+		public bool EnableSeries { get; set; }
 	}
 }
