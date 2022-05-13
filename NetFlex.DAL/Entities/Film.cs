@@ -18,7 +18,5 @@ namespace NetFlex.DAL.Entities
         public string Description { get; set; }
         public string VideoLink { get; set; }
 
-        public string Preview { get; set; }
-
     }
 }
