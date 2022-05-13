@@ -22,6 +22,11 @@
 		<main role="main" class="pb-3">
 			<div class="wrapper">
 				<div class="menu">
+					<a class="button" asp-controller="Main" asp-action="Index">
+						<i class="fa-solid fa-reply-all"></i>
+						<span>Return to main</span>
+					</a>
+					<hr />
 					@{
 						//Enum.TryParse(ViewData["CurrentPage"] as string, out AdminPages _page);
 						Func<AdminPages, string> CheckSelected = (e) => { return (e == (AdminPages)ViewData["CurrentPage"]).ToString(); };

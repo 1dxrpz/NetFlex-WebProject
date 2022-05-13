@@ -6,179 +6,69 @@
 
 @section Styles {
 <link rel="stylesheet" href="~/css/Main/Main.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@splidejs/splide@4.0.1/dist/css/splide.min.css" />
 }
 
 <div class="container">
-	@for (var a = 0; a < 5; a++)
-	{
+	@*@for (var a = 0; a < 1; a++)
+		{
 		<div class="video_slider" label="Test">
-			<div class="slider_left">
-				<i class="fa-solid fa-chevron-left"></i>
-			</div>
-			<div class="slider_right">
-				<i class="fa-solid fa-chevron-right"></i>
-			</div>
+		<div class="slider_left">
+		<i class="fa-solid fa-chevron-left"></i>
+		</div>
+		<div class="slider_right">
+		<i class="fa-solid fa-chevron-right"></i>
+		</div>
 
-			<div class="slider_wrapper">
-				<div class="wrapper">
-					@for (var i = 0; i < 20; i++)
-					{
+		<div class="slider_wrapper">
+
+		</div>
+		</div>
+		}*@
+	<section class="splide video_slider" aria-labelledby="carousel-heading" label="Test">
+		<div class="splide__arrows">
+			<button class="splide__arrow splide__arrow--prev">
+				Prev
+			</button>
+			<button class="splide__arrow splide__arrow--next">
+				Next
+			</button>
+		</div>
+		<div class="splide__track">
+			<ul class="splide__list">
+				@for (var i = 0; i < 20; i++)
+				{
+					<li class="splide__slide">
 						<div class="video_element">
 							<img src="https://images-ext-2.discordapp.net/external/sFszT_kL3HLRK3G3Th5pQVg4QZgE1ImypKfxDR4Q8iQ/%3Fr%3Dfcc/https/occ-0-3466-3467.1.nflxso.net/dnm/api/v6/X194eJsgWBDE2aQbaNdmCXGUP-Y/AAAABV1lPbVUdmIEMkhD0yhg_IPYBt263-UBiHREnChaRkTpVIDhugDaOgvL-jvO31JGIteSb4RlMqG0XKN6sHwwPm4HURNBatbJdc3P7l3uX9CkzOY0Y79s7fsSJHsLSsa4koJf_Q.jpg?width=461&height=259" />
 							<div class="info" data-title="Этот тупой свин не понимает мечты девушки кролика" data-rating="9.5"></div>
 						</div>
-					}
-				</div>
-			</div>
-
+					</li>
+				}
+			</ul>
 		</div>
-	}
+	</section>
+	<div class="video_row">
+		<div class="videos">
+			@for (var i = 0; i < 20; i++)
+			{
+				var h = i * 10 + 300;
+				<div class="video_element">
+					<img src="https://picsum.photos/300/@h" />
+					<div class="info" data-rating="9.5">
+						<div class="description">
+							Этот тупой свин не понимает мечты девушки кроликаЭтот тупой свин не понимает мечты девушки кроликаЭтот тупой свин не понимает мечты девушки кроликаЭтот тупой свин не понимает мечты девушки кроликаЭтот тупой свин не понимает мечты девушки кроликаЭтот тупой свин не понимает мечты девушки кроликаЭтот тупой свин не понимает мечты девушки кроликаЭтот тупой свин не понимает мечты девушки кроликаЭтот тупой свин не понимает мечты девушки кроликаЭтот тупой свин не понимает мечты девушки кроликаЭтот тупой свин не понимает мечты девушки кроликаЭтот тупой свин не понимает мечты девушки кроликаЭтот тупой свин не понимает мечты девушки кроликаЭтот тупой свин не понимает мечты девушки кролика
+						</div>
+					</div>
+				</div>
+			}
+		</div>
+		<div class="more_videos_wrapper">
+			<div class="more_videos">More videos</div> 
+		</div>
+	</div>
 </div>
-
-@*
-	<main>
-
-	<div class="container-netflex">
-	<div class="films-genres">
-	<div><text >Фильмы</text></div>
-	<div class="genre-list">
-
-	<div class="genre-container">
-	<text class="genre-text">Жанры</text>
-	<i class="fa-solid fa-caret-down"></i>
-	</div>
-	<div class="dropdownmenu closed">
-
-	<ul>
-	<li>
-	<a href="">Азиатское</a>
-	<a href="">Американские</a>
-	<a href="">Аниме</a>
-	<a href="">Британские</a>
-	<a href="">Для детей</a>
-	<a href="">Документальные сериалы</a>
-	</li>
-	<li>
-	<a href="">Драмы</a>
-	<a href="">Европейские</a>
-	<a href="">Комедии</a>
-	<a href="">Наука и природа</a>
-	<a href="">Научная фантастика и фэнтези</a>
-	<a href="">О преступлениях</a>
-	</li>
-	<li>
-	<a href="">Подростковое кино</a>
-	<a href="">Реалити и ток-шоу</a>
-	<a href="">Романтика</a>
-	<a href="">Триллеры</a>
-	<a href="">Ужасы</a>
-	<a href="">Экшен</a>
-	</li>
-	</ul>
-
-	</div>
-	</div>
-	</div>
-	</div>
-
-	<div class="container-netflex">
-	<div class="Information">
-	<div class="div_name"><text>WATCHMEN</text></div>
-	<div class="div_information"><text>В параллельном мире супергерои - обычное дело. Заклейменные преступниками, они должны спасти себя... и весь мир</text></div>
-	</div>
-	</div>
-	<div class="container-netflex">
-	<div class="watchinformation-age">
-	<div class="watch-information">
-	<div class="watch">
-	<<i class="fa-solid fa-play"></i>
-	<text>Смотреть</text>
-	</div>
-
-	</div>
-	<div class="age"><text>16+</text></div>
-	</div>
-	</div>
-
-
-	<div class="recomendations-container">
-	<div class="recomendations">
-	<div class="recomendation-block">
-	<text>Мой лист</text>
-	<div class="recomendation-pictures snaps-inline">
-	<div class="film-picture">
-	<img src="~/images/recomendation-picture.png" alt="">
-	</div>
-	<div class="film-picture">
-	<img src="~/images/recomendation-picture.png" alt="">
-	</div>
-	<div class="film-picture">
-	<img src="~/images/recomendation-picture.png" alt="">
-	</div>
-	<div class="film-picture">
-	<img src="~/images/recomendation-picture.png" alt="">
-	</div>
-	<div class="film-picture">
-	<img src="~/images/recomendation-picture.png" alt="">
-	</div>
-	<div class="film-picture">
-	<img src="~/images/recomendation-picture.png" alt="">
-	</div>
-	<div class="film-picture">
-	<img src="~/images/recomendation-picture.png" alt="">
-	</div>
-	<div class="film-picture">
-	<img src="~/images/recomendation-picture.png" alt="">
-	</div>
-	</div>
-	</div>
-
-	<div class="recomendation-block">
-	<text>Приключенческое кино</text>
-	<div class="recomendation-pictures snaps-inline">
-	<div class="film-picture">
-	<img src="~/images/recomendation-picture.png" alt="">
-	</div>
-	<div class="film-picture">
-	<img src="~/images/recomendation-picture.png" alt="">
-	</div>
-	<div class="film-picture">
-	<img src="~/images/recomendation-picture.png" alt="">
-	</div>
-	<div class="film-picture">
-	<img src="~/images/recomendation-picture.png" alt="">
-	</div>
-	<div class="film-picture">
-	<img src="~/images/recomendation-picture.png" alt="">
-	</div>
-	</div>
-	</div>
-
-	<div class="recomendation-block">
-	<text>Приключенческое кино</text>
-	<div class="recomendation-pictures snaps-inline">
-	<div class="film-picture">
-	<img src="~/images/recomendation-picture.png" alt="">
-	</div>
-	<div class="film-picture">
-	<img src="~/images/recomendation-picture.png" alt="">
-	</div>
-	<div class="film-picture">
-	<img src="~/images/recomendation-picture.png" alt="">
-	</div>
-	<div class="film-picture">
-	<img src="~/images/recomendation-picture.png" alt="">
-	</div>
-	<div class="film-picture">
-	<img src="~/images/recomendation-picture.png" alt="">
-	</div>
-	</div>
-	</div>
-	</div>
-	</div>
-	</main>*@
-
-
-<script type="text/javascript">
-	//document.querySelectorAll("")
-</script>
+@**@
+@section Scripts {
+<script src="~/js/Slider.js"></script>
+}

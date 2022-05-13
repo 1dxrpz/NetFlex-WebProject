@@ -12,7 +12,80 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
+    .videoPlayerContainer .closeEpisodesSlider {
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        right: 0;
+        top: 0;
+        font-size: 18pt;
+        color: #eee;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10001;
+    }
+    .videoPlayerContainer .episodes {
+        z-index: 10000;
+        overflow: hidden;
+        right: -100%;
+        top: 0;
+        transition: .2s;
+        position: absolute;
+        width: 50%;
+        height: 100%;
+    }
+        .videoPlayerContainer .episodes[data-visible="true"] {
+            right: 0;
+        }
+        .videoPlayerContainer .episodes[data-visible="false"] {
+            right: -100%;
+        }
+
+        .videoPlayerContainer .episodes .wrapper {
+            left: 100px;
+            position: relative;
+            transition: 0.2s;
+        }
+
+        .videoPlayerContainer .episodes .episode {
+            position: relative;
+            width: 400px;
+            height: 100px;
+            margin: 10px;
+            left: 0;
+            border-radius: 10px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, .23);
+            transition: 0.2s;
+            background: #eee;
+            overflow: hidden;
+            padding-left: 100px;
+        }
+            .videoPlayerContainer .episodes .episode .image {
+                width: 100px;
+                height: 100%;
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+            .videoPlayerContainer .episodes .episode .image img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            .videoPlayerContainer .episodes .episode[active=true] {
+                margin: 30px 0;
+                opacity: 1;
+                background: #eee;
+            }
+
+            .videoPlayerContainer .episodes .episode[active=false] {
+                margin: 10px;
+                opacity: .25;
+                background: #eee;
+            }
 
     .videoPlayerContainer[hovered=true] .controls {
         opacity: 1;
@@ -21,7 +94,7 @@
 
     .videoPlayerContainer[hovered=false] .controls {
         opacity: 0;
-        cursor: none;
+        cursor: normal;
     }
 
     .videoPlayerContainer .video_info_container {
@@ -71,11 +144,22 @@
             font-size: 12pt;
         }
 
-    .videoPlayerContainer #video {
+    .videoPlayerContainer #videoPlayer {
         position: relative;
         width: 100%;
         height: 100%;
+        filter: blur(0px);
+        transform: scale(1);
+        transition: .5s;
     }
+    .videoPlayerContainer #videoPlayer[episodes="true"] {
+        filter: blur(10px);
+        transform: scale(1.2);
+    }
+        .videoPlayerContainer #videoPlayer[episodes="false"] {
+            filter: blur(0px);
+            transform: scale(1);
+        }
 
     .videoPlayerContainer .controls {
         width: 100%;
@@ -85,6 +169,7 @@
         bottom: 0;
         box-shadow: inset 0 50px 80px black, inset 0 -50px 80px black;
         transition: 0.2s;
+        z-index: 9999;
     }
 
     .videoPlayerContainer .controls_bottom {

@@ -1,9 +1,22 @@
 ﻿@model NetFlex.WEB.ViewModels.VideoPlayerViewModel
 
 <div class="videoPlayerContainer" hovered="false">
-	<video id="video">
+	<video id="videoPlayer">
 		<source src="@Model.VideoLink" type="video/mp4" />
 	</video>
+	<div class="episodes" data-visible="false">
+		<div class="closeEpisodesSlider" onclick="ToggleEpisodes()"><i class="fa-solid fa-xmark"></i></div>
+		<div class="wrapper">
+			@for (int i = 1; i < 10; i++)
+			{
+				<div class="episode" data-episode="@i">
+					<div class="image">
+						<img src="https://imagesvc.meredithcorp.io/v3/mm/image?q=60&c=sc&rect=516%2C31%2C2000%2C773&poi=%5B1480%2C65%5D&w=2000&h=1000&url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F6%2F2021%2F10%2F27%2FLightyear_1.jpg" />
+					</div>
+				</div>
+			}
+		</div>
+	</div>
 	<div class="controls">
 		<div class="video_info_container" onclick="ToggleVideo()">
 			<div class="video_name" onclick="alert(1)"><i class="fa-solid fa-arcontrols_row-left-long"></i></div>
@@ -47,7 +60,10 @@
 				<div class="buttons right">
 					<div class="button support"></div>
 					<div class="button next_episode"><i class="fa-solid fa-forward-step"></i></div>
-					<div class="button episodes"><i class="fa-solid fa-bars"></i></div>
+					@if (Model.EnableSeries)
+					{
+						<div class="button toggleEpisodes" onclick="ToggleEpisodes()"><i class="fa-solid fa-bars"></i></div>
+					}
 					<div class="button fullscreen" data-fullscreen="false"><i class="fa-solid fa-expand" onclick="Expand()"></i><i class="fa-solid fa-compress" onclick="Compress()"></i></div>
 				</div>
 			</div>
@@ -55,5 +71,5 @@
 	</div>
 </div>
 @section Scripts {
-    
+
 }
