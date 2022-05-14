@@ -1,5 +1,51 @@
-﻿@{
+﻿@model IEnumerable<NetFlex.WEB.ViewModels.SerialViewModel>
+@{
     ViewData["Title"] = "Series";
 	Layout = "~/Views/Shared/_MainLayout.cshtml";
 	ViewData["mainpage"] = false;
 }
+
+<div class="container">
+	<div class="content_wrapper">
+		<div class="action_container">
+			<div class="input_wrapper">
+				<div class="label"><i class="fa-solid fa-magnifying-glass"></i></div>
+				<input placeholder="Search movie" />
+			</div>
+			<div class="input_wrapper select">
+				<input type="checkbox" class="select_checkbox" />
+				<div class="label">
+					<i class="fa-solid fa-chevron-down"></i>
+				</div>
+				<div class="checkbox_select" label="Select genres">
+				</div>
+				<div class="options">
+					<div class="option">
+						<input type="checkbox" />
+						Test
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="content_container">
+			<div class="video_row">
+				<div class="videos">
+
+					@foreach (var item in Model)
+					{
+						<a class="video_element" asp-action="Serial" asp-controller="video" asp-route-id="@item.Id">
+							<div class="image_wrapper">
+								<img src="@item.Poster" />
+								<div class="info" data-rating="@item.UserRating">
+								</div>
+							</div>
+						</a>
+					}
+				</div>
+				@*<div class="more_videos_wrapper">
+					<div class="more_videos">More videos</div>
+				</div>*@
+			</div>
+		</div>
+	</div>
+</div>

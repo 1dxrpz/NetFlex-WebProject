@@ -1,5 +1,10 @@
 ﻿@model NetFlex.WEB.ViewModels.VideoPlayerViewModel
 
+@{
+	string episode = Context.Request.Query["episode"];
+	int current_episode = episode == null ? 1 : int.Parse(episode);
+}
+
 <div class="videoPlayerContainer" hovered="false">
 	<video id="videoPlayer">
 		<source src="@Model.VideoLink" type="video/mp4" />
@@ -7,13 +12,22 @@
 	<div class="episodes" data-visible="false">
 		<div class="closeEpisodesSlider" onclick="ToggleEpisodes()"><i class="fa-solid fa-xmark"></i></div>
 		<div class="wrapper">
-			@for (int i = 1; i < 10; i++)
+			@if (Model.EnableSeries)
 			{
-				<div class="episode" data-episode="@i">
-					<div class="image">
-						<img src="https://imagesvc.meredithcorp.io/v3/mm/image?q=60&c=sc&rect=516%2C31%2C2000%2C773&poi=%5B1480%2C65%5D&w=2000&h=1000&url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F6%2F2021%2F10%2F27%2FLightyear_1.jpg" />
-					</div>
-				</div>
+				@foreach (var item in Model.Episodes)
+				{
+
+					<a asp-controller="Video" asp-action="Serial" asp-route-episode="@item.Number">
+						<div class="episode" data-episode="@item.Number" active="@episode == @item.Number">
+							<div class="image">
+								<img src="@item.Preview" />
+							</div>
+							<div>
+								@item.Title
+							</div>
+						</div>
+					</a>
+				}
 			}
 		</div>
 	</div>

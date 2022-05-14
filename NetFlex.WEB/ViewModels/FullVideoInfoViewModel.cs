@@ -2,16 +2,15 @@
 {
     public class FullVideoInfoViewModel
     {
-        public List<FilmViewModel> Films { get; set; }
-        public List<SerialViewModel> Serials { get; set; }
+        public FilmViewModel Film { get; set; }
+        public SerialViewModel Serial { get; set; }
+        public List<ReviewViewModel> Reviews { get; set; }
 
-        public List<GenreViewModel> Genres { get; set; }
+        public List<GenreVideosViewModel> Genres { get; set; }
 
         public FullVideoInfoViewModel()
         {
-            Films = new List<FilmViewModel>();
-            Serials = new List<SerialViewModel>();
-            Genres = new List<GenreViewModel>();
+            Genres = new List<GenreVideosViewModel>();
         }
     }
 }

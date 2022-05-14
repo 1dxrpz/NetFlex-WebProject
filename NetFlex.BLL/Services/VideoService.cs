@@ -37,7 +37,7 @@ namespace NetFlex.BLL.Services
                 SerialId = episode.SerialId,
                 Number = episode.Number,
                 VideoLink = episode.VideoLink,
-
+                PreviewVideo = episode.PreviewVideo
             };
         }
 
@@ -58,7 +58,7 @@ namespace NetFlex.BLL.Services
                 UserRating = film.UserRating,
                 Description = film.Description,
                 VideoLink = film.VideoLink,
-
+                Poster = film.Poster
             };
         }
 
@@ -78,7 +78,7 @@ namespace NetFlex.BLL.Services
                 AgeRating = serial.AgeRating,
                 UserRating = serial.UserRating,
                 Description = serial.Description,
-
+                Poster = serial.Poster
             };
         }
 
@@ -87,6 +87,12 @@ namespace NetFlex.BLL.Services
             var episodes = await Database.Episodes.GetAll();
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Episode, EpisodeDTO>()).CreateMapper();
             return mapper.Map<IEnumerable<Episode>, List<EpisodeDTO>>(episodes);
+        }
+        public async Task<IEnumerable<EpisodeDTO>> GetEpisodes(Guid id)
+        {
+            var episodes = await Database.Episodes.GetAll();
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Episode, EpisodeDTO>()).CreateMapper();
+            return mapper.Map<IEnumerable<Episode>, List<EpisodeDTO>>(episodes.Where(v => v.SerialId == id));
         }
 
         public async Task<IEnumerable<FilmDTO>> GetFilms()

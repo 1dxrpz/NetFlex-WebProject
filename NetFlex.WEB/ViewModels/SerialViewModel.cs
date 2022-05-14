@@ -17,6 +17,7 @@
         public SerialViewModel()
         {
             Genres = new List<GenreViewModel>();
+            Episodes = new List<EpisodeViewModel>();
         }
     }
 }

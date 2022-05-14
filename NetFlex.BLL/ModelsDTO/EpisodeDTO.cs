@@ -16,7 +16,7 @@ namespace NetFlex.BLL.ModelsDTO
         public int Duration { get; set; }
 
         public string VideoLink { get; set; }
-        public IFormFile PreviewVideo { get; set; }
+        public string PreviewVideo { get; set; }
 
     }
 }

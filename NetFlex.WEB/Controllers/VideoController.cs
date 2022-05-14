@@ -22,33 +22,85 @@ namespace NetFlex.WEB.Controllers
             _userService = userService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(Guid id)
 		{
             return User.Identity.IsAuthenticated ? View() : RedirectToAction("Index", "Home");
         }
 
-		public async Task<IActionResult> ViewFilm(Guid id)
+		public async Task<IActionResult> Movie(Guid id)
         {
             try
             {
                 FilmDTO filmDTO = await _videoService.GetFilm(id);
 
-                return View(filmDTO);
+                var getFilm = await _videoService.GetFilm(id);
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<FilmDTO, FilmViewModel>());
+                var mapper = new Mapper(config);
+                var movie = mapper.Map<FilmDTO, FilmViewModel>(getFilm);
+
+                var getGenres = await _videoService.GetGenres(id);
+                var config1 = new MapperConfiguration(cfg => cfg.CreateMap<GenreVideoDTO, GenreVideosViewModel>());
+                var mapper1 = new Mapper(config1);
+                var genres = mapper1.Map<IEnumerable<GenreVideoDTO>, List<GenreVideosViewModel>>(getGenres);
+
+				var getReviews = await _reviewService.GetReviews(id);
+				var config2 = new MapperConfiguration(cfg => cfg.CreateMap<ReviewDTO, ReviewViewModel>());
+				var mapper2 = new Mapper(config2);
+				var reviews = mapper2.Map<IEnumerable<ReviewDTO>, List<ReviewViewModel>>(getReviews);
+
+				var fullVideo = new FullVideoInfoViewModel()
+                {
+                    Film = movie,
+                    Genres = genres,
+                    Reviews = reviews
+                };
+
+                return View(fullVideo);
             }
             catch (ValidationException ex)
             {
                 return Content(ex.Message);
             }
         }
-
-        [HttpGet("Seraes")]
-        public async Task<IActionResult> GetSerial(Guid sereasId)
+        public async Task<IActionResult> Serial(Guid id)
         {
-            var getSetial = await _videoService.GetSerial(sereasId);
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<SerialDTO, SerialViewModel>());
-            var mapper = new Mapper(config);
-            var sereas = mapper.Map<SerialDTO, SerialViewModel>(getSetial);
-            return View(sereas);
+            try
+            {
+                var getSerial = await _videoService.GetSerial(id);
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<SerialDTO, SerialViewModel>());
+                var mapper = new Mapper(config);
+                var serial = mapper.Map<SerialDTO, SerialViewModel>(getSerial);
+
+                var getGenres = await _videoService.GetGenres(id);
+                var config1 = new MapperConfiguration(cfg => cfg.CreateMap<GenreVideoDTO, GenreVideosViewModel>());
+                var mapper1 = new Mapper(config1);
+                var genres = mapper1.Map<IEnumerable<GenreVideoDTO>, List<GenreVideosViewModel>>(getGenres);
+
+                var getReviews = await _reviewService.GetReviews(id);
+                var config2 = new MapperConfiguration(cfg => cfg.CreateMap<ReviewDTO, ReviewViewModel>());
+                var mapper2 = new Mapper(config2);
+                var reviews = mapper2.Map<IEnumerable<ReviewDTO>, List<ReviewViewModel>>(getReviews);
+
+                var getEpisodes = await _videoService.GetEpisodes(id);
+                var config3 = new MapperConfiguration(cfg => cfg.CreateMap<EpisodeDTO, EpisodeViewModel>());
+                var mapper3 = new Mapper(config3);
+                var episodes = mapper3.Map<IEnumerable<EpisodeDTO>, List<EpisodeViewModel>> (getEpisodes);
+
+                serial.Episodes = episodes;
+
+                var fullVideo = new FullVideoInfoViewModel()
+                {
+                    Serial = serial,
+                    Genres = genres,
+                    Reviews = reviews,
+                };
+
+                return View(fullVideo);
+            }
+            catch (ValidationException ex)
+            {
+                return Content(ex.Message);
+            }
         }
 
         [HttpGet("Movie")]
