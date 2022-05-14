@@ -20,6 +20,7 @@ namespace NetFlex.BLL.Interfaces
         Task<IEnumerable<FilmDTO>> GetFilms();
         Task<IEnumerable<SerialDTO>> GetSerials();
         Task<IEnumerable<EpisodeDTO>>GetEpisodes();
+        Task<IEnumerable<EpisodeDTO>>GetEpisodes(Guid id);
 
         Task UpdateFilm(FilmDTO updatedFilm);
         Task UpdateSerial(SerialDTO updatedSerial);

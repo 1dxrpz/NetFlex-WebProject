@@ -10,21 +10,6 @@
 }
 
 <div class="container">
-	@*@for (var a = 0; a < 1; a++)
-		{
-		<div class="video_slider" label="Test">
-		<div class="slider_left">
-		<i class="fa-solid fa-chevron-left"></i>
-		</div>
-		<div class="slider_right">
-		<i class="fa-solid fa-chevron-right"></i>
-		</div>
-
-		<div class="slider_wrapper">
-
-		</div>
-		</div>
-		}*@
 	<section class="splide video_slider" aria-labelledby="carousel-heading" label="Test">
 		<div class="splide__arrows">
 			<button class="splide__arrow splide__arrow--prev">
@@ -50,22 +35,21 @@
 	</section>
 	<div class="video_row">
 		<div class="videos">
-			@for (var i = 0; i < 20; i++)
+
+			@foreach (var item in Model)
 			{
-				var h = i * 10 + 300;
-				<div class="video_element">
-					<img src="https://picsum.photos/300/@h" />
-					<div class="info" data-rating="9.5">
-						<div class="description">
-							Этот тупой свин не понимает мечты девушки кроликаЭтот тупой свин не понимает мечты девушки кроликаЭтот тупой свин не понимает мечты девушки кроликаЭтот тупой свин не понимает мечты девушки кроликаЭтот тупой свин не понимает мечты девушки кроликаЭтот тупой свин не понимает мечты девушки кроликаЭтот тупой свин не понимает мечты девушки кроликаЭтот тупой свин не понимает мечты девушки кроликаЭтот тупой свин не понимает мечты девушки кроликаЭтот тупой свин не понимает мечты девушки кроликаЭтот тупой свин не понимает мечты девушки кроликаЭтот тупой свин не понимает мечты девушки кроликаЭтот тупой свин не понимает мечты девушки кроликаЭтот тупой свин не понимает мечты девушки кролика
+				<a class="video_element" asp-action="Serial" asp-controller="video" asp-route-id="@item.Id">
+					<div class="image_wrapper">
+						<img src="@item.Poster" />
+						<div class="info" data-rating="@item.UserRating">
 						</div>
 					</div>
-				</div>
+				</a>
 			}
 		</div>
-		<div class="more_videos_wrapper">
-			<div class="more_videos">More videos</div> 
-		</div>
+		@*<div class="more_videos_wrapper">
+			<div class="more_videos">More videos</div>
+			</div>*@
 	</div>
 </div>
 @**@

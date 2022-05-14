@@ -121,13 +121,13 @@ namespace NetFlex.WEB.Controllers
                 var genres = mapper.Map<IEnumerable<GenreDTO>, IEnumerable<GenreViewModel>>(getGenres);
 
 
-                var serialsView = new FullVideoInfoViewModel
-                {
-                    Serials = serials.ToList(),
-                    Genres = genres.ToList(),
-                };
+                //var serialsView = new FullVideoInfoViewModel
+                //{
+                //    Serials = serials.ToList(),
+                //    Genres = genres.ToList(),
+                //};
 
-                return View(serialsView);
+                return View();
             }
             catch
             {

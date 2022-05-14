@@ -556,7 +556,7 @@ namespace NetFlex.DAL.EF
                 new Film {
                     Id= film2,
                     Title ="Бегущий по лезвию 2049",
-                    Poster = "https://upload.wikimedia.org/wikipedia/ru/thumb/9/9b/%D0%91%D0%B5%D0%B3%D1%83%D1%89%D0%B8%D0%B9_%D0%BF%D0%BE_%D0%BB%D0%B5%D0%B7%D0%B2%D0%B8%D1%8E_2049.jpg/300px-%D0%91%D0%B5%D0%B3%D1%83%D1%89%D0%B8%D0%B9_%D0%BF%D0%BE_%D0%BB%D0%B5%D0%B7%D0%B2%D0%B8%D1%8E_2049.jpg",
+                    Poster = "https://m.media-amazon.com/images/I/A1cLrVccuTL._AC_SL1500_.jpg",
                     Duration=163,
                     AgeRating=16,
                     UserRating=0,
@@ -576,7 +576,7 @@ namespace NetFlex.DAL.EF
                 new Film {
                     Id= film4,
                     Title ="Назад в будущее",
-                    Poster = "https://upload.wikimedia.org/wikipedia/ru/thumb/9/90/BTTF_DVD_rus.jpg/300px-BTTF_DVD_rus.jpg",
+                    Poster = "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/21b866100905361.5f130219321ac.jpg",
                     Duration=116,
                     AgeRating=12,
                     UserRating=0,
@@ -638,7 +638,7 @@ namespace NetFlex.DAL.EF
                 new Film {
                     Id= film10,
                     Title ="Звёздные войны. Эпизод V: Империя наносит ответный удар",
-                    Poster = "https://upload.wikimedia.org/wikipedia/ru/thumb/e/e0/Empire20strikes20back_old.jpg/345px-Empire20strikes20back_old.jpg",
+                    Poster = "https://www.teahub.io/photos/full/257-2575326_star-wars-the-empire-strikes-back-star-wars.jpg",
                     Duration=124,
                     AgeRating=16,
                     UserRating=0,

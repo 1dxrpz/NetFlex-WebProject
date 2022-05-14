@@ -6,5 +6,7 @@
 		public string? EpisodeName { get; set; }
 		public string? VideoLink { get; set; }
 		public bool EnableSeries { get; set; }
+
+		public List<EpisodeViewModel> Episodes { get; set; }
 	}
 }

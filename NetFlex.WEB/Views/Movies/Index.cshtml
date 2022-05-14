@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<NetFlex.WEB.ViewModels.FilmViewModel>
+@{
 	ViewData["Title"] = "Movies";
 	Layout = "~/Views/Shared/_MainLayout.cshtml";
 	ViewData["mainpage"] = false;
@@ -27,79 +28,24 @@
 			</div>
 		</div>
 		<div class="content_container">
-		</div>
-	</div>
-</div>
-<br>
-<br>
-<br>
-<br>
-<br>
-<div class="preview_slider">
-	<div class="slider_wrapper">
-		<div class="slider_element">
-			<img class="image" src="https://cdn.pastemagazine.com/www/system/images/photo_albums/best-movie-posters-2016/large/moonlight-ver2-xlg.jpg?1384968217" />
-		</div>
-		<div class="slider_element">
-			<img class="image" src="https://cdn.pastemagazine.com/www/system/images/photo_albums/best-movie-posters-2016/large/moonlight-ver2-xlg.jpg?1384968217" />
-		</div>
-		<div class="slider_element">
-			<img class="image" src="https://cdn.pastemagazine.com/www/system/images/photo_albums/best-movie-posters-2016/large/moonlight-ver2-xlg.jpg?1384968217" />
-		</div>
-	</div>
-	<div class="info">
-		<div class="topic_container">
-			<div class="info_wrapper">
-				<div class="topic">Topic header</div>
-				<div class="topic">Something better</div>
-				<div class="topic">Hello world</div>
+			<div class="video_row">
+				<div class="videos">
+
+					@foreach (var item in Model)
+					{
+						<a class="video_element" asp-action="Movie" asp-controller="video" asp-route-id="@item.Id">
+							<div class="image_wrapper">
+								<img src="@item.Poster" />
+								<div class="info" data-rating="@item.UserRating">
+								</div>
+							</div>
+						</a>
+					}
+				</div>
+				@*<div class="more_videos_wrapper">
+					<div class="more_videos">More videos</div>
+				</div>*@
 			</div>
 		</div>
 	</div>
-	<div class="slider_controls">
-		<div class="slider_button left" onclick="PrevSlide()">
-			<i class="fa-solid fa-chevron-left"></i>
-		</div>
-		<div class="slider_button right" onclick="NextSlide()">
-			<i class="fa-solid fa-chevron-right"></i>
-		</div>
-		<div class="slider_buttons">
-			<div class="button" data-slider-button="1" active></div>
-			<div class="button" data-slider-button="2"></div>
-			<div class="button" data-slider-button="3"></div>
-		</div>
-	</div>
 </div>
-
-@section Scripts {
-<script>
-	var TopicSlider = document.querySelector(".info_wrapper");
-	var SliderWrapper = document.querySelector(".slider_wrapper");
-	var sliderButtons = document.querySelectorAll(".slider_buttons>.button");
-	var currentSlide = 1;
-	var ChangeSlide = s => {
-		TopicSlider.style.top = s * -60 + 'px';
-		SliderWrapper.style.left = -s + "00%";
-		sliderButtons.forEach(v => v.removeAttribute("active"));
-		sliderButtons[s].setAttribute("active", "true");
-		currentSlide = s;
-	}
-	sliderButtons.forEach(v => {
-		v.addEventListener('click', e => {
-			ChangeSlide(+v.getAttribute("data-slider-button") - 1);
-		});
-	})
-	var NextSlide = _ => {
-		currentSlide = currentSlide == 2 ? 0 : currentSlide + 1;
-		ChangeSlide(currentSlide);
-		console.log("next");
-	}
-	var PrevSlide = _ => {
-		currentSlide = currentSlide == 0 ? 2 : currentSlide - 1;
-		ChangeSlide(currentSlide);
-		console.log("prev");
-	}
-
-
-</script>
-}

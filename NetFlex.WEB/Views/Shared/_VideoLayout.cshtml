@@ -14,11 +14,11 @@
 <body>
     <header>
 		<div class="logo"></div>
-		<a asp-controller="Main" class="nav_button">Main</a>
-		<a asp-controller="Movies" class="nav_button">Movies</a>
-		<a asp-controller="Series" class="nav_button">Series</a>
-		<a asp-controller="Popular" class="nav_button">Popular</a>
-		<a asp-controller="MyList" class="nav_button">My list</a>
+		<a asp-controller="Main" asp-action="Index" class="nav_button">Main</a>
+		<a asp-controller="Movies" asp-action="Index" class="nav_button">Movies</a>
+		<a asp-controller="Series" asp-action="Index" class="nav_button">Series</a>
+		<a asp-controller="Popular" asp-action="Index" class="nav_button">Popular</a>
+		<a asp-controller="MyList" asp-action="Index" class="nav_button">My list</a>
 		<div class="right">
 			<div class="user">
 				<span>@User.Identity.Name</span>
