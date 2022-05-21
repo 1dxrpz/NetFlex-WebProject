@@ -1,0 +1,111 @@
+﻿@using NetFlex.DAL.Enums
+@*
+	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+	Layout = "~/Views/Shared/_AdminLayout.cshtml";
+	ViewData["Title"] = "Admin panel";
+	ViewData["CurrentPage"] = AdminPages.Statistics;
+}
+@section Styles {
+<style>
+</style>
+}
+<div class="statistics">
+	<div class="layout">
+		<div class="vertical">
+			<div class="block">
+				<div class="wrapper">
+					<div class="topic">Welcome to Dashboard</div>
+					<div class="description">Setting & statistics</div>
+				</div>
+			</div>
+		</div>
+		<div class="horizontal">
+			<div class="block blue">
+				<div class="icon corner">
+					<span><i class="fa-brands fa-apple"></i></span>
+				</div>
+				<div class="wrapper center">
+					<div class="topic">14,536</div>
+					<div class="spacer"></div>
+					<div class="description">Test</div>
+				</div>
+			</div>
+			<div class="block red">
+				<div class="icon corner">
+					<span><i class="fa-brands fa-apple"></i></span>
+				</div>
+				<div class="wrapper center">
+					<div class="topic">126</div>
+					<div class="spacer"></div>
+					<div class="description">Test</div>
+				</div>
+			</div>
+			<div class="block yellow">
+				<div class="icon corner">
+					<span><i class="fa-brands fa-apple"></i></span>
+				</div>
+				<div class="wrapper center">
+					<div class="topic">15</div>
+					<div class="spacer"></div>
+					<div class="description">Test</div>
+				</div>
+			</div>
+			<div class="block green">
+				<div class="icon corner">
+					<span><i class="fa-brands fa-apple"></i></span>
+				</div>
+				<div class="wrapper center">
+					<div class="topic">3.6</div>
+					<div class="spacer"></div>
+					<div class="description">Test</div>
+				</div>
+			</div>
+		</div>
+		<div class="vertical">
+			<div class="block" label="Info">
+				<div class="icon">
+					<span><i class="fa-brands fa-apple"></i></span>
+				</div>
+				<div class="wrapper">
+					<div class="topic">Welcome to Dashboard</div>
+					<div class="description">Setting & statistics</div>
+				</div>
+			</div>
+		</div>
+		<div class="horizontal">
+			<div class="block">
+				<div class="icon red">
+					<span><i class="fa-brands fa-apple"></i></span>
+				</div>
+				<div class="wrapper">
+					<div class="topic">Test</div>
+					<div class="description">Test</div>
+				</div>
+			</div>
+			<div class="block">
+				<div class="icon green">
+					<span><i class="fa-brands fa-apple"></i></span>
+				</div>
+				<div class="wrapper">
+					<div class="topic">Test</div>
+					<div class="description">Test</div>
+				</div>
+			</div>
+			<div class="block">
+				<div class="icon yellow">
+					<span><i class="fa-brands fa-apple"></i></span>
+				</div>
+				<div class="wrapper">
+					<div class="topic">Test</div>
+					<div class="description">Test</div>
+				</div>
+			</div>
+		</div>
+		<div class="horizontal">
+			<div class="block" label="chart"></div>
+			<div class="block" label="chart"></div>
+		</div>
+	</div>
+</div>

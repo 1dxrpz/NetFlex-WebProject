@@ -1,0 +1,52 @@
+﻿@using NetFlex.DAL.Enums
+@model IEnumerable<NetFlex.WEB.ViewModels.GenreViewModel>
+@{
+	Layout = "~/Views/Shared/_AdminLayout.cshtml";
+	ViewData["CurrentPage"] = AdminPages.Genres;
+}
+<div class="layout">
+	<div class="vertical">
+		<div class="block">
+			<div class="wrapper">
+				<div class="topic">Genres</div>
+				<div class="description">Add & edit Genres</div>
+			</div>
+		</div>
+	</div>
+	<div class="vertical">
+		<div class="horizontal m-0">
+			<div class="block" label="Options">
+				<div class="horizontal m-0">
+					<button type="button" class="btn btn-primary" onclick="loadAddGenre()">
+						Add Genre
+					</button>
+				</div>
+			</div>
+		</div>
+		<div class="block">
+			<table class="table genresTable">
+				@foreach (var item in Model)
+				{
+					<tr class="AllGenres" data-name="@item.GenreName" data-id="@item.Id">
+						<td class="genrename">@item.GenreName</td>
+						<td>
+							<button type="button" class="btn btn-danger m-2" onclick="RemoveGenre('@item.Id')">
+								Remove
+							</button>
+						</td>
+						<td>
+							<button onclick="loadEditGenre('@item.Id')" type="button" class="btn btn-primary m-2">
+								Edit
+							</button>
+						</td>
+					</tr>
+				}
+			</table>
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+<script asp-append-version="true">
+</script>
+}

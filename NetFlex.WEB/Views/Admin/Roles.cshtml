@@ -1,0 +1,70 @@
+﻿@using NetFlex.DAL.Enums
+
+@model IEnumerable<NetFlex.WEB.ViewModels.RoleViewModel>
+@inject NetFlex.BLL.Interfaces.IRoleService _roleManager
+
+@{
+	Layout = "~/Views/Shared/_AdminLayout.cshtml";
+	ViewData["CurrentPage"] = AdminPages.Roles;
+	int i = 0;
+}
+
+<div class="layout">
+	<div class="vertical">
+		<div class="block">
+			<div class="wrapper">
+				<div class="topic">Role list</div>
+			</div>
+		</div>
+		<div class="horizontal m-0">
+			<div class="block">
+				<div class="horizontal m-0">
+					<button type="button" class="btn btn-primary m-2" onclick="loadAddRole()">
+						Add role
+					</button>
+				</div>
+			</div>
+		</div>
+		<div class="block">
+			<table class="table rolesTable">
+				<thead>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Role</th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th scope="col">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					
+					@foreach (var item in Model)
+					{
+						i++;
+						<tr class="AllRoles" data-name="@item.Name" data-id="@item.Id">
+							<td class="rolename">@i</td>
+							<td class="rolename">@item.Name</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>
+								<button type="button" class="button light" onclick="RemoveRole('@item.Id')">
+									Remove
+								</button>
+								<button onclick="loadEditRole('@item.Id')" type="button" class="button light">
+									Edit
+								</button>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+<script>
+</script>
+}

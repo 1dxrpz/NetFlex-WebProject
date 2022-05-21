@@ -1,0 +1,147 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using NetFlex.DAL.EF
+@using NetFlex.DAL.Enums
+@model NetFlex.WEB.ViewModels.UsersPageViewModel
+@inject NetFlex.BLL.Interfaces.IRoleService _roleManager
+@inject NetFlex.BLL.Interfaces.IUserService _userService
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+	Layout = "~/Views/Shared/_AdminLayout.cshtml";
+	ViewData["CurrentPage"] = AdminPages.Users;
+
+	int startPage = 1;
+	int endPage = 7;
+	int currentPage = 1;
+	int pageCount = (int)Math.Ceiling(Model.UsersCount / 32.0);
+	bool page = int.TryParse(HttpContextAccessor.HttpContext.Request.Query["page"], out currentPage);
+	var search = ViewBag.searchString;
+	if (page)
+	{
+		startPage = currentPage - 3;
+		endPage = currentPage + 3;
+		if (startPage <= 0)
+		{
+			endPage -= startPage - 1;
+			startPage = 1;
+		}
+		if (endPage >= pageCount)
+		{
+			startPage += pageCount - endPage;
+			endPage = pageCount;
+		}
+	}
+	else
+	{
+		currentPage = 1;
+	}
+	var i = page ? (currentPage - 1) * 32 : 0;
+}
+
+<div class="find_context_menu" shown="false">
+	<div class="input">
+		<form asp-action="Users" asp-controller="Admin" asp-route-page="1">
+			<input name="searchString" placeholder="Type here..." class="findContext" />
+		</form>
+		<div class="hint"><span class="key">enter</span><span>to confirm</span><span class="key">esc</span><span>to cancel</span></div>
+	</div>
+</div>
+<div class="layout">
+	<div class="vertical">
+		<div class="block">
+			<div class="wrapper">
+				<div class="topic">Users list</div>
+			</div>
+		</div>
+		<div class="horizontal m-0">
+			<div class="block blue">
+				<div class="icon corner">
+					<span><i class="fa-brands fa-apple"></i></span>
+				</div>
+				<div class="wrapper center">
+					<div class="topic">@Model.UsersCount</div>
+					<div class="spacer"></div>
+					<div class="description">Users count</div>
+				</div>
+			</div>
+		</div>
+		<div class="horizontal m-0">
+			<div class="block" label="Page">
+				<div class="horizontal m-0">
+					<nav aria-label="Page navigation example">
+						<div class="pagination">
+							<a class="page" href="?page=1&searchString=@search" aria-label="Previous">
+								<span aria-hidden="true"><i class="fa-solid fa-caret-left"></i></span>
+							</a>
+							@for (int a = startPage; a <= endPage; a++)
+							{
+								var active = a == currentPage;
+								<a class="page" active=@active href="?page=@a&searchString=@search">@a</a>
+							}
+							<a class="page" href="?page=@pageCount&searchString=@search" aria-label="Next">
+								<span aria-hidden="true"><i class="fa-solid fa-caret-right"></i></span>
+							</a>
+						</div>
+					</nav>
+				</div>
+			</div>
+			<div class="block" label="Search">
+				<div class="input-group mb-3">
+					<form asp-action="Users" asp-controller="Admin" asp-route-page="1">
+						<input name="searchString" type="text">
+					</form>
+					<i class="fa-solid fa-magnifying-glass"></i>
+				</div>
+			</div>
+		</div>
+		<div class="block" label="users">
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Name</th>
+						<th scope="col">Email</th>
+						<th scope="col">Password</th>
+						<th scope="col">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var item in Model.Users)
+					{
+						i++;
+						<tr>
+							<td>@i</td>
+							<td>@item.UserName</td>
+							<td>@item.Email</td>
+							<td>@item.Password</td>
+							<td>
+								<button onclick="loadChageUserRoles('@item.UserId')" type="button" class="button light">
+									Roles
+								</button>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+<script>
+		var contextMenu = document.querySelector(".find_context_menu");
+		var findContext = document.querySelector(".findContext");
+		document.body.addEventListener('keydown', e => {
+		if (e.ctrlKey && 'fа'.indexOf(e.key) !== -1) {
+			e.preventDefault();
+			contextMenu.setAttribute('shown', true);
+			findContext.focus();
+		}
+		if	(e.keyCode == 27 && contextMenu.getAttribute('shown')) {
+			e.preventDefault();
+			findContext.value = '';
+			contextMenu.setAttribute('shown', false);
+		}
+	});
+</script>
+}

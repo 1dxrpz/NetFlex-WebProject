@@ -1,0 +1,96 @@
+﻿@using NetFlex.DAL.Enums
+
+@model IEnumerable<NetFlex.WEB.ViewModels.FilmViewModel>
+
+@inject NetFlex.BLL.Interfaces.IVideoService _videoService
+
+@{
+	Layout = "~/Views/Shared/_AdminLayout.cshtml";
+	ViewData["CurrentPage"] = AdminPages.Movies;
+}
+
+<div class="layout">
+	<div class="vertical">
+		<div class="block">
+			<div class="wrapper">
+				<div class="topic">Movies</div>
+				<div class="description">Add & edit movies</div>
+			</div>
+		</div>
+	</div>
+	<div class="horizontal">
+		<div class="block blue">
+			<div class="icon corner">
+				<span><i class="fa-brands fa-apple"></i></span>
+			</div>
+			<div class="wrapper center">
+				<div class="topic">12</div>
+				<div class="spacer"></div>
+				<div class="description">Film count</div>
+			</div>
+		</div>
+		<div class="block green">
+			<div class="wrapper center">
+				<div class="topic">12</div>
+				<div class="spacer"></div>
+				<div class="description">Review count</div>
+			</div>
+		</div>
+	</div>
+	<div class="vertical">
+		<div class="horizontal m-0">
+			<div class="block">
+				<div class="horizontal m-0">
+					<button type="button" class="btn btn-primary" onclick="loadAddMovie()">
+						Добавить фильм
+					</button>
+					<div>
+						<ul class="pagination">
+							<li class="page-item">
+								<a class="page-link btn-dark" href="#" aria-label="Previous">
+									<span aria-hidden="true">&laquo;</span>
+								</a>
+							</li>
+							<li class="page-item btn-dark"><a class="page-link" href="#">1</a></li>
+							<li class="page-item btn-dark"><a class="page-link" href="#">2</a></li>
+							<li class="page-item btn-dark"><a class="page-link" href="#">3</a></li>
+							<li class="page-item btn-dark">
+								<a class="page-link" href="#" aria-label="Next">
+									<span aria-hidden="true">&raquo;</span>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="vertical">
+		<table class="table moviesTable">
+			@foreach (var item in Model)
+			{
+				<tr class="AllMovies" data-id='@item.Id'>
+					<td class="title">@item.Title</td>
+					<td class="rating">@item.UserRating</td>
+					<td class="age_rating">@item.AgeRating</td>
+					<td>
+						<button type="button" class="btn btn-danger m-2" onclick="RemoveMovie('@item.Id')">
+							Remove
+						</button>
+					</td>
+					<td>
+						<button onclick="loadEditMovie('@item.Id')" type="button" class="btn btn-primary m-2">
+							Edit
+						</button>
+					</td>
+				</tr>
+			}
+		</table>
+	</div>
+</div>
+
+
+@section Scripts {
+<script>
+</script>
+}

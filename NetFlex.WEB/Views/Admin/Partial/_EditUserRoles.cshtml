@@ -1,0 +1,13 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model NetFlex.WEB.ViewModels.ChangeRoleViewModel
+@inject NetFlex.BLL.Interfaces.IRoleService _roleManager
+
+<form id="ChangeUserRoles" asp-action="changeuserroles">
+	@foreach (var role in Model.AllRoles)
+	{
+		<input type="checkbox" name="roles" value="@role.Name"
+		   @(Model.UserRoles.Contains(role.Name) ? "checked='checked''" : "") />
+
+		@role.Name <br />
+	}
+</form>

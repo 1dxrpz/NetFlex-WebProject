@@ -1,0 +1,19 @@
+﻿@model NetFlex.WEB.ViewModels.FilmViewModel
+@inject NetFlex.BLL.Interfaces.IVideoService _videoService
+
+<form id="EditMovieForm" enctype="multipart/form-data">
+	<input name="Title" type="text" placeholder="Movie title" value="@Model.Title" />
+	<input name="Poster" type="text" placeholder="Poster link" value="@Model.Poster" />
+	<input name="AgeRating" type="number" placeholder="Age rating" value="@Model.AgeRating" />
+	<input name="UserRating" type="number" placeholder="user Rating" value="@Model.UserRating" />
+	<input name="Description" type="text" placeholder="Description" value="@Model.Description" />
+	<input name="VideoLink" type="text" placeholder="Video Link" value="@Model.VideoLink" />
+	<div class="genres">
+		@foreach (var genre in await _videoService.GetGenres())
+		{
+			<input type='checkbox' name="genres" value="@genre.GenreName" 
+			@(Model.FilmGenres.Contains(genre.GenreName) ? "checked='checked''" : "")/>
+			<label>@genre.GenreName</label>
+		}
+	</div>
+</form>

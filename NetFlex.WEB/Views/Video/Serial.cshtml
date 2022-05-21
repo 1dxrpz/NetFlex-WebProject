@@ -1,0 +1,96 @@
+@model NetFlex.WEB.ViewModels.FullVideoInfoViewModel
+@{
+	ViewData["Title"] = "Video";
+	Layout = "~/Views/Shared/_VideoLayout.cshtml";
+	ViewData["mainpage"] = false;
+
+}
+@{
+	string episode = Context.Request.Query["episode"];
+
+	int current_episode = episode == null ? 1 : int.Parse(episode);
+	NetFlex.WEB.ViewModels.VideoPlayerViewModel m = new NetFlex.WEB.ViewModels.VideoPlayerViewModel()
+			{
+				EpisodeName = "",
+				VideoLink = Model.Serial.Episodes[current_episode - 1].VideoLink,
+				VideoTitle = Model.Serial.Title,
+				EnableSeries = true,
+				Episodes = Model.Serial.Episodes
+			};
+	var age_rating = Model.Serial.AgeRating + "+";
+	var user_rating = Model.Serial.UserRating > 0 ? Model.Serial.UserRating.ToString() : "-";
+	var rating_color = Model.Serial.UserRating > 7.5 ? "green" : Model.Serial.UserRating > 4 ? "gray" : Model.Serial.UserRating > 0 ? "red" : "gray";
+}
+@section Styles {
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/VideoPlayer.min.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/Video/Video.min.css" asp-append-version="true" />
+}
+<div class="poster">
+	<img class="image" src="@Model.Serial.Poster" />
+	<div class="dot"></div>
+	<div class="content">
+		<div class="container">
+			<div class="wrapper">
+				<div class="poster_preview">
+					<img src="@Model.Serial.Poster" />
+				</div>
+				<div class="text_content">
+					<div class="title">@Model.Serial.Title</div>
+					<div class="age_rating">
+						Возратсной рейтинг <span>@age_rating</span>
+					</div>
+					<div class="tags">
+						@foreach (var item in Model.Genres)
+						{
+							<div class="tag">@item.GenreName</div>
+						}
+					</div>
+					<div class="description">
+						@Model.Serial.Description
+					</div>
+					<div class="action_buttons">
+						<div class="watch_button" onclick="Watch()">Смотреть <i class="fa-solid fa-circle-play"></i></div>
+						<div class="small_button">
+							<i class="fa-solid fa-plus"></i>
+						</div>
+						<div class="small_button">
+							<i class="fa-solid fa-toilet-paper"></i>
+							@*<i class="fa-solid fa-feather-pointed"></i>*@
+						</div>
+					</div>
+				</div>
+				<div class="text_content right">
+					<div class="user_rating @rating_color">@user_rating <i class="fa-solid fa-star-half-stroke"></i></div>
+					@if (Model.Serial.UserRating == 0)
+					{
+						<div class="user_rating text">Недостаточно отзывов</div>
+					}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container">
+	@await Html.PartialAsync("../Shared/_VideoPlayerPartial.cshtml", @m)
+</div>
+@section Scripts {
+<script src="~/js/VideoPlayer.js"></script>
+<script>
+		window.addEventListener('keydown', (e) => {
+		if (e.keyCode === 32 && e.target === document.body) {
+			e.preventDefault();
+		}
+	});
+	var posterImage = document.querySelector(".poster>.image")
+	window.onscroll = e => {
+		posterImage.style.top = window.scrollY * 0.5 + 'px';
+	}
+	function Watch(){
+		document.querySelector('#videoPlayer').scrollIntoView({
+			behavior: 'smooth'
+		});
+	}
+</script>
+}

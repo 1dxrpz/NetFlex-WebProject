@@ -1,0 +1,99 @@
+@using Microsoft.AspNetCore.Identity
+@using NetFlex.DAL.EF
+@inject SignInManager<ApplicationUser> _sim
+
+@{
+	var topicHeight = "";
+	if ((bool)ViewData["mainpage"] == false)
+	{
+		topicHeight = "height: 30vh !important;";
+	}
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<script src="https://kit.fontawesome.com/3ee70c58bc.js" crossorigin="anonymous"></script>
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="~/css/MainLayout.css">
+	@await RenderSectionAsync("Styles", required: false)
+
+</head>
+<body>
+	<header>
+		<div class="logo"></div>
+		<a asp-controller="Main" class="nav_button">Main</a>
+		<a asp-controller="Movies" class="nav_button">Movies</a>
+		<a asp-controller="Series" class="nav_button">Series</a>
+		<a asp-controller="Popular" class="nav_button">Popular</a>
+		<a asp-controller="MyList" class="nav_button">My list</a>
+		<div class="right">
+			<div class="user">
+				<span>@User.Identity.Name</span>
+				<i class="fa-solid fa-user"></i>
+				<div class="account_buttons">
+					<a href="~/Identity/Account/Manage" type="submit">Settings</a>
+					@if(User.IsInRole("Administrator")){
+						<a href="~/admin" type="submit">Admin panel</a>
+					}
+					<form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+						<button type="submit">Logout</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<div class="topic" style="@topicHeight">
+		<video autoplay muted loop class="preview">
+			<source src="https://raw.githubusercontent.com/1dxrpz/video-player-test-js/main/videos/background.mp4" type="video/mp4">
+		</video>
+		<div class="dot"></div>
+		<div class="content">
+			<div class="wrapper">
+				<div class="logo">
+					<img src="~/images/Logo.svg" />
+				</div>
+				<div class="text">Watch anywhere. Cancel at any time</div>
+			</div>
+		</div>
+	</div>
+
+	@RenderBody()
+
+	<div id="loader" loaded="false">
+		<img src="~/images/mini-logo.svg" />
+	</div>
+
+	<script type="text/javascript">
+		var video = document.querySelector(".preview");
+		var logo = document.querySelector(".wrapper>.logo");
+		var header = document.querySelector("header");
+		var logoY = logo.getBoundingClientRect().top;
+
+		window.onscroll = (e) => {
+			var val = window.scrollY >= logoY - header.getBoundingClientRect().height - 10;
+			header.setAttribute('scroll', val);
+			if (val) {
+				header.style.top = (logoY - header.getBoundingClientRect().height - 10) + 'px';
+			} else {
+				header.style.top = '0px';
+			}
+			video.style.top = window.scrollY * 0.5 + 'px';
+		}
+		video.addEventListener('loadeddata', (e) => {
+		   if(video.readyState >= 3){
+			   document.querySelector("#loader").setAttribute("loaded", "true");
+		   }
+		});
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/@@splidejs/splide@4.0.1/dist/js/splide.min.js"></script>
+	@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

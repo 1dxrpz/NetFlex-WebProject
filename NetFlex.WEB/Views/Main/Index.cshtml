@@ -1,0 +1,60 @@
+﻿@model NetFlex.WEB.ViewModels.MainPageViewModel
+
+@{
+	ViewData["Title"] = "Mainpage";
+	Layout = "~/Views/Shared/_MainLayout.cshtml";
+	ViewData["mainpage"] = true;
+}
+
+@section Styles {
+<link rel="stylesheet" href="~/css/Main/Main.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@splidejs/splide@4.0.1/dist/css/splide.min.css" />
+}
+
+<div class="container">
+	<section class="splide video_slider" aria-labelledby="carousel-heading" label="Test">
+		<div class="splide__arrows">
+			<button class="splide__arrow splide__arrow--prev">
+				Prev
+			</button>
+			<button class="splide__arrow splide__arrow--next">
+				Next
+			</button>
+		</div>
+		<div class="splide__track">
+			<ul class="splide__list">
+				@for (var i = 0; i < 20; i++)
+				{
+					<li class="splide__slide">
+						<div class="video_element">
+							<img src="https://images-ext-2.discordapp.net/external/sFszT_kL3HLRK3G3Th5pQVg4QZgE1ImypKfxDR4Q8iQ/%3Fr%3Dfcc/https/occ-0-3466-3467.1.nflxso.net/dnm/api/v6/X194eJsgWBDE2aQbaNdmCXGUP-Y/AAAABV1lPbVUdmIEMkhD0yhg_IPYBt263-UBiHREnChaRkTpVIDhugDaOgvL-jvO31JGIteSb4RlMqG0XKN6sHwwPm4HURNBatbJdc3P7l3uX9CkzOY0Y79s7fsSJHsLSsa4koJf_Q.jpg?width=461&height=259" />
+							<div class="info" data-title="Этот тупой свин не понимает мечты девушки кролика" data-rating="9.5"></div>
+						</div>
+					</li>
+				}
+			</ul>
+		</div>
+	</section>
+	<div class="video_row">
+		<div class="videos">
+
+			@foreach (var item in Model.Series)
+			{
+				<a class="video_element" asp-action="Serial" asp-controller="video" asp-route-id="@item.Id">
+					<div class="image_wrapper">
+						<img src="@item.Poster" />
+						<div class="info" data-rating="@item.UserRating">
+						</div>
+					</div>
+				</a>
+			}
+		</div>
+		@*<div class="more_videos_wrapper">
+			<div class="more_videos">More videos</div>
+			</div>*@
+	</div>
+</div>
+@**@
+@section Scripts {
+<script src="~/js/Slider.js"></script>
+}

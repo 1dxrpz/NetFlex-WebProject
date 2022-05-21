@@ -1,0 +1,38 @@
+﻿[
+  {
+    "outputFile": "wwwroot/css/Account/LoginRegister.min.css",
+    "inputFile": "wwwroot/sass/LoginRegister.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/Video/Video.min.css",
+    "inputFile": "wwwroot/sass/Video.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/Admin/Admin.min.css",
+    "inputFile": "wwwroot/sass/Admin.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/Settings/Settings.min.css",
+    "inputFile": "wwwroot/sass/Settings.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/Home/Subscribe.min.css",
+    "inputFile": "wwwroot/sass/Subscribe.scss"
+  },
+  {
+    "outputFile": "wwwroot/sass/PanelsUI.css",
+    "inputFile": "wwwroot/sass/PanelsUI.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/Home/Mainpage.min.css",
+    "inputFile": "wwwroot/sass/Mainpage.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/MainLayout.css",
+    "inputFile": "wwwroot/css/MainLayout.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/Main/Main.min.css",
+    "inputFile": "wwwroot/sass/Main.scss"
+  }
+]

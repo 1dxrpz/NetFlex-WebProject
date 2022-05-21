@@ -2,27 +2,55 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>14107a53-ef37-4306-9831-aff97a8d4da1</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNet.Identity.Core" Version="2.2.3" />
-    <PackageReference Include="Microsoft.AspNet.Identity.EntityFramework" Version="2.2.3" />
-    <PackageReference Include="Microsoft.AspNet.Identity.Owin" Version="2.2.3" />
+    <Content Remove="compilerconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AspNet.Security.OAuth.Vkontakte" Version="6.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.3" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.2" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.3" />
+    <PackageReference Include="PagedList" Version="1.17.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\NetFlex.BLL\NetFlex.BLL.csproj" />
     <ProjectReference Include="..\NetFlex.DAL\NetFlex.DAL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\css\Account\" />
+    <Folder Include="wwwroot\css\Main\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="compilerconfig.json" />
+    <None Include="wwwroot\lib\jquery-confirm\.github\ISSUE_TEMPLATE.md" />
+    <None Include="wwwroot\lib\jquery-confirm\.gitignore" />
+    <None Include="wwwroot\lib\jquery-confirm\css\jquery-confirm.less" />
+    <None Include="wwwroot\lib\jquery-confirm\demo\demo.js" />
+    <None Include="wwwroot\lib\jquery-confirm\demo\libs\bundled.js" />
+    <None Include="wwwroot\lib\jquery-confirm\demo\libs\fonts\fontawesome-webfont.svg" />
+    <None Include="wwwroot\lib\jquery-confirm\demo\libs\fonts\fontawesome-webfont.woff2" />
+    <None Include="wwwroot\lib\jquery-confirm\demo\logo-name.svg" />
+    <None Include="wwwroot\lib\jquery-confirm\dist\jquery-confirm.min.js" />
+    <None Include="wwwroot\lib\jquery-confirm\js\jquery-confirm.js" />
+    <None Include="wwwroot\lib\jquery-confirm\LICENSE" />
+    <None Include="wwwroot\lib\jquery-confirm\README.md" />
+    <None Include="wwwroot\lib\jquery-ui-1.12.1\external\jquery\jquery.js" />
+    <None Include="wwwroot\lib\jquery-ui-1.12.1\jquery-ui.js" />
+    <None Include="wwwroot\lib\jquery-ui-1.12.1\jquery-ui.min.js" />
   </ItemGroup>
 
 </Project>

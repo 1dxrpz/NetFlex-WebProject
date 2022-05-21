@@ -1,0 +1,17 @@
+﻿@inject NetFlex.BLL.Interfaces.IVideoService _videoService
+
+<form id="AddMovieForm" enctype="multipart/form-data">
+	<input name="Title" type="text" placeholder="Movie title" />
+	<input name="Poster" type="text" placeholder="Poster link" />
+	<input name="AgeRating" type="number" placeholder="Age rating" />
+	<input name="UserRating" type="number" placeholder="user Rating" />
+	<input name="Description" type="text" placeholder="Description" />
+	<input name="VideoLink" type="text" placeholder="Video Link" />
+	<div class="genres">
+		@foreach (var genre in await _videoService.GetGenres())
+		{
+			<input type='checkbox' name="FilmGenres" value="@genre.GenreName" />
+			<label>@genre.GenreName</label>
+		}
+	</div>
+</form>

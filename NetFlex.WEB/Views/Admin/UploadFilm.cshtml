@@ -1,0 +1,47 @@
+﻿@model NetFlex.WEB.ViewModels.FilmViewModel
+@{
+    //Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<form asp-action="UploadFilm" asp-controller="Admin" method="post">
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label asp-for="Title">Title</label>
+            <input type="text" name="Title" class="form-control" id="inputEmail4" placeholder="Title">
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="AgeRating">Description</label>
+            <input type="text" name="AgeRating" class="form-control" id="inputPassword4" placeholder="AgeRating">
+        </div>
+
+        <div class="form-group col-md-6">
+            <label asp-for="VideoLink">Description</label>
+            <input type="text" name="VideoLink" class="form-control" id="inputPassword4" placeholder="VideoLink">
+        </div>
+
+        <div class="form-group col-md-6">
+            <label asp-for="Poster">Description</label>
+            <input type="text" name="Poster" class="form-control" id="inputPassword4" placeholder="Link on poster">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Description">Description</label>
+        <textarea name="Description" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Description"></textarea>
+    </div>
+
+    @foreach (var genre in Model.AllGenres)
+    {
+        <input type="checkbox" name="FilmGenres" value="@genre.GenreName"
+               @(Model.FilmGenres.Contains(genre.GenreName) ? "checked=\"checked\"" : "") />
+
+            @genre.GenreName <br />
+
+       @* <div class="form-check form-check-inline">
+            <label class="form-check-label" asp-for="FilmGenres">@genre.GenreName</label>
+            <input class="form-check-input" name="FilmsGenres" type="checkbox" id="inlineCheckbox1">
+        </div>*@
+    }
+    <button type="submit" class="btn btn-primary">Add</button>
+</form>
+

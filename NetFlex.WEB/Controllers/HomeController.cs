@@ -15,9 +15,12 @@ namespace NetFlex.WEB.Controllers
 
         public IActionResult Index()
         {
+            return User.Identity.IsAuthenticated ? RedirectToAction("Index", "Main") : View();
+        }
+        public IActionResult Subscribe()
+        {
             return View();
         }
-
         public IActionResult Privacy()
         {
             return View();

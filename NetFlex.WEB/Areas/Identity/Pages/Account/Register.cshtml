@@ -1,0 +1,63 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Sign up";
+    Layout = "~/Views/Shared/_LoginRegisterLayout.cshtml";
+}
+
+<h1 class="topic">@ViewData["Title"]</h1>
+
+<form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+	<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+	<div>
+		<div class="textbox">
+			<input asp-for="Input.Email" class="input" placeholder=" " autocomplete="username" aria-required="true" />
+			<div class="textbox_placeholder"><div>Email</div></div>
+		</div>
+		<span asp-validation-for="Input.Email" class="text-danger"></span>
+	</div>
+
+	<div>
+		<div class="textbox">
+			<input asp-for="Input.Password" class="input" placeholder=" " autocomplete="new-password" aria-required="true" />
+			<div class="textbox_placeholder"><div>Password</div></div>
+		</div>
+		<span asp-validation-for="Input.Password" class="text-danger"></span>
+	</div>
+    <div>
+		<div class="textbox">
+			<input asp-for="Input.ConfirmPassword" class="input" placeholder=" " autocomplete="new-password" aria-required="true" />
+			<div class="textbox_placeholder"><div>Confirm Password</div></div>
+		</div>
+		<span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+	</div>
+	<button id="Register-submit" type="submit">Sign up</button>
+<h3 class="topic_bottom">Sign up using </h3>
+</form>
+@{
+	if ((Model.ExternalLogins?.Count ?? 0) == 0)
+	{
+		<div>
+			<p>
+				There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">
+					article
+					about setting up this ASP.NET application to support logging in via external services
+				</a>.
+			</p>
+		</div>
+	}
+	else
+	{
+		<form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+			<div>
+				<p>
+					@foreach (var provider in Model.ExternalLogins)
+					{
+						<button type="submit" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+					}
+				</p>
+			</div>
+		</form>
+	}
+}
