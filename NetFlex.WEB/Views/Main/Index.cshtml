@@ -1,4 +1,6 @@
-﻿@{
+﻿@model NetFlex.WEB.ViewModels.MainPageViewModel
+
+@{
 	ViewData["Title"] = "Mainpage";
 	Layout = "~/Views/Shared/_MainLayout.cshtml";
 	ViewData["mainpage"] = true;
@@ -36,7 +38,7 @@
 	<div class="video_row">
 		<div class="videos">
 
-			@foreach (var item in Model)
+			@foreach (var item in Model.Series)
 			{
 				<a class="video_element" asp-action="Serial" asp-controller="video" asp-route-id="@item.Id">
 					<div class="image_wrapper">
